@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Club", "Club\Club.csproj", "{B31F209F-3DBC-4D26-AFF5-2C0E231C6A6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.csproj", "{59EA2377-2615-421E-84F2-79BF7A692D07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorios", "Repositorios\Repositorios.csproj", "{DBC77CA5-44CB-41F6-B90F-95D3F6C1C171}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B31F209F-3DBC-4D26-AFF5-2C0E231C6A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31F209F-3DBC-4D26-AFF5-2C0E231C6A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31F209F-3DBC-4D26-AFF5-2C0E231C6A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31F209F-3DBC-4D26-AFF5-2C0E231C6A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59EA2377-2615-421E-84F2-79BF7A692D07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EA2377-2615-421E-84F2-79BF7A692D07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EA2377-2615-421E-84F2-79BF7A692D07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EA2377-2615-421E-84F2-79BF7A692D07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC77CA5-44CB-41F6-B90F-95D3F6C1C171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC77CA5-44CB-41F6-B90F-95D3F6C1C171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC77CA5-44CB-41F6-B90F-95D3F6C1C171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC77CA5-44CB-41F6-B90F-95D3F6C1C171}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D8CDB57-1389-4E08-8A34-B87F53C67CF0}
+	EndGlobalSection
+EndGlobal
