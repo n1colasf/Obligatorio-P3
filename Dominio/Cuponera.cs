@@ -8,6 +8,6 @@ namespace Dominio
 {
     public class Cuponera : FormaDePago
     {
-
+        //asdasdasd
     }
 }

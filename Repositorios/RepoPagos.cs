@@ -13,7 +13,7 @@ namespace Repositorios
     {
         public bool Alta(FormaDePago obj)
         {
-            //asdasd
+            //asdasd asdasd
             throw new NotImplementedException();
         }
 
