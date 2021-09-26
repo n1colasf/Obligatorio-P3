@@ -8,5 +8,7 @@ namespace Dominio
 {
     public class Horario
     {
+        public string dia { get; set; }
+        public int hora { get; set; }
     }
 }

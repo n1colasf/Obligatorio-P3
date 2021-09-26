@@ -8,5 +8,7 @@ namespace Dominio
 {
     public class Funcionario
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
