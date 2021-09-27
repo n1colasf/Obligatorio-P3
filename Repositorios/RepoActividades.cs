@@ -35,5 +35,21 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
+
+        //Fix me: Van aca los metodos del repo socios
+        public bool validarNombre(string nombre)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool verificarCupo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool aptoEdad(Socio socio)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
