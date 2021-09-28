@@ -37,7 +37,7 @@ namespace Repositorios
         }
 
         //Fix me: Van aca los metodos del repo socios
-        public bool validarNombre(string nombre)
+        public bool existeNombre(string nombre)
         {
             throw new NotImplementedException();
         }

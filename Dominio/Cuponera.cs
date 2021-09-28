@@ -8,9 +8,42 @@ namespace Dominio
 {
     public class Cuponera : FormaDePago
     {
-        public int DescuentoC { get; set; }
-        public int CantActividades { get; set; }
-        private double PrecioActividad { get; set; }
+        #region Atributos
+        private int descuentoC;
+        private int cantActividades;
+        private double precioActividad;
+        #endregion
+
+        #region Propiedades
+        public int DescuentoC
+        {
+            get { return descuentoC; }
+            set { descuentoC = value; }
+        }
+        public int CantActividades
+        {
+            get { return cantActividades; }
+            set { cantActividades = value; }
+        }
+        public double PrecioActividad
+        {
+            get { return precioActividad; }
+            set { precioActividad = value; }
+        }
+        #endregion
+
+        #region Constructor
+        //FixMe: no me doy cuenta por que no me deja pasarle los parametros padre
+        public Cuponera(int descuentoC, int cantActividades, double precioActividad) : base(fecha, socio)
+        {
+            this.descuentoC = descuentoC;
+            this.cantActividades = cantActividades;
+            this.precioActividad = precioActividad;
+
+        }
+        #endregion
+
+        #region MetodosDeInstancia
         public override double CalcularCosto()
         {
             throw new NotImplementedException();
@@ -19,5 +52,6 @@ namespace Dominio
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

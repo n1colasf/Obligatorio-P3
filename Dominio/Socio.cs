@@ -8,12 +8,59 @@ namespace Dominio
 {
     public class Socio
     {
-        public int Cedula { get; set; }
-        public string Nombre { get; set; }
-        public DateTime FechaNac { get; set; }
-        public DateTime FechaIngreso { get; set; }
-        public bool Activo { get; set; }
-        public List<Actividad> Actividades { get; set; }
+        #region Atributos
+        private int cedula;
+        private string nombre;
+        private DateTime fechaNac;
+        private DateTime fechaIngreso;
+        private bool activo;
+        private List<Actividad> actividades;
+        #endregion
+
+        #region Propiedades
+        public int Cedula
+        {
+            get { return cedula; }
+            set { cedula = value; }
+        }
+        public string Nombre
+        {
+            get { return nombre; }
+            set { nombre = value; }
+        }
+        public DateTime FechaNac
+        {
+            get { return fechaNac; }
+            set { fechaNac = value; }
+        }
+        public DateTime FechaIngreso
+        {
+            get { return fechaIngreso; }
+            set { fechaIngreso = value; }
+        }
+        public bool Activo
+        {
+            get { return activo; }
+            set { activo = value; }
+        }
+        public List<Actividad> Actividades
+        {
+            get { return actividades; }
+            set { actividades = value; }
+        }
+        #endregion
+
+        #region Constructor
+        public Socio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, List<Actividad> actividades)
+        {
+            this.cedula = cedula;
+            this.nombre = nombre;
+            this.fechaNac = fechaNac;
+            this.fechaIngreso = fechaIngreso;
+            activo = true;
+            this.actividades = actividades;
+        }
+        #endregion
 
     }
 }

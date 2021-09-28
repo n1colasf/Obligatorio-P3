@@ -39,7 +39,12 @@ namespace Repositorios
         //Fix me: Van aca los metodos del repo socios
         public bool existeSocio(int cedula)
         {
-            throw new NotImplementedException();
+            bool existe = false;
+            if(BuscarPorId(cedula) != null)
+            {
+                existe = true;
+            }
+            return existe;
         }
 
         public bool validarCedula (string cedula)
@@ -58,7 +63,22 @@ namespace Repositorios
             //6<caracteres &
             //sin espacios al principio o al final & 
             //caracteres alfabeticos
-            throw new NotImplementedException();
+            bool valido = true;
+
+            //FixMe: ver de hacer con una expresion regular
+            if (nombre.Length > 6)
+            {
+                for (int i = 0; i < nombre.Length; i++)
+                {
+                    if (nombre[0] == ' ' || nombre[nombre.Length-1] == ' ' || !Double.IsNaN(nombre[i]) )
+                    {
+                        valido = false;
+                        continue;
+                    }
+                }
+
+            }
+            return valido;
         }
 
         public bool validarEdad(DateTime fechaNac)
