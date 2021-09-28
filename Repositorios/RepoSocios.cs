@@ -39,6 +39,8 @@ namespace Repositorios
         //Fix me: Van aca los metodos del repo socios
         public bool existeSocio(int cedula)
         {
+
+            //PRUEBAA
             bool existe = false;
             if(BuscarPorId(cedula) != null)
             {
