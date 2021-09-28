@@ -34,6 +34,7 @@ namespace Dominio
         #region Constructor
         public FormaDePago(DateTime fecha, Socio socio)
         {
+            //Ver de sacar el contId y que sea autoincremental en la BD
             id = contId++;
             this.fecha = fecha;
             this.socio = socio;
