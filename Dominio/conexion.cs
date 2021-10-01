@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-	class Conexion
+	public class Conexion
 	{
 		private string stringConexion =
 			@"SERVER=ACER-GON\SQLEXPRESS;

@@ -7,14 +7,48 @@ using Dominio;
 using System.Data;
 using System.Data.SqlClient;
 
+
 namespace Repositorios
 {
     class RepoSocios : IRepositorio<Socio>
     {
         public bool Alta(Socio obj)
         {
-            
-        }
+
+			if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || this.ExisteSocio(obj.Cedula))
+				return false;
+			Conexion manejadorConexion = new Conexion();
+			IDbConnection cn = manejadorConexion.CrearConexion();
+            SqlTransaction trn = null;
+            try
+			{
+				//código que quiero que se ejecute
+				//preparar comando para guardar la fila del cliente
+				SqlCommand cmd = new SqlCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				//indico que voy a ejecutar un procedimiento almacenado en la bd
+				cmd.CommandText = "Alta_Socio";//indico el procedimiento
+				cmd.Parameters.AddWithValue("@cedula", obj.Cedula);
+				cmd.Parameters.AddWithValue("@nombre", obj.Nombre);
+				cmd.Parameters.AddWithValue("@fechaNac", obj.FechaNac);
+				cmd.Parameters.AddWithValue("@fechaIngreso", obj.FechaIngreso);
+				cmd.Parameters.AddWithValue("@activo", obj.Activo);
+				manejadorConexion.AbrirConexion(cn);
+				cmd.ExecuteNonQuery();
+
+				
+				return true;
+			}
+			catch (SqlException Ex)
+			{
+                trn.Rollback();
+                return false;
+            }
+            finally
+			{
+				manejadorConexion.CerrarConexion(cn);
+			}
+		}
 
         public bool Baja(int id)
         {
@@ -35,75 +69,17 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
-
-        //Fix me: Van aca los metodos del repo socios
-        public bool existeSocio(int cedula)
+        public bool ExisteSocio(int cedula)
         {
 
-            //PRUEBAA
             bool existe = false;
-            if(BuscarPorId(cedula) != null)
+            if (BuscarPorId(cedula) != null)
             {
                 existe = true;
             }
             return existe;
         }
 
-        public bool validarCedula (string cedula)
-        {
-            bool valido = false;
-            if (cedula.Length >= 7 && cedula.Length <= 9)
-            {
-                valido = true;
-            }
-
-            return valido;
-        }
-
-        public bool validarNombre(string nombre)
-        {
-            //6<caracteres &
-            //sin espacios al principio o al final & 
-            //caracteres alfabeticos
-            bool valido = true;
-
-            //FixMe: ver de hacer con una expresion regular
-            if (nombre.Length > 6)
-            {
-                for (int i = 0; i < nombre.Length; i++)
-                {
-                    if (nombre[0] == ' ' || nombre[nombre.Length-1] == ' ' || !Double.IsNaN(nombre[i]) )
-                    {
-                        valido = false;
-                        continue;
-                    }
-                }
-
-            }
-            return valido;
-        }
-
-        public bool validarEdad(DateTime fechaNac)
-        {
-            bool valido = false;
-
-                //Determino una variable fechaDeHoy a la que le doy el valor de la fecha actual
-                DateTime fechaDeHoy = DateTime.Today;
-                //Determino una variable edad la cual iguala a la resta del año de la fecha, menos el año de nacimiento
-                int edad = DateTime.Today.Year - fechaNac.Year;
-                //Si la fecha de cumpleaños todavia no paso, resto un año al resultado anterior
-                if (DateTime.Today < fechaNac.AddYears(edad))
-                {
-                    edad--;
-                }
-
-            if (edad >3 && edad < 90)
-            {
-                valido = true;
-            }
-
-            return valido;
-        }
 
     }
 }
