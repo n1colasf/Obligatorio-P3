@@ -8,41 +8,13 @@ namespace Dominio
 {
     public abstract class FormaDePago
     {
-        #region Atributos
-        private int id;
-        private static int contId;
-        private DateTime fecha;
-        private Socio socio;
-        #endregion
+        public int Id { get; }
+        public DateTime Fecha { get; set; }
+        public Socio Socio { get; set; }
 
-        #region Propiedades
-        public int Id
-        {
-            get { return id; }
-        }
-        public DateTime Fecha
-        {
-            get { return fecha; }
-            set { fecha = value; }
-        }
-        public Socio Socio
-        {
-            get { return socio; }
-        }
-        #endregion
+        //FixMe: Este atributo era necesario?
+        private static int ContId;
 
-        #region Constructor
-        public FormaDePago(DateTime fecha, Socio socio)
-        {
-            //Ver de sacar el contId y que sea autoincremental en la BD
-            id = contId++;
-            this.fecha = fecha;
-            this.socio = socio;
-        }
-        #endregion
-
-        #region MetodosDeClase
         public abstract double CalcularCosto();
-        #endregion
     }
 }
