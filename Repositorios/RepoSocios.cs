@@ -13,7 +13,7 @@ namespace Repositorios
     {
         public bool Alta(Socio obj)
         {
-            throw new NotImplementedException();
+            
         }
 
         public bool Baja(int id)
