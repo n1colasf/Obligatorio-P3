@@ -14,7 +14,7 @@ namespace Dominio
 			@"SERVER=ACER-GON\SQLEXPRESS;
 				Database=Club; 
 				INTEGRATED SECURITY = TRUE;";
-		public IDbConnection CrearConexion()
+		public SqlConnection CrearConexion()
 		{
 			return new SqlConnection(stringConexion);
 		}

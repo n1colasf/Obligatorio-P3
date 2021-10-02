@@ -38,7 +38,7 @@ namespace Dominio
             {
                 for (int i = 0; i < nombre.Length; i++)
                 {
-                    if (nombre[0] == ' ' || nombre[nombre.Length - 1] == ' ' || !Double.IsNaN(nombre[i]))
+                    if (nombre[0] == ' ' || nombre[nombre.Length - 1] == ' ' || Char.IsNumber(nombre[i]))
                     {
                         valido = false;
                         continue;

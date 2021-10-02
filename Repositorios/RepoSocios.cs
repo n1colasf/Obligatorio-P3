@@ -15,39 +15,38 @@ namespace Repositorios
         public bool Alta(Socio obj)
         {
 
-			if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || this.ExisteSocio(obj.Cedula))
-				return false;
-			Conexion manejadorConexion = new Conexion();
-			IDbConnection cn = manejadorConexion.CrearConexion();
-            SqlTransaction trn = null;
+            if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || this.ExisteSocio(obj.Cedula))
+            	return false;
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+
             try
-			{
-				//código que quiero que se ejecute
-				//preparar comando para guardar la fila del cliente
-				SqlCommand cmd = new SqlCommand();
-				cmd.CommandType = CommandType.StoredProcedure;
-				//indico que voy a ejecutar un procedimiento almacenado en la bd
-				cmd.CommandText = "Alta_Socio";//indico el procedimiento
-				cmd.Parameters.AddWithValue("@cedula", obj.Cedula);
-				cmd.Parameters.AddWithValue("@nombre", obj.Nombre);
-				cmd.Parameters.AddWithValue("@fechaNac", obj.FechaNac);
-				cmd.Parameters.AddWithValue("@fechaIngreso", obj.FechaIngreso);
-				cmd.Parameters.AddWithValue("@activo", obj.Activo);
-				manejadorConexion.AbrirConexion(cn);
-				cmd.ExecuteNonQuery();
+            {
+                using(SqlCommand cmd = new SqlCommand()){
+                    cmd.Connection = con;
+                    cmd.CommandText = "Alta_Socio";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cedula", obj.Cedula));
+                    cmd.Parameters.Add(new SqlParameter("@nombre", obj.Nombre));
+                    cmd.Parameters.Add(new SqlParameter("@fechaNac", obj.FechaNac));
+                    cmd.Parameters.Add(new SqlParameter("@fechaIngreso", obj.FechaIngreso));
+                    cmd.Parameters.Add(new SqlParameter("@activo", obj.Activo));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    
+                }
 
 				
 				return true;
 			}
 			catch (SqlException Ex)
 			{
-                trn.Rollback();
                 return false;
             }
             finally
 			{
-				manejadorConexion.CerrarConexion(cn);
-			}
+                con.Close();
+            }
 		}
 
         public bool Baja(int id)
@@ -57,7 +56,8 @@ namespace Repositorios
 
         public Socio BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            //IMPLEMENTAR (VALIDACION PARA ALTA DE SOCIO)
+            return null;
         }
 
         public bool Modificacion(Socio obj)

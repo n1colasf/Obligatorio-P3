@@ -9,8 +9,24 @@ namespace Repositorios
 {
     public class FachadaClub
     {
-        //Este atributo va? porque me obliga a agregar el using Dominio
-        //public List<Funcionario> Funcionarios { get; set; }
+        public static bool AltaSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso)
+        {
+            bool ret = false;
+            List<Actividad> actividades = new List<Actividad>();
+            Socio socio = new Socio()
+            {
+                Cedula = cedula,
+                Nombre = nombre,
+                FechaNac = fechaNac,
+                Actividades = actividades,
+                FechaIngreso = fechaIngreso,
+                Activo = true
+            };
+            RepoSocios repoSocios = new RepoSocios();
+            ret = repoSocios.Alta(socio);
+            return ret;
+
+        }
 
         public bool LogIn(string email, string password)
         {
