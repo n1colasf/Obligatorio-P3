@@ -9,11 +9,11 @@ using System.Data.SqlClient;
 
 namespace Repositorios
 {
-    class RepoActividades : IRepositorio<Actividad>
+    class RepoHorarios : IRepositorio<Horario>
     {
-        public bool Alta(Actividad obj)
+        public bool Alta(Horario obj)
         {
-            if (obj == null || ExisteNombre(obj.Nombre))
+            if (obj == null || !obj.ValidarHora(obj.Hora))
                 return false;
             Conexion manejadorConexion = new Conexion();
             SqlConnection con = manejadorConexion.CrearConexion();
@@ -22,18 +22,17 @@ namespace Repositorios
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
+                    int idActividad = 1;//new Actividad().Id;
+                    //VER COMO PASAMOS EL ID DE LA ACTIVIDAD
                     cmd.Connection = con;
-                    cmd.CommandText = "Alta_Actividad";
+                    cmd.CommandText = "Alta_Horario";
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@nombre", obj.Nombre));
-                    cmd.Parameters.Add(new SqlParameter("@edadMin", obj.EdadMin));
-                    cmd.Parameters.Add(new SqlParameter("@edadMax", obj.EdadMax));
-                    cmd.Parameters.Add(new SqlParameter("@cupo", obj.Cupo));
+                    cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
+                    cmd.Parameters.Add(new SqlParameter("@hora", obj.Hora));
+                    cmd.Parameters.Add(new SqlParameter("@dia", obj.Dia));
                     con.Open();
                     cmd.ExecuteNonQuery();
-
                 }
-
 
                 return true;
             }
@@ -52,36 +51,20 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public Actividad BuscarPorId(int id)
+        public Horario BuscarPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Modificacion(Actividad obj)
+        public bool Modificacion(Horario obj)
         {
             throw new NotImplementedException();
         }
 
-        public List<Actividad> TraerTodos()
+        public List<Horario> TraerTodos()
         {
             throw new NotImplementedException();
         }
 
-        //Fix me: Van aca los metodos del repo socios
-        public bool ExisteNombre(string nombre)
-        {
-            //IMPLEMENTAR PARA VALIDACION
-            return false;
-        }
-
-        public bool VerificarCupo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AptoEdad(Socio socio)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

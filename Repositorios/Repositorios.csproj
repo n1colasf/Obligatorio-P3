@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RepoHorarios.cs" />
+    <Compile Include="RepoFuncionarios.cs" />
     <Compile Include="IRepositorio.cs" />
     <Compile Include="RepoPagos.cs" />
     <Compile Include="RepoSocios.cs" />

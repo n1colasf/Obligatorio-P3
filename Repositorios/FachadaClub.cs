@@ -9,6 +9,19 @@ namespace Repositorios
 {
     public class FachadaClub
     {
+        public static bool AltaFuncionario(string email, string password)
+        {
+            bool ret = false;
+            Funcionario func = new Funcionario()
+            {
+                Email = email,
+                Password = password
+            };
+            RepoFuncionarios repoFunc = new RepoFuncionarios();
+            ret = repoFunc.Alta(func);
+            return ret;
+
+        }
         public static bool AltaSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso)
         {
             bool ret = false;
@@ -24,6 +37,35 @@ namespace Repositorios
             };
             RepoSocios repoSocios = new RepoSocios();
             ret = repoSocios.Alta(socio);
+            return ret;
+
+        }
+
+        public static bool AltaActividad(string nombre, int edadMin, int edadMax, int cupo)
+        {
+            bool ret = false;
+            Actividad act = new Actividad()
+            {
+                Nombre = nombre,
+                EdadMin = edadMin,
+                EdadMax = edadMax,
+                Cupo = cupo
+            };
+            RepoActividades repoAct = new RepoActividades();
+            ret = repoAct.Alta(act);
+            return ret;
+
+        }
+        public static bool AltaHorario(string dia, int hora)
+        {
+            bool ret = false;
+            Horario horario = new Horario()
+            {
+                Dia = dia,
+                Hora = hora
+            };
+            RepoHorarios repoHorario = new RepoHorarios();
+            ret = repoHorario.Alta(horario);
             return ret;
 
         }

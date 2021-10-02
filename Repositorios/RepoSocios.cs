@@ -15,7 +15,7 @@ namespace Repositorios
         public bool Alta(Socio obj)
         {
 
-            if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || this.ExisteSocio(obj.Cedula))
+            if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || ExisteSocio(obj.Cedula))
             	return false;
             Conexion manejadorConexion = new Conexion();
             SqlConnection con = manejadorConexion.CrearConexion();

@@ -10,5 +10,16 @@ namespace Dominio
     {
         public string Email { get; set; }
         public string Password { get; set; }
+
+        public bool ValidarEmail(string email)
+        {
+            //IMPLEMENTAR
+            return true;
+        }
+        public bool ValidarPassword(string password)
+        {
+            //IMPLEMENTAR
+            return true;
+        }
     }
 }

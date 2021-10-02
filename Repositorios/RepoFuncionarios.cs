@@ -9,11 +9,11 @@ using System.Data.SqlClient;
 
 namespace Repositorios
 {
-    class RepoActividades : IRepositorio<Actividad>
+    class RepoFuncionarios : IRepositorio<Funcionario>
     {
-        public bool Alta(Actividad obj)
+        public bool Alta(Funcionario obj)
         {
-            if (obj == null || ExisteNombre(obj.Nombre))
+            if (obj == null || !obj.ValidarEmail(obj.Email) || !obj.ValidarPassword(obj.Password))
                 return false;
             Conexion manejadorConexion = new Conexion();
             SqlConnection con = manejadorConexion.CrearConexion();
@@ -23,12 +23,10 @@ namespace Repositorios
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = con;
-                    cmd.CommandText = "Alta_Actividad";
+                    cmd.CommandText = "Alta_Funcionario";
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@nombre", obj.Nombre));
-                    cmd.Parameters.Add(new SqlParameter("@edadMin", obj.EdadMin));
-                    cmd.Parameters.Add(new SqlParameter("@edadMax", obj.EdadMax));
-                    cmd.Parameters.Add(new SqlParameter("@cupo", obj.Cupo));
+                    cmd.Parameters.Add(new SqlParameter("@email", obj.Email));
+                    cmd.Parameters.Add(new SqlParameter("@password", obj.Password));
                     con.Open();
                     cmd.ExecuteNonQuery();
 
@@ -52,36 +50,20 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public Actividad BuscarPorId(int id)
+        public Funcionario BuscarPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Modificacion(Actividad obj)
+        public bool Modificacion(Funcionario obj)
         {
             throw new NotImplementedException();
         }
 
-        public List<Actividad> TraerTodos()
+        public List<Funcionario> TraerTodos()
         {
             throw new NotImplementedException();
         }
 
-        //Fix me: Van aca los metodos del repo socios
-        public bool ExisteNombre(string nombre)
-        {
-            //IMPLEMENTAR PARA VALIDACION
-            return false;
-        }
-
-        public bool VerificarCupo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AptoEdad(Socio socio)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
