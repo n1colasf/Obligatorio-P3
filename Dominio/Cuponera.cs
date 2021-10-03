@@ -8,16 +8,22 @@ namespace Dominio
 {
     public class Cuponera : FormaDePago
     {
-        public int DescuentoC { get; set; }
+        public static double DescuentoC { get; set; } = 0.15; //En porcentaje
         public int CantActividades { get; set; }
-        private double PrecioActividad { get; set; }
+        public static int MinActParaDesc { get; set; } = 30;
         public override double CalcularCosto()
         {
-            throw new NotImplementedException();
+            double precioActividad = Actividad.PrecioActividad;
+            double total = CantActividades * precioActividad;
+            if (DescontarActividad())
+            {
+                total *= DescuentoC;
+            }
+            return total;
         }
-        public bool DescontarActividad()
+        private bool DescontarActividad()
         {
-            throw new NotImplementedException();
+            return CantActividades > MinActParaDesc;
         }
     }
 }

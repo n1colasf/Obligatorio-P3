@@ -90,9 +90,41 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
-        public bool RegistrarPago(int id)
+        public bool MostrarCostoCuponera(int cedula, int cantidadActividades)
         {
-            throw new NotImplementedException();
+            //double totalAPagar = cup.CalcularCosto();
+            return false;
+        }
+        public bool MostrarCostoPaseLibre(int cedula)
+        {
+
+            return false;
+        }
+        public bool RegistrarPagoCuponera(Socio socio, int cantidadActividades)
+        {
+            if (cantidadActividades < 8 || cantidadActividades > 60)
+                return false;
+            Cuponera cup = new Cuponera()
+            {
+                Socio = socio,
+                Fecha = DateTime.Now,
+                CantActividades = cantidadActividades
+            };
+            RepoPagos repoPagos = new RepoPagos();
+            bool ret = repoPagos.Alta(cup);
+            return ret;
+        }
+        public bool RegistrarPagoPaseLibre(Socio socio)
+        {
+            PaseLibre pas = new PaseLibre()
+            {
+                Socio = socio,
+                Fecha = DateTime.Now,
+                Antiguedad = DateTime.Now.Year - socio.FechaIngreso.Year
+            };
+            RepoPagos repoPagos = new RepoPagos();
+            bool ret = repoPagos.Alta(pas);
+            return ret;
         }
         public void ExportarInformacion()
         {

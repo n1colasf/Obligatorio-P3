@@ -26,6 +26,8 @@ namespace Club
             Console.WriteLine(FachadaClub.AltaHorario("Martes", 9));
             Console.WriteLine(FachadaClub.AltaHorario("Jueves", 2));
 
+            //Registrar Pago
+            Console.WriteLine(FachadaClub.RegistrarPago(45556667));
         }
     }
 }
