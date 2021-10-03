@@ -22,12 +22,11 @@ namespace Club
             //Console.WriteLine(FachadaClub.AltaFuncionario("funcionario1@club.com", "pass123"));
 
             //ALTA HORARIO
-            Console.WriteLine(FachadaClub.AltaHorario("Lunes", 20));
-            Console.WriteLine(FachadaClub.AltaHorario("Martes", 9));
-            Console.WriteLine(FachadaClub.AltaHorario("Jueves", 2));
+            //Console.WriteLine(FachadaClub.AltaHorario("Lunes", 20));
+            //Console.WriteLine(FachadaClub.AltaHorario("Martes", 9));
+            //Console.WriteLine(FachadaClub.AltaHorario("Jueves", 2));
 
             //Registrar Pago
-            Console.WriteLine(FachadaClub.RegistrarPago(45556667));
         }
     }
 }
