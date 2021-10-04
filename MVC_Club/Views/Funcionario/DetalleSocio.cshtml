@@ -1,0 +1,61 @@
+﻿@using Dominio
+@{
+    ViewBag.Title = "Detalle de Socio";
+}
+
+<h2>Detalle del Socio</h2>
+
+<form action="/funcionario/DetalleSocio" method="post">
+
+    <div class="form-group">
+        <label for="cedula">Cédula:</label>
+        <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.cedulaSocio" />
+    </div>
+
+    <div class="form-group">
+        <label for="nombre">Nombre y Apellido:</label>
+        <input type="text" id="nombre" class="form-control" name="nombre" required placeholder="Ingresa un Nombre y Apellido" value="@ViewBag.nombreSocio" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaNac">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNac" class="form-control" name="fechaNac" required value="@ViewBag.fechaNac" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaNac">Fecha de Ingreso:</label>
+        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.fechaIngreso" />
+    </div>
+
+    <div class="form-group">
+        <label for="activo">Activo:</label>
+        <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.activo" />
+    </div>
+
+    <button class="btn btn-primary" type="submit" id="btnGuardar">Guardar</button>
+    <br />
+    <button class="btn btn-secondary" type="submit" id="btnEliminar">Dar de baja</button>
+    <br />
+    <a href="">Inscribir a actividad</a>
+    <br />
+    <a href="/funcionario/PagarMensualidad">Pagar Mensualidad</a>
+    <br />
+    <br />
+    <h3>Ingresos a actividades por Fecha</h3>
+    <div class="form-group">
+        <label for="fechaIngresoAct">Selecciona una fecha:</label>
+        <input type="date" id="fechaIngresoAct" class="form-control" name="fechaIngresoAct" required />
+    </div>
+    <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Consultar</button>
+    <br />
+</form>
+<br>
+<h3>@ViewBag.mensaje</h3>
+
+@section scripts
+    {
+    <script>
+
+    </script>
+
+}

@@ -1,0 +1,62 @@
+﻿@using Dominio
+@{
+    ViewBag.Title = "Pagar Mensualidad";
+}
+
+<h2>Pagar Mensualidad</h2>
+
+<form action="/funcionario/PagarMensualidad" method="post">
+
+    <div class="form-group">
+        <label for="cedula">Cédula:</label>
+        <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.cedulaSocio" />
+    </div>
+
+    <div class="form-group">
+        <label for="nombre">Nombre y Apellido:</label>
+        <input type="text" id="nombre" class="form-control" name="nombre" disabled value="@ViewBag.nombreSocio" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaNac">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNac" class="form-control" name="fechaNac" disabled value="@ViewBag.fechaNac" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaNac">Fecha de Ingreso:</label>
+        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.fechaIngreso" />
+    </div>
+
+    <div class="form-group">
+        <label for="activo">Activo:</label>
+        <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.activo" />
+    </div>
+    <br />
+    <br />
+    <h3>Registrar Pago de Socio</h3>
+    <div class="form-group">
+        <label for="selectMembresia">Seleccionar Membresía:</label>
+        <select class="form-control" name="selectMembresia">
+            <option value="0" disabled>Elegir...</option>
+            <option value="1">Pase Libre</option>
+            <option value="2">Cuponera</option>
+        </select>
+        <br />
+        <label for="cantDiasCuponera">Cantidad de clases:</label>
+        <input type="number" id="cantDiasCuponera" class="form-control" name="cantDiasCuponera" required placeholder="Ingrese la cantidad" />
+        <h3>Total a pagar: $ @ViewBag.totalAPagar</h3>
+    </div>
+    <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Registrar Pago</button>
+    <br />
+</form>
+<br>
+<h3>@ViewBag.mensaje</h3>
+
+@section scripts
+    {
+    <script>
+        //FALTA VALIDAR CANTIDAD DE CLASES
+        // >= 8 && <= 60
+    </script>
+
+}

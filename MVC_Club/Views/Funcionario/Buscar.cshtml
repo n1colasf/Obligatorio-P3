@@ -1,0 +1,42 @@
+﻿@using Dominio
+@{
+    ViewBag.Title = "Buscar Socio";
+}
+
+<h2>Buscar Socio por cédula</h2>
+
+<form action="/funcionario/Buscar" method="post">
+
+    <div class="form-group">
+        <label for="cedula">Ingresar Cédula:</label>
+        <input type="number" id="cedula" class="form-control" name="cedula" required placeholder="Ingresa número de cédula" />
+    </div>
+
+    <button class="btn btn-primary" type="submit" id="btnBuscar">Buscar</button>
+</form>
+<br>
+<h3>@ViewBag.mensaje</h3>
+
+@*FALTA LA BUSQUEDA*@
+
+@section scripts
+    {
+    <script>
+        let btnRegistrarse = document.getElementById("btnBuscar")
+        btnRegistrarse.addEventListener('click', () => {
+            let cedula = document.getElementById("cedula").value;
+            let cedulaF = verificarCedula(cedula);
+            if (cedulaF != "") {
+                alert("Error: " + cedulaF);
+            }
+        })
+        function verificarCedula(cedula) {
+            let parrafo = "";
+            if (cedula.length < 7 || cedula.length > 9) {
+                parrafo = "La cedula debe estar compuesta por numeros y debe tener entre 7 y 9 digitos. ";
+            }
+            return parrafo;
+        }
+    </script>
+
+}

@@ -16,13 +16,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Club", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                    @*@if (Session["Logueado"] == null)
+                    {*@
+                        <li><a href="/funcionario/Login">Ingresar</a></li>
+                        <li><a href="/funcionario/Registro">Registrarse</a></li>
+                        @*//}
+                        //else
+                        //{*@
+                        <li><a href="/funcionario/RegistroSocio">Registrar Socio</a></li>
+                        <li><a href="/funcionario/Buscar">Buscar Socio</a></li>
+                        <li><a href="/funcionario/Listar">Listar Socios</a></li>
+                        <li><a href="/funcionario/Exportar">Exportar</a></li>
+                        <li><a href="/funcionario/Logout">Salir</a></li>
+                    @*}*@
                 </ul>
             </div>
         </div>
@@ -31,12 +41,12 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Obligatorio 1 P3 - Gonzalo Bazzi - Nicolás Fernandez - Sebastián Paulos</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required:=False)
+    @RenderSection("scripts", required: false)
 </body>
 </html>

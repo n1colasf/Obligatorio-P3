@@ -26,7 +26,7 @@ namespace Repositorios
                     cmd.CommandText = "Alta_Funcionario";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@email", obj.Email));
-                    cmd.Parameters.Add(new SqlParameter("@password", obj.Password));
+                    cmd.Parameters.Add(new SqlParameter("@password", obj.Password)); //PASAR ENCRIPTADO
                     con.Open();
                     cmd.ExecuteNonQuery();
 

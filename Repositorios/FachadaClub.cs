@@ -9,6 +9,7 @@ namespace Repositorios
 {
     public class FachadaClub
     {
+        private List<Funcionario> funcionarios { get; set; }
         public static bool AltaFuncionario(string email, string password)
         {
             bool ret = false;
@@ -130,6 +131,17 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
-
+        public Funcionario VerificarFuncionario(string email, string password)
+        {
+            Funcionario funcEncontrado = null;
+            foreach (Funcionario func in funcionarios) //DE DONDE OBTENEMOS LA LISTA DE FUNCIOARIOS
+            {
+                if (func.Email == email && func.Password == password)
+                {
+                    funcEncontrado = func;
+                }
+            }
+            return funcEncontrado;
+        }
     }
 }

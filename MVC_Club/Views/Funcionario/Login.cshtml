@@ -1,0 +1,32 @@
+﻿@using Dominio
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Ingreso de Funcionario</h2>
+
+<form action="/funcionario/Login" method="post">
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" required placeholder="Ingrese su Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" name="contrasena" required placeholder="Ingrese contraseña" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Acceder</button>
+    <a href="/funcionario/Registro" class="btn btn-secondary">Registrarse</a>
+</form>
+<br>
+<p>@ViewBag.mensaje</p>
+
+
+
+@section scripts
+    {
+    <script></script>
+}
+

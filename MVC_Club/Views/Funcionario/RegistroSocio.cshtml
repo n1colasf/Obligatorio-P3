@@ -1,0 +1,83 @@
+﻿@using Dominio
+@{
+    ViewBag.Title = "Registrar nuevo Socio";
+}
+
+<h2>Registrar un Nuevo Socio</h2>
+
+<form action="/funcionario/RegistroSocio" method="post">
+
+    <div class="form-group">
+        <label for="cedula">Cédula:</label>
+        <input type="number" id="cedula" class="form-control" name="cedula" required placeholder="Ingresa número de cédula" />
+    </div>
+
+    <div class="form-group">
+        <label for="nombre">Nombre y Apellido:</label>
+        <input type="text" id="nombre" class="form-control" name="nombre" required placeholder="Ingresa un Nombre y Apellido" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaNac">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNac" class="form-control" name="fechaNac" required />
+    </div>
+
+    <button class="btn btn-primary" type="submit" id="btnRegistro">Registrar Socio</button>
+</form>
+<br>
+<h3>@ViewBag.mensaje</h3>
+
+@section scripts
+    {
+    <script>
+        let btnRegistrarse = document.getElementById("btnRegistro")
+        btnRegistrarse.addEventListener('click', () => {
+            let cedula = document.getElementById("cedula").value;
+            let nombre = document.getElementById("nombre").value;
+            let fechaNac = document.getElementById("fechaNac").value;
+            let fechaNacF = validarEdad(fechaNac);
+            let nombreF = verificarNombre(nombre);
+            let cedulaF = verificarCedula(cedula);
+            if (nombreF != "" || cedulaF != "" || fechaNacF != "") {
+                alert("Error: " + cedulaF + ' ' + nombreF + ' ' + fechaNacF);
+            }
+        })
+        function verificarNombre(nombre) {
+            let parrafo = "";
+            if (nombre.length > 6) {
+                for (let i = 0; i < nombre.length; i++) {
+                    if (nombre[0] == ' ' || nombre[nombre.length - 1] == ' ' || (!isNaN(nombre[i]) && nombre[i] !== ' ') ) {
+                        parrafo = 'El nombre no es válido.';
+                        continue;
+                    }
+                }
+
+            } else {
+                parrafo = 'El nombre debe tener al menos 7 caracteres.'
+            }
+            return parrafo;
+        }
+        function verificarCedula(cedula) {
+            let parrafo = "";
+            if (cedula.length < 7 || cedula.length > 9) {
+                parrafo = "La cedula debe estar compuesta por numeros y debe tener entre 7 y 9 digitos. ";
+            }
+            return parrafo;
+        }
+        function validarEdad(fechaNac) {
+            let parrafo = "";
+            //let fechaHoy = Date.now();
+            //let edad = fechaHoy - fechaNac;
+            //int edad = DateTime.Today.Year - fechaNac.Year;
+            //if (DateTime.Today < fechaNac.AddYears(edad)) {
+            //    edad--;
+            //}
+
+            //if (edad < 3 || edad > 90) {
+            //    parrafo = 'El Socio debe tener entre 3 y 90 años';
+            //}
+            return parrafo;
+        }
+    </script>
+
+}

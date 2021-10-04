@@ -1,0 +1,86 @@
+﻿@using Dominio
+@{
+    ViewBag.Title = "Registro de Funcionario";
+}
+
+<h2>Registrarse como Funcionario</h2>
+
+<form action="/Funcionario/Registro" method="post">
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" class="form-control" name="email" required placeholder="Ingrese su email" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" class="form-control" name="contrasena" required placeholder="Ingrese su contraseña" />
+    </div>
+
+    <button class="btn btn-primary" type="submit" id="btnRegistro">Registrarse</button>
+    <a href="/Funcionario/Login" class="btn btn-secondary">Volver</a>
+</form>
+<br>
+<h3>@ViewBag.mensaje</h3>
+
+@section scripts
+    {
+    <script>
+        let btnRegistrarse = document.getElementById("btnRegistro")
+        btnRegistrarse.addEventListener('click', () => {
+            let email = document.getElementById("email").value;
+            let contrasena = document.getElementById("password").value;
+            let contrasenaF = verificarContrasena(contrasena);
+            let emailF = verificarEmail(email);
+            if (emailF != "" || contrasenaF != "")
+            {
+                alert("Error: " + emailF + contrasenaF);
+            }
+        })
+        function verificarEmail(email) {
+            let parrafo = "";
+            if (nombre.length < 2)
+            {
+                parrafo = "El nombre debe tener al menos dos caracteres. ";
+            }
+            return parrafo;
+        }
+        function verificarContrasena(contrasena) {
+            let parrafo = "";
+            if (contrasena.length < 6 || tieneNumeros(contrasena) == 0 || tieneMinuscula(contrasena) == 0 || tieneMayuscula(contrasena) == 0 )
+            {
+                parrafo = "La contrasena debe estar compuesta por al menos 6 caracteres, debe tener por lo menos una letra mayuscula, una letra minuscula y un numero.";
+            }
+            return parrafo;
+        }
+        let numeros = "0123456789";
+        let minusculas = "abcdefghijklmnopqrstuvwxyz"
+        let mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        function tieneNumeros(texto) {
+            for (i = 0; i < texto.length; i++) {
+                if (numeros.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+        function tieneMinuscula(texto) {
+            for (i = 0; i < texto.length; i++) {
+                if (minusculas.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+        function tieneMayuscula(texto) {
+            for (i = 0; i < texto.length; i++) {
+                if (mayusculas.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+    </script>
+
+}
