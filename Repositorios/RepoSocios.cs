@@ -56,8 +56,44 @@ namespace Repositorios
 
         public Socio BuscarPorId(int id)
         {
-            //IMPLEMENTAR (VALIDACION PARA ALTA DE SOCIO)
-            return null;
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Buscar_por_Cedula";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cedula", id));
+                    con.Open();
+
+
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        Socio socio = new Socio
+                        {
+                            Cedula = (int)filas["cedula"],
+                            Nombre = (string)filas["nombre"],
+                            FechaNac = (DateTime)filas["fechaNac"],
+                            FechaIngreso = (DateTime)filas["fechaIngreso"],
+                            Activo = (bool)filas["activo"]
+                        };
+                        return socio;
+                    }
+                }
+                return null;
+            }
+            catch (SqlException Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         public bool Modificacion(Socio obj)
@@ -79,7 +115,5 @@ namespace Repositorios
             }
             return existe;
         }
-
-
     }
 }

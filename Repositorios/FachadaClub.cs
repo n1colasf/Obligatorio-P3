@@ -101,8 +101,10 @@ namespace Repositorios
 
             return false;
         }
-        public bool RegistrarPagoCuponera(Socio socio, int cantidadActividades)
+        public static bool RegistrarPagoCuponera(int cedula, int cantidadActividades)
         {
+            RepoSocios repoSocios = new RepoSocios();
+            Socio socio = repoSocios.BuscarPorId(cedula);
             if (cantidadActividades < 8 || cantidadActividades > 60)
                 return false;
             Cuponera cup = new Cuponera()
@@ -115,17 +117,26 @@ namespace Repositorios
             bool ret = repoPagos.Alta(cup);
             return ret;
         }
-        public bool RegistrarPagoPaseLibre(Socio socio)
+        public static bool RegistrarPagoPaseLibre(int cedula)
         {
-            PaseLibre pas = new PaseLibre()
+            RepoSocios repoSocios = new RepoSocios();
+            Socio socio = repoSocios.BuscarPorId(cedula);
+            try
             {
-                Socio = socio,
-                Fecha = DateTime.Now,
-                Antiguedad = DateTime.Now.Year - socio.FechaIngreso.Year
-            };
-            RepoPagos repoPagos = new RepoPagos();
-            bool ret = repoPagos.Alta(pas);
-            return ret;
+                PaseLibre pas = new PaseLibre()
+                {
+                    Socio = socio,
+                    Fecha = DateTime.Now,
+                    Antiguedad = DateTime.Now.Year - socio.FechaIngreso.Year
+                };
+                RepoPagos repoPagos = new RepoPagos();
+                bool ret = repoPagos.Alta(pas);
+                return ret;
+            } catch(Exception ex)
+            {
+                return false;
+            }
+            
         }
         public void ExportarInformacion()
         {

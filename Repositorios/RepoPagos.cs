@@ -30,16 +30,22 @@ namespace Repositorios
                     if (obj is Cuponera)
                     {
                         Cuponera cup = (Cuponera)obj;
-                        cmd.Parameters.Add(new SqlParameter("@descuentoC", Cuponera.DescuentoC));
+                        cmd.Parameters.Add(new SqlParameter("@descuentoPL", DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@antiguedadPL", DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@precioPL", DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@descuentoC", cup.CalcularDescAplicado()));
                         cmd.Parameters.Add(new SqlParameter("@cantActividadesC", cup.CantActividades));
                         cmd.Parameters.Add(new SqlParameter("@precioTotalC", cup.CalcularCosto()));
                     }
                     else if (obj is PaseLibre)
                     {
                         PaseLibre pas = (PaseLibre)obj;
-                        cmd.Parameters.Add(new SqlParameter("@descuentoPL", PaseLibre.DescuentoPL));
+                        cmd.Parameters.Add(new SqlParameter("@descuentoPL", pas.CalcularDescAplicado()));
                         cmd.Parameters.Add(new SqlParameter("@antiguedadPL", pas.Antiguedad));
-                        cmd.Parameters.Add(new SqlParameter("@precioPL", pas.PrecioPL));//FALTA ESTO
+                        cmd.Parameters.Add(new SqlParameter("@precioPL", pas.CalcularCosto()));
+                        cmd.Parameters.Add(new SqlParameter("@descuentoC", DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@cantActividadesC", DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@precioTotalC", DBNull.Value));
                     }
                     con.Open();
                     cmd.ExecuteNonQuery();

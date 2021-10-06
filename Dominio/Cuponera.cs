@@ -17,10 +17,15 @@ namespace Dominio
             double total = CantActividades * precioActividad;
             if (DescontarActividad())
             {
-                total *= DescuentoC;
+                total *= (1-DescuentoC);
             }
             return total;
         }
+        public override double CalcularDescAplicado()
+        {
+            return DescontarActividad() ? DescuentoC : 0; 
+        }
+
         private bool DescontarActividad()
         {
             return CantActividades > MinActParaDesc;

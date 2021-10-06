@@ -14,7 +14,7 @@ namespace Dominio
         public int EdadMin { get; set; }
         public int EdadMax { get; set; }
         public int Cupo { get; set; }
-        public static double PrecioActividad { get; set; } = 500;
+        public static double PrecioActividad { get; set; } = 120;
         public List<Horario> Horarios { get; set; }
         public List<Socio> Participantes { get; set; }
     }

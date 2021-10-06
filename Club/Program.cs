@@ -12,8 +12,8 @@ namespace Club
         static void Main(string[] args)
         {
             //ALTA SOCIO
-            //DateTime fechaNac = new DateTime(2011, 2, 19);
-            //Console.WriteLine(FachadaClub.AltaSocio(61115558, "Pedro Perez", fechaNac, DateTime.Now));
+            //DateTime fechaNac = new DateTime(1999, 2, 19);
+            //Console.WriteLine(FachadaClub.AltaSocio(71115558, "Jose Perez", fechaNac, new DateTime(2005, 2, 19)));
 
             //ALTA ACTIVIDAD
             //Console.WriteLine(FachadaClub.AltaActividad("Yoga", 4, 89, 20));
@@ -27,6 +27,10 @@ namespace Club
             //Console.WriteLine(FachadaClub.AltaHorario("Jueves", 2));
 
             //Registrar Pago
+            //Console.WriteLine(FachadaClub.RegistrarPagoPaseLibre(41115558));
+            //Console.WriteLine(FachadaClub.RegistrarPagoPaseLibre(71115558));
+            //Console.WriteLine(FachadaClub.RegistrarPagoCuponera(61115558,34));
+            //Console.WriteLine(FachadaClub.RegistrarPagoCuponera(41115558,16));
         }
     }
 }

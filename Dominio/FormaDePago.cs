@@ -16,5 +16,6 @@ namespace Dominio
         private static int ContId;
 
         public abstract double CalcularCosto();
+        public abstract double CalcularDescAplicado();
     }
 }
