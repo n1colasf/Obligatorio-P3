@@ -54,7 +54,42 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
+        public Funcionario BuscarPorEmail(string email)
+        {
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Buscar_Funcionario";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@email", email));
+                    con.Open();
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        Funcionario func = new Funcionario
+                        {
+                            Email = (string)filas["email"],
+                            Password = (string)filas["password"]
+                        };
+                        return func;
+                    }
 
+                }
+                return null;
+            }
+            catch (SqlException Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public bool Modificacion(Funcionario obj)
         {
             throw new NotImplementedException();

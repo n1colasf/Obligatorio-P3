@@ -22,26 +22,16 @@ namespace MVC_Club.Controllers
         [HttpPost]
         public ActionResult Login(string email, string contrasena)
         {
-            //ViewBag.Funcionario = FachadaClub.VerificarFuncionario(email, contrasena);
-            //Usuario unU = ViewBag.Usuario;
-            //if (unU != null)
-            //{
-            //    Session["LogueadoRol"] = unU.Rol;
-            //    Session["LogueadoCedula"] = unU.Cedula;
-            //    Session["Logueado"] = true;
-            //    if (unU.Rol == "Cliente")
-            //    {
-            //        return Redirect("/Usuario/AccesoCliente?cedula=" + usuario);
-            //    }
-            //    else if (unU.Rol == "Operador")
-            //    {
-            //        return Redirect("/Usuario/AccesoOperador");
-            //    }
-            //}
-            //else
-            //{
-            //    ViewBag.mensaje = "Error de login";
-            //}
+            Funcionario funcLoggedin = FachadaClub.LogIn(email,contrasena);
+            if (funcLoggedin != null)
+            {
+                Session["Logueado"] = true;
+                return Redirect("/funcionario/Buscar");
+            }
+            else
+            {
+                ViewBag.mensaje = "Error de login";
+            }
             return View();
         }
         public ActionResult Registro()
@@ -71,6 +61,11 @@ namespace MVC_Club.Controllers
         public ActionResult PagarMensualidad()
         {
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session["Logueado"] = null;
+            return Redirect("/funcionario/Login");
         }
     }
 }

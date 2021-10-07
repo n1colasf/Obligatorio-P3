@@ -9,17 +9,18 @@ namespace Repositorios
 {
     public class FachadaClub
     {
-        private List<Funcionario> funcionarios { get; set; }
         public static bool AltaFuncionario(string email, string password)
         {
-            bool ret = false;
-            Funcionario func = new Funcionario()
+            Funcionario func = BuscarFuncionario(email);
+            if (func != null)
+                return false;
+            func = new Funcionario()
             {
                 Email = email,
                 Password = password
             };
             RepoFuncionarios repoFunc = new RepoFuncionarios();
-            ret = repoFunc.Alta(func);
+            bool ret = repoFunc.Alta(func);
             return ret;
 
         }
@@ -41,7 +42,6 @@ namespace Repositorios
             return ret;
 
         }
-
         public static bool AltaActividad(string nombre, int edadMin, int edadMax, int cupo)
         {
             bool ret = false;
@@ -70,14 +70,16 @@ namespace Repositorios
             return ret;
 
         }
-
-        public bool LogIn(string email, string password)
+        public static Funcionario LogIn(string email, string password)
         {
-            throw new NotImplementedException();
-        }
-        public bool LogOut()
-        {
-            throw new NotImplementedException();
+            Funcionario func = BuscarFuncionario(email);
+            if(func.Email == email && func.Password == password)
+            {
+                return func;
+            } else
+            {
+                return null;
+            }
         }
         public bool AnotarseAActividad(Socio socio, Actividad actividad)
         {
@@ -91,33 +93,32 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
-        public bool MostrarCostoCuponera(int cedula, int cantidadActividades)
+        public static Cuponera CalcularCuponera(int cedula, int cantidadActividades)
         {
-            //double totalAPagar = cup.CalcularCosto();
-            return false;
-        }
-        public bool MostrarCostoPaseLibre(int cedula)
-        {
-
-            return false;
-        }
-        public static bool RegistrarPagoCuponera(int cedula, int cantidadActividades)
-        {
+            if (cantidadActividades < 8 || cantidadActividades > 60)
+                return null;
             RepoSocios repoSocios = new RepoSocios();
             Socio socio = repoSocios.BuscarPorId(cedula);
-            if (cantidadActividades < 8 || cantidadActividades > 60)
-                return false;
             Cuponera cup = new Cuponera()
             {
                 Socio = socio,
                 Fecha = DateTime.Now,
                 CantActividades = cantidadActividades
             };
+            return cup;
+        }
+        public static double MostrarCostoCuponera(int cedula, int cantidadActividades)
+        {
+            return CalcularCuponera(cedula,cantidadActividades).CalcularCosto();
+        }
+        public static bool RegistrarPagoCuponera(int cedula, int cantidadActividades)
+        {
+            Cuponera cup = CalcularCuponera(cedula, cantidadActividades);
             RepoPagos repoPagos = new RepoPagos();
             bool ret = repoPagos.Alta(cup);
             return ret;
         }
-        public static bool RegistrarPagoPaseLibre(int cedula)
+        public static PaseLibre CalcularPaseLibre(int cedula)
         {
             RepoSocios repoSocios = new RepoSocios();
             Socio socio = repoSocios.BuscarPorId(cedula);
@@ -129,30 +130,31 @@ namespace Repositorios
                     Fecha = DateTime.Now,
                     Antiguedad = DateTime.Now.Year - socio.FechaIngreso.Year
                 };
-                RepoPagos repoPagos = new RepoPagos();
-                bool ret = repoPagos.Alta(pas);
-                return ret;
+                return pas;
             } catch(Exception ex)
             {
-                return false;
+                return null; // VER QUE HACEMOS CON LAS EXEPCIONES
             }
-            
+        }
+        public static double MostrarCostoPaseLibre(int cedula)
+        {
+            return CalcularPaseLibre(cedula).CalcularCosto();
+        }
+        public static bool RegistrarPagoPaseLibre(int cedula)
+        {
+            PaseLibre pas = CalcularPaseLibre(cedula);
+            RepoPagos repoPagos = new RepoPagos();
+            bool ret = repoPagos.Alta(pas);
+            return ret;        
         }
         public void ExportarInformacion()
         {
             throw new NotImplementedException();
         }
-        public Funcionario VerificarFuncionario(string email, string password)
+        public static Funcionario BuscarFuncionario(string email)
         {
-            Funcionario funcEncontrado = null;
-            foreach (Funcionario func in funcionarios) //DE DONDE OBTENEMOS LA LISTA DE FUNCIOARIOS
-            {
-                if (func.Email == email && func.Password == password)
-                {
-                    funcEncontrado = func;
-                }
-            }
-            return funcEncontrado;
+            RepoFuncionarios repoFunc = new RepoFuncionarios();
+            return repoFunc.BuscarPorEmail(email);
         }
     }
 }

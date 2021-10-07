@@ -27,10 +27,10 @@ namespace Club
             //Console.WriteLine(FachadaClub.AltaHorario("Jueves", 2));
 
             //Registrar Pago
-            //Console.WriteLine(FachadaClub.RegistrarPagoPaseLibre(41115558));
             //Console.WriteLine(FachadaClub.RegistrarPagoPaseLibre(71115558));
+            //Console.WriteLine(FachadaClub.MostrarCostoPaseLibre(71115558));
             //Console.WriteLine(FachadaClub.RegistrarPagoCuponera(61115558,34));
-            //Console.WriteLine(FachadaClub.RegistrarPagoCuponera(41115558,16));
+            //Console.WriteLine(FachadaClub.MostrarCostoCuponera(41115558,45));
         }
     }
 }

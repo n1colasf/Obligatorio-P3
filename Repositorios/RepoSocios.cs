@@ -69,7 +69,6 @@ namespace Repositorios
                     cmd.Parameters.Add(new SqlParameter("@cedula", id));
                     con.Open();
 
-
                     SqlDataReader filas = cmd.ExecuteReader();
                     while (filas.Read())
                     {
