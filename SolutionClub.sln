@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorios", "Repositorio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Club", "MVC_Club\MVC_Club.csproj", "{B8C279E3-214E-4A42-9EC8-CFA1727E186E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF_AltaSocioActividad", "WCF_AltaSocioActividad\WCF_AltaSocioActividad.csproj", "{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B8C279E3-214E-4A42-9EC8-CFA1727E186E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8C279E3-214E-4A42-9EC8-CFA1727E186E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8C279E3-214E-4A42-9EC8-CFA1727E186E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

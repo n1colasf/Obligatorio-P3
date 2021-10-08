@@ -1,44 +1,47 @@
 ﻿@using Dominio
 @{
     ViewBag.Title = "Detalle de Socio";
+    ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "Si" : "No";
+    ViewBag.FechaNacimiento = ViewBag.socio.FechaNac.ToString("yyyy-MM-dd");
+    ViewBag.FechaIngreso = ViewBag.socio.FechaIngreso.ToString("yyyy-MM-dd");
 }
-
 <h2>Detalle del Socio</h2>
 
 <form action="/funcionario/DetalleSocio" method="post">
-
     <div class="form-group">
         <label for="cedula">Cédula:</label>
-        <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.cedulaSocio" />
+        <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.socio.Cedula" />
     </div>
 
     <div class="form-group">
         <label for="nombre">Nombre y Apellido:</label>
-        <input type="text" id="nombre" class="form-control" name="nombre" required placeholder="Ingresa un Nombre y Apellido" value="@ViewBag.nombreSocio" />
+        <input type="text" id="nombre" class="form-control" name="nombre" required placeholder="Ingresa un Nombre y Apellido" value="@ViewBag.socio.Nombre" />
     </div>
 
     <div class="form-group">
         <label for="fechaNac">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNac" class="form-control" name="fechaNac" required value="@ViewBag.fechaNac" />
+        <input type="date" id="fechaNac" class="form-control" name="fechaNac" required value="@ViewBag.FechaNacimiento" />
     </div>
 
     <div class="form-group">
         <label for="fechaNac">Fecha de Ingreso:</label>
-        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.fechaIngreso" />
+        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.FechaIngreso" />
     </div>
 
     <div class="form-group">
         <label for="activo">Activo:</label>
-        <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.activo" />
+        <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.TextoActivo" />
     </div>
-
     <button class="btn btn-primary" type="submit" id="btnGuardar">Guardar</button>
     <br />
-    <button class="btn btn-secondary" type="submit" id="btnEliminar">Dar de baja</button>
-    <br />
+    <button class="btn btn-secondary" type="button" id="btnEliminar">Dar de baja</button>
+</form>
+
+<form action="/funcionario/DetalleSocio" method="post">
+
     <a href="">Inscribir a actividad</a>
     <br />
-    <a href="/funcionario/PagarMensualidad">Pagar Mensualidad</a>
+    @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
     <br />
     <br />
     <h3>Ingresos a actividades por Fecha</h3>

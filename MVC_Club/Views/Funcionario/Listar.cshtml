@@ -5,41 +5,31 @@
 
 <h2>Listado de Socios</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Cédula</th>
-            <th scope="col">Nombre y Apellido</th>
-            <th scope="col">Fecha de Nacimiento</th>
-            <th scope="col">Fecha de Ingreso</th>
-            <th scope="col">Activo</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>AAA</td>
-            <td>AAA</td>
-            <td>AAA</td>
-            <td><a href="/funcionario/DetalleSocio">Ver Detalle</a></td>
-        </tr>
-        <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>AAA</td>
-            <td>AAA</td>
-            <td>AAA</td>
-            <td><a href="/funcionario/DetalleSocio">Ver Detalle</a></td>
-        </tr>
-        <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>AAA</td>
-            <td>AAA</td>
-            <td>AAA</td>
-            <td><a href="/funcionario/DetalleSocio">Ver Detalle</a></td>
-        </tr>
-    </tbody>
-</table>
+@if (ViewBag.listadoSocios != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Cédula</th>
+                <th scope="col">Nombre y Apellido</th>
+                <th scope="col">Fecha de Nacimiento</th>
+                <th scope="col">Fecha de Ingreso</th>
+                <th scope="col">Activo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Socio socio in ViewBag.listadoSocios)
+            {
+            <tr>
+                <td>@socio.Cedula</td>
+                <td>@socio.Nombre</td>
+                <td>@socio.FechaNac</td>
+                <td>@socio.FechaIngreso</td>
+                <td>@socio.Activo</td>
+                <td>@Html.ActionLink("Ver Detalle", "/DetalleSocio", new { cedula = socio.Cedula })</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}

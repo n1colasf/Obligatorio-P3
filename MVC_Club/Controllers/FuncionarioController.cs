@@ -52,14 +52,42 @@ namespace MVC_Club.Controllers
         }
         public ActionResult Listar()
         {
+            List<Socio> listadoSocios = FachadaClub.ListarSocios();
+            ViewBag.listadoSocios = listadoSocios;
             return View();
         }
-        public ActionResult DetalleSocio()
+        public ActionResult DetalleSocio(int cedula)
+        {
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DetalleSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo)
         {
             return View();
         }
-        public ActionResult PagarMensualidad()
+        public ActionResult PagarMensualidad(int cedula)
         {
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PagarMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera)
+        {
+            //ESTO SE ROMPE CUANDO EN EL FORMULARIO VIENE LA CANTIDAD DE ACTIVIDADES EN NULL
+            double costoCuota;
+            if (selectMembresia == 1)
+            {
+                costoCuota = FachadaClub.MostrarCostoPaseLibre(cedula);
+            } else
+            {
+                costoCuota = FachadaClub.MostrarCostoCuponera(cedula, cantActividadesCuponera);
+            }
+            ViewBag.costoCuota = costoCuota;
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
             return View();
         }
         public ActionResult Logout()

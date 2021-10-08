@@ -54,7 +54,7 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public Socio BuscarPorId(int id)
+        public Socio BuscarPorId(int cedula)
         {
             Conexion manejadorConexion = new Conexion();
             SqlConnection con = manejadorConexion.CrearConexion();
@@ -66,7 +66,7 @@ namespace Repositorios
                     cmd.Connection = con;
                     cmd.CommandText = "Buscar_por_Cedula";
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@cedula", id));
+                    cmd.Parameters.Add(new SqlParameter("@cedula", cedula));
                     con.Open();
 
                     SqlDataReader filas = cmd.ExecuteReader();
@@ -102,7 +102,41 @@ namespace Repositorios
 
         public List<Socio> TraerTodos()
         {
-            throw new NotImplementedException();
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Listar_Socios";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    List<Socio> listaSocios = new List<Socio>();
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        Socio socio = new Socio
+                        {
+                            Cedula = (int)filas["cedula"],
+                            Nombre = (string)filas["nombre"],
+                            FechaNac = (DateTime)filas["fechaNac"],
+                            FechaIngreso = (DateTime)filas["fechaIngreso"],
+                            Activo = (bool)filas["activo"]
+                        };
+                        listaSocios.Add(socio);
+                    }
+                    return listaSocios;
+                }
+            }
+            catch (SqlException Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
         public bool ExisteSocio(int cedula)
         {

@@ -156,5 +156,15 @@ namespace Repositorios
             RepoFuncionarios repoFunc = new RepoFuncionarios();
             return repoFunc.BuscarPorEmail(email);
         }
+        public static Socio BuscarPorId(int cedula)
+        {
+            RepoSocios repoSocios = new RepoSocios();
+            return repoSocios.BuscarPorId(cedula);
+        }
+        public static List<Socio> ListarSocios()
+        {
+            RepoSocios repoSocios = new RepoSocios();
+            return repoSocios.TraerTodos();
+        }
     }
 }

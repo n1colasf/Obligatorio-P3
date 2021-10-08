@@ -1,50 +1,57 @@
 ﻿@using Dominio
 @{
     ViewBag.Title = "Pagar Mensualidad";
+    ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "Si" : "No";
+    ViewBag.FechaNacimiento = ViewBag.socio.FechaNac.ToString("yyyy-MM-dd");
+    ViewBag.FechaIngreso = ViewBag.socio.FechaIngreso.ToString("yyyy-MM-dd");
 }
 
 <h2>Pagar Mensualidad</h2>
 
-<form action="/funcionario/PagarMensualidad" method="post">
+<form action="/funcionario/PagarMensualidad" method="post" onsubmit="return validateSubmit();">
 
     <div class="form-group">
         <label for="cedula">Cédula:</label>
-        <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.cedulaSocio" />
+        <input type="number" id="cedula" class="form-control" name="cedula"  value="@ViewBag.socio.Cedula" />
     </div>
 
     <div class="form-group">
         <label for="nombre">Nombre y Apellido:</label>
-        <input type="text" id="nombre" class="form-control" name="nombre" disabled value="@ViewBag.nombreSocio" />
+        <input type="text" id="nombre" class="form-control" name="nombre"  value="@ViewBag.socio.Nombre" />
     </div>
 
     <div class="form-group">
         <label for="fechaNac">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNac" class="form-control" name="fechaNac" disabled value="@ViewBag.fechaNac" />
+        <input type="date" id="fechaNac" class="form-control" name="fechaNac"  value="@ViewBag.FechaNacimiento" />
     </div>
 
     <div class="form-group">
-        <label for="fechaNac">Fecha de Ingreso:</label>
-        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.fechaIngreso" />
+        <label for="fechaIngreso">Fecha de Ingreso:</label>
+        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso"  value="@ViewBag.FechaIngreso" />
     </div>
 
     <div class="form-group">
         <label for="activo">Activo:</label>
-        <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.activo" />
+        <input type="text" id="activo" class="form-control" name="activo"  value="true" />
     </div>
     <br />
     <br />
     <h3>Registrar Pago de Socio</h3>
     <div class="form-group">
         <label for="selectMembresia">Seleccionar Membresía:</label>
-        <select class="form-control" name="selectMembresia">
+        <select class="form-control" id="membresia" name="selectMembresia" onchange="toggleCuotas()">
             <option value="0" disabled>Elegir...</option>
             <option value="1">Pase Libre</option>
             <option value="2">Cuponera</option>
         </select>
         <br />
-        <label for="cantDiasCuponera">Cantidad de clases:</label>
-        <input type="number" id="cantDiasCuponera" class="form-control" name="cantDiasCuponera" required placeholder="Ingrese la cantidad" />
-        <h3>Total a pagar: $ @ViewBag.totalAPagar</h3>
+        <div class="inputCantClases" style="display:none;">
+            <label for="cantActividadesCuponera">Cantidad de Actividades:</label>
+            <input type="number" id="cantActividadesCuponera" class="form-control" name="cantActividadesCuponera" placeholder="Ingrese la cantidad" />
+            <br />
+        </div>
+        <button class="btn btn-primary" type="submit" id="btnCalcularCosto">Calcular Costo</button>
+        <h3>Total a pagar: $ @ViewBag.costoCuota</h3>
     </div>
     <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Registrar Pago</button>
     <br />
@@ -55,8 +62,28 @@
 @section scripts
     {
     <script>
-        //FALTA VALIDAR CANTIDAD DE CLASES
-        // >= 8 && <= 60
+        function toggleCuotas() {
+            var membresia = $("#membresia").val();
+            if (membresia <= 1) {
+                $(".inputCantClases").hide();
+                $("#cantActividadesCuponera").val(10);
+            } else {
+                $(".inputCantClases").show();
+            }
+        }
+        function validateSubmit() {
+            let cantActividadesCuponera = document.getElementById("cantActividadesCuponera").value;
+            let membresia = document.getElementById("membresia").value;
+            if (membresia <= 1) {
+                document.getElementById("cantActividadesCuponera").value(10);
+            } else {
+                if (cantActividadesCuponera < 8 || cantActividadesCuponera > 60) {
+                    alert("Debes ingresar entre 8 y 60 actividades");
+                    return false;
+                }
+            }
+            return true;
+        }
     </script>
 
 }
