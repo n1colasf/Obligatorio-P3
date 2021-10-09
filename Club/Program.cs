@@ -16,7 +16,9 @@ namespace Club
             //Console.WriteLine(FachadaClub.AltaSocio(71115558, "Jose Perez", fechaNac, new DateTime(2005, 2, 19)));
 
             //ALTA ACTIVIDAD
-            //Console.WriteLine(FachadaClub.AltaActividad("Yoga", 4, 89, 20));
+            //Console.WriteLine(FachadaClub.AltaActividad("Futbol", 15, 30, 22));
+            //Console.WriteLine(FachadaClub.AltaActividad("Tenis", 12, 25, 4));
+            //Console.WriteLine(FachadaClub.AltaActividad("Boxeo", 18, 50, 25));
 
             //ALTA FUNCIONARIO
             //Console.WriteLine(FachadaClub.AltaFuncionario("funcionario1@club.com", "pass123"));

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Dominio;
 using Repositorios;
+using WCF_AltaSocioActividad;
 
 namespace MVC_Club.Controllers
 {
@@ -74,16 +75,21 @@ namespace MVC_Club.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult PagarMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera)
+        public ActionResult PagarMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera = 0)
         {
             //ESTO SE ROMPE CUANDO EN EL FORMULARIO VIENE LA CANTIDAD DE ACTIVIDADES EN NULL
             double costoCuota;
             if (selectMembresia == 1)
             {
                 costoCuota = FachadaClub.MostrarCostoPaseLibre(cedula);
+                ViewBag.slectedOption = 1;
+                ViewBag.showCuponera = "none";
             } else
             {
                 costoCuota = FachadaClub.MostrarCostoCuponera(cedula, cantActividadesCuponera);
+                ViewBag.slectedOption = 2;
+                ViewBag.showCuponera = "block";
+                ViewBag.cantActividadesCuponera = cantActividadesCuponera;
             }
             ViewBag.costoCuota = costoCuota;
             Socio socio = FachadaClub.BuscarPorId(cedula);
@@ -94,6 +100,16 @@ namespace MVC_Club.Controllers
         {
             Session["Logueado"] = null;
             return Redirect("/funcionario/Login");
+        }
+        public ActionResult ListarActividades()
+        {
+            ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
+            //servicioActividad.Open(); ESTO PARA QUE ERA? NO SIRVE
+            //TRAER LOS HORARIOS DE CADA ACTIVIDAD
+            //ASOCIAR ACTIVIDAD AL SOCIO
+            IEnumerable<DtoActividad> listaActividades = servicioActividad.ListarActividades();
+            ViewBag.ListaActividades = listaActividades;
+            return View();
         }
     }
 }

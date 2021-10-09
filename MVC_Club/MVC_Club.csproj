@@ -169,6 +169,7 @@
     <Content Include="Views\Funcionario\Listar.cshtml" />
     <Content Include="Views\Funcionario\DetalleSocio.cshtml" />
     <Content Include="Views\Funcionario\PagarMensualidad.cshtml" />
+    <Content Include="Views\Funcionario\ListarActividades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -200,6 +201,13 @@
       <Project>{dbc77ca5-44cb-41f6-b90f-95d3f6c1c171}</Project>
       <Name>Repositorios</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WCF_AltaSocioActividad\WCF_AltaSocioActividad.csproj">
+      <Project>{a5ae02e5-a0a7-4bf8-8e1f-f9bec7b58a3f}</Project>
+      <Name>WCF_AltaSocioActividad</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

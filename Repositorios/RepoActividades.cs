@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace Repositorios
 {
-    class RepoActividades : IRepositorio<Actividad>
+    public class RepoActividades : IRepositorio<Actividad>
     {
         public bool Alta(Actividad obj)
         {
@@ -64,7 +64,41 @@ namespace Repositorios
 
         public List<Actividad> TraerTodos()
         {
-            throw new NotImplementedException();
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Listar_Actividades";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    List<Actividad> listaActividades = new List<Actividad>();
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        Actividad act = new Actividad
+                        {
+                            Id = (int)filas["id"],
+                            Nombre = (string)filas["nombre"],
+                            EdadMin = (int)filas["edadMin"],
+                            EdadMax = (int)filas["edadMax"],
+                            Cupo = (int)filas["cupo"]
+                        };
+                        listaActividades.Add(act);
+                    }
+                    return listaActividades;
+                }
+            }
+            catch (SqlException Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         //Fix me: Van aca los metodos del repo socios

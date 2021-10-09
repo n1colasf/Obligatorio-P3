@@ -41,17 +41,26 @@
         <label for="selectMembresia">Seleccionar Membresía:</label>
         <select class="form-control" id="membresia" name="selectMembresia" onchange="toggleCuotas()">
             <option value="0" disabled>Elegir...</option>
-            <option value="1">Pase Libre</option>
-            <option value="2">Cuponera</option>
+            @if (ViewBag.slectedOption == 1)
+            {
+                <option value="1" selected>Pase Libre</option>
+                <option value="2">Cuponera</option>
+            }
+            else
+            {
+                <option value="1">Pase Libre</option>
+                <option value="2" selected>Cuponera</option>
+            }
+
         </select>
         <br />
-        <div class="inputCantClases" style="display:none;">
+        <div class="inputCantClases" style="display:@ViewBag.showCuponera;">
             <label for="cantActividadesCuponera">Cantidad de Actividades:</label>
-            <input type="number" id="cantActividadesCuponera" class="form-control" name="cantActividadesCuponera" placeholder="Ingrese la cantidad" />
+            <input type="number" id="cantActividadesCuponera" class="form-control" name="cantActividadesCuponera" placeholder="Ingrese la cantidad" value="@ViewBag.cantActividadesCuponera"/>
             <br />
         </div>
         <button class="btn btn-primary" type="submit" id="btnCalcularCosto">Calcular Costo</button>
-        <h3>Total a pagar: $ @ViewBag.costoCuota</h3>
+        <h3>Total a pagar: <span class="totalAPagar">$ @ViewBag.costoCuota</span></h3>
     </div>
     <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Registrar Pago</button>
     <br />
@@ -67,8 +76,10 @@
             if (membresia <= 1) {
                 $(".inputCantClases").hide();
                 $("#cantActividadesCuponera").val(10);
+                $(".totalAPagar").html('');
             } else {
                 $(".inputCantClases").show();
+                $(".totalAPagar").html('');
             }
         }
         function validateSubmit() {

@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class Actividad
     {
-        public int Id { get; }
+        public int Id { get; set; }
         private static int ContId;
         public string Nombre { get; set; }
         public int EdadMin { get; set; }
