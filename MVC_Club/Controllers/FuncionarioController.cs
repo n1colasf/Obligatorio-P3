@@ -74,12 +74,14 @@ namespace MVC_Club.Controllers
         }
         public ActionResult ModificarSocio(int cedula = 0)
         {
+            // NO ESTA FUNCIONANDO
             ViewBag.socioModificado = false;
             return View("DetalleSocio");
         }
         [HttpPost]
         public ActionResult ModificarSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo)
         {
+            //NO ESTA FUNCIONANDO
             bool socioModificado = FachadaClub.ModificarSocio(cedula, nombre, fechaNac, activo);
             ViewBag.mensaje = (socioModificado) ? "Se modificaron los datos con éxito." : "No se pudo actualizar datos.";
             ViewBag.socioCreado = socioModificado;
