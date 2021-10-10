@@ -14,12 +14,10 @@ namespace Repositorios
     {
         public bool Alta(Socio obj)
         {
-
             if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || ExisteSocio(obj.Cedula))
             	return false;
             Conexion manejadorConexion = new Conexion();
             SqlConnection con = manejadorConexion.CrearConexion();
-
             try
             {
                 using(SqlCommand cmd = new SqlCommand()){
@@ -35,8 +33,6 @@ namespace Repositorios
                     cmd.ExecuteNonQuery();
                     
                 }
-
-				
 				return true;
 			}
 			catch (SqlException Ex)
@@ -49,9 +45,32 @@ namespace Repositorios
             }
 		}
 
-        public bool Baja(int id)
+        public bool Baja(int cedula)
         {
-            throw new NotImplementedException();
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Baja_Socio";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cedula", cedula));
+                    cmd.Parameters.Add(new SqlParameter("@activo", false));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (SqlException Ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         public Socio BuscarPorId(int cedula)
@@ -97,7 +116,34 @@ namespace Repositorios
 
         public bool Modificacion(Socio obj)
         {
-            throw new NotImplementedException();
+            if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac))
+                return false;
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Modificar_Socio";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cedula", obj.Cedula));
+                    cmd.Parameters.Add(new SqlParameter("@nombre", obj.Nombre));
+                    cmd.Parameters.Add(new SqlParameter("@fechaNac", obj.FechaNac));
+                    cmd.Parameters.Add(new SqlParameter("@activo", obj.Activo));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (SqlException Ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         public List<Socio> TraerTodos()

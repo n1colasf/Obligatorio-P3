@@ -24,7 +24,7 @@ namespace Repositorios
             return ret;
 
         }
-        public static bool AltaSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso)
+        public static bool AltaSocio(int cedula, string nombre, DateTime fechaNac)
         {
             bool ret = false;
             List<Actividad> actividades = new List<Actividad>();
@@ -34,11 +34,34 @@ namespace Repositorios
                 Nombre = nombre,
                 FechaNac = fechaNac,
                 Actividades = actividades,
-                FechaIngreso = fechaIngreso,
+                FechaIngreso = DateTime.Now,
                 Activo = true
             };
             RepoSocios repoSocios = new RepoSocios();
             ret = repoSocios.Alta(socio);
+            return ret;
+
+        }
+        public static bool ModificarSocio(int cedula, string nombre, DateTime fechaNac, bool activo)
+        {
+            bool ret;
+            Socio socio = new Socio()
+            {
+                Cedula = cedula,
+                Nombre = nombre,
+                FechaNac = fechaNac,
+                Activo = activo
+            };
+            RepoSocios repoSocios = new RepoSocios();
+            ret = repoSocios.Modificacion(socio);
+            return ret;
+
+        }
+        public static bool DarDeBajaSocio(int cedula)
+        {
+            bool ret;
+            RepoSocios repoSocios = new RepoSocios();
+            ret = repoSocios.Baja(cedula);
             return ret;
 
         }
@@ -73,7 +96,7 @@ namespace Repositorios
         public static Funcionario LogIn(string email, string password)
         {
             Funcionario func = BuscarFuncionario(email);
-            if(func.Email == email && func.Password == password)
+            if (func != null && func.Email == email && func.Password == password)
             {
                 return func;
             } else

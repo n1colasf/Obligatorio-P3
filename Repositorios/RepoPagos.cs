@@ -64,17 +64,17 @@ namespace Repositorios
 
         }
 
-        public bool Baja(int id)
+        public bool Baja(int id) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
 
-        public FormaDePago BuscarPorId(int id)
+        public FormaDePago BuscarPorId(int id) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
 
-        public bool Modificacion(FormaDePago obj)
+        public bool Modificacion(FormaDePago obj) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }

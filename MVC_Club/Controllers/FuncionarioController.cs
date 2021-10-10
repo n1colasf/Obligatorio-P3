@@ -11,7 +11,6 @@ namespace MVC_Club.Controllers
 {
     public class FuncionarioController : Controller
     {
-        // GET: Funcionario
         public ActionResult Index()
         {
             return View();
@@ -31,13 +30,30 @@ namespace MVC_Club.Controllers
             }
             else
             {
-                ViewBag.mensaje = "Error de login";
+                ViewBag.mensaje = "El funcionario no existe.";
             }
             return View();
         }
         public ActionResult Registro()
         {
+            ViewBag.funcionarioCreado = false;
             return View();
+        }
+        [HttpPost]
+        public ActionResult Registro(string email, string password)
+        {
+            bool funcionarioCreado = FachadaClub.AltaFuncionario(email, password);
+            ViewBag.funcionarioCreado = funcionarioCreado;
+            if (funcionarioCreado)
+            {
+                ViewBag.mensajeExito = "Funcionario registrado con éxito.";
+                Session["Logueado"] = true;
+                return View("Buscar");
+            } else
+            {
+                ViewBag.mensaje = "No se pudo registrar el funcionario.";
+                return View("");
+            }
         }
         public ActionResult Inicio()
         {
@@ -45,10 +61,38 @@ namespace MVC_Club.Controllers
         }
         public ActionResult RegistroSocio()
         {
+            ViewBag.socioCreado = false;
             return View();
+        }
+        [HttpPost]
+        public ActionResult RegistroSocio(int cedula, string nombre, DateTime fechaNac)
+        {
+            bool socioCreado = FachadaClub.AltaSocio(cedula, nombre, fechaNac);
+            ViewBag.mensaje = (socioCreado) ? "Socio registrado con éxito." : "No se pudo registrar el socio.";
+            ViewBag.socioCreado = socioCreado;
+            return View();
+        }
+        public ActionResult ModificarSocio(int cedula = 0)
+        {
+            ViewBag.socioModificado = false;
+            return View("DetalleSocio");
+        }
+        [HttpPost]
+        public ActionResult ModificarSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo)
+        {
+            bool socioModificado = FachadaClub.ModificarSocio(cedula, nombre, fechaNac, activo);
+            ViewBag.mensaje = (socioModificado) ? "Se modificaron los datos con éxito." : "No se pudo actualizar datos.";
+            ViewBag.socioCreado = socioModificado;
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
+            return View("DetalleSocio");
         }
         public ActionResult Buscar()
         {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/funcionario/Login");
+            }
             return View();
         }
         public ActionResult Listar()
@@ -61,13 +105,24 @@ namespace MVC_Club.Controllers
             ViewBag.listadoSocios = listadoSocios;
             return View();
         }
-        public ActionResult DetalleSocio(int cedula)
+        public ActionResult DetalleSocio(int cedula = 0)
         {
+            if(cedula == 0)
+            {
+                ViewBag.mensaje = "Ingresa una cédula válida para ver el detalle.";
+                return View("Buscar");
+            }
+            ViewBag.mensaje = "";
             if (Session["Logueado"] == null)
             {
                 return Redirect("/funcionario/Login");
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
+            if(socio == null)
+            {
+                ViewBag.mensaje = "No se encontró socio con la cédula ingresada.";
+                return View("Buscar");
+            }
             ViewBag.socio = socio;
             return View();
         }
@@ -85,6 +140,14 @@ namespace MVC_Club.Controllers
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
             return View();
+        }
+        public ActionResult DarDeBaja(int cedula = 0)
+        {
+            bool dadoDeBaja = FachadaClub.DarDeBajaSocio(cedula);
+            ViewBag.mensajeDatosActualizados = (dadoDeBaja) ? "El socio fue dado de baja." : "";
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
+            return View("DetalleSocio");
         }
         [HttpPost]
         public ActionResult PagarMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera = 0)

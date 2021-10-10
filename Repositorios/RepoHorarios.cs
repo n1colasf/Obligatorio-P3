@@ -11,7 +11,7 @@ namespace Repositorios
 {
     public class RepoHorarios : IRepositorio<Horario>
     {
-        public bool Alta(Horario obj)
+        public bool Alta(Horario obj) //FALTA EL ID DE ACTIVIDAD
         {
             if (obj == null || !obj.ValidarHora(obj.Hora))
                 return false;
@@ -46,7 +46,7 @@ namespace Repositorios
             }
         }
 
-        public bool Baja(int id)
+        public bool Baja(int id) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
@@ -56,7 +56,7 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public bool Modificacion(Horario obj)
+        public bool Modificacion(Horario obj) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }

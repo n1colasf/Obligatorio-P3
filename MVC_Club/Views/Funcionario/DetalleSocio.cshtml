@@ -1,63 +1,100 @@
 ﻿@using Dominio
 @{
     ViewBag.Title = "Detalle de Socio";
-    ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "Si" : "No";
+    ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "checked" : "";
     ViewBag.FechaNacimiento = ViewBag.socio.FechaNac.ToString("yyyy-MM-dd");
     ViewBag.FechaIngreso = ViewBag.socio.FechaIngreso.ToString("yyyy-MM-dd");
-}
-<h2>Detalle del Socio</h2>
 
-<form action="/funcionario/DetalleSocio" method="post">
-    <div class="form-group">
-        <label for="cedula">Cédula:</label>
-        <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.socio.Cedula" />
-    </div>
+    <h2>Detalle del Socio</h2>
+    <form action="/funcionario/ModificarSocio" method="post" onsubmit="return validarSubmit();">
+        <div class="form-group">
+            <label for="cedula">Cédula:</label>
+            <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.socio.Cedula" />
+        </div>
 
-    <div class="form-group">
-        <label for="nombre">Nombre y Apellido:</label>
-        <input type="text" id="nombre" class="form-control" name="nombre" required placeholder="Ingresa un Nombre y Apellido" value="@ViewBag.socio.Nombre" />
-    </div>
+        <div class="form-group">
+            <label for="nombre">Nombre y Apellido:</label>
+            <input type="text" id="nombre" class="form-control" name="nombre" required placeholder="Ingresa un Nombre y Apellido" value="@ViewBag.socio.Nombre" />
+        </div>
 
-    <div class="form-group">
-        <label for="fechaNac">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNac" class="form-control" name="fechaNac" required value="@ViewBag.FechaNacimiento" />
-    </div>
+        <div class="form-group">
+            <label for="fechaNac">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNac" class="form-control" name="fechaNac" required value="@ViewBag.FechaNacimiento" />
+        </div>
 
-    <div class="form-group">
-        <label for="fechaNac">Fecha de Ingreso:</label>
-        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.FechaIngreso" />
-    </div>
-
-    <div class="form-group">
-        <label for="activo">Activo:</label>
-        <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.TextoActivo" />
-    </div>
-    <button class="btn btn-primary" type="submit" id="btnGuardar">Actualizar datos</button>
-    <button class="btn btn-secondary btn btn-danger" type="button" id="btnEliminar">Dar de baja</button>
-</form>
-<br />
-<form action="/funcionario/DetalleSocio" method="post">
-    <h4>Más acciones:</h4>
-    @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula})
+        <div class="form-group">
+            <label for="fechaNac">Fecha de Ingreso:</label>
+            <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.FechaIngreso" />
+        </div>
+        <div class="form-check form-switch form-group">
+            <input class="form-check-input" type="checkbox" id="activo" name="activo" disabled @ViewBag.TextoActivo>
+            <label class="form-check-label" for="activo">Activo</label>
+        </div>
+        <button class="btn btn-primary" type="submit" id="btnGuardar">Actualizar datos</button>
+        <button class="btn btn-secondary btn btn-danger" type="button" id="btnEliminar">Dar de baja</button>
+    </form>
+    <h3>@ViewBag.mensajeDatosActualizados</h3>
     <br />
-    @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
-    <br />
-    <br />
-    <h4>Ingresos a actividades por Fecha:</h4>
-    <div class="form-group">
-        <label for="fechaIngresoAct">Selecciona una fecha:</label>
-        <input type="date" id="fechaIngresoAct" class="form-control" name="fechaIngresoAct" required />
-    </div>
-    <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Consultar</button>
-    <br />
-</form>
-<br>
-<h3>@ViewBag.mensaje</h3>
+    <form action="/funcionario/DetalleSocio" method="post">
+        <h4>Más acciones:</h4>
+        @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula })
+        <br />
+        @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
+        <br />
+        <br />
+        <h4>Ingresos a actividades por Fecha:</h4>
+        <div class="form-group">
+            <label for="fechaIngresoAct">Selecciona una fecha:</label>
+            <input type="date" id="fechaIngresoAct" class="form-control" name="fechaIngresoAct" required />
+        </div>
+        <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Consultar</button>
+        <br />
+    </form>
+    <br>
+    <h3>@ViewBag.mensaje</h3>
 
-@section scripts
+    @section scripts
     {
-    <script>
+        <script>
+            $('#btnEliminar').click(function () {
+                window.location.href='/funcionario/DarDeBaja?cedula=@ViewBag.socio.Cedula';
+            });
+            function validarSubmit() {
+                let nombre = document.getElementById("nombre").value;
+                let fechaNac = document.getElementById("fechaNac").value;
+                let fechaNacF = validarEdad(fechaNac);
+                let nombreF = verificarNombre(nombre);
+                if (nombreF != "" || fechaNacF != "") {
+                    alert("Error: " + nombreF + ' ' + fechaNacF);
+                    return false;
+                }
+                return true;
+            }
+            function verificarNombre(nombre) {
+                let parrafo = "";
+                if (nombre.length > 6) {
+                    for (let i = 0; i < nombre.length; i++) {
+                        if (nombre[0] == ' ' || nombre[nombre.length - 1] == ' ' || (!isNaN(nombre[i]) && nombre[i] !== ' ')) {
+                            parrafo = 'El nombre no es válido.';
+                            continue;
+                        }
+                    }
 
-    </script>
-
+                } else {
+                    parrafo = 'El nombre debe tener al menos 7 caracteres.'
+                }
+                return parrafo;
+            }
+            function validarEdad(fechaNac) {
+                let parrafo = "";
+                fechaNac = new Date(fechaNac);
+                let fechaHoy = new Date();
+                let edad = new Date(fechaHoy).getFullYear() - new Date(fechaNac).getFullYear();
+                if (edad < 3 || edad > 90) {
+                    parrafo = 'El Socio debe tener entre 3 y 90 años';
+                }
+                return parrafo;
+            }
+        </script>
+    }
 }

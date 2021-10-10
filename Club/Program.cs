@@ -13,7 +13,7 @@ namespace Club
         {
             //ALTA SOCIO
             //DateTime fechaNac = new DateTime(1999, 2, 19);
-            //Console.WriteLine(FachadaClub.AltaSocio(71115558, "Jose Perez", fechaNac, new DateTime(2005, 2, 19)));
+            //Console.WriteLine(FachadaClub.AltaSocio(71115558, "Jose Perez", fechaNac));
 
             //ALTA ACTIVIDAD
             //Console.WriteLine(FachadaClub.AltaActividad("Futbol", 15, 30, 22));
@@ -21,7 +21,7 @@ namespace Club
             //Console.WriteLine(FachadaClub.AltaActividad("Boxeo", 18, 50, 25));
 
             //ALTA FUNCIONARIO
-            //Console.WriteLine(FachadaClub.AltaFuncionario("funcionario1@club.com", "pass123"));
+            //Console.WriteLine(FachadaClub.AltaFuncionario("funcionario2@club.com", "asdasd"));
 
             //ALTA HORARIO
             //Console.WriteLine(FachadaClub.AltaHorario("Lunes", 20));

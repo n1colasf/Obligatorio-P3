@@ -4,8 +4,11 @@
 }
 
 <h2>Buscar Socio por cédula</h2>
-
-<form action="/funcionario/Buscar" method="post">
+@if (ViewBag.funcionarioCreado != null && ViewBag.funcionarioCreado)
+{
+    <p class="text-success">@ViewBag.mensajeExito</p>
+}
+<form action="/funcionario/DetalleSocio" method="get" onsubmit="return validarCedula()">
 
     <div class="form-group">
         <label for="cedula">Ingresar Cédula:</label>
@@ -15,21 +18,20 @@
     <button class="btn btn-primary" type="submit" id="btnBuscar">Buscar</button>
 </form>
 <br>
-<h3>@ViewBag.mensaje</h3>
-
-@*FALTA LA BUSQUEDA*@
+<p class="text-danger">@ViewBag.mensaje</p>
 
 @section scripts
     {
     <script>
-        let btnRegistrarse = document.getElementById("btnBuscar")
-        btnRegistrarse.addEventListener('click', () => {
+        function validarCedula() {
             let cedula = document.getElementById("cedula").value;
             let cedulaF = verificarCedula(cedula);
             if (cedulaF != "") {
                 alert("Error: " + cedulaF);
+                return false
             }
-        })
+            return true;
+        }
         function verificarCedula(cedula) {
             let parrafo = "";
             if (cedula.length < 7 || cedula.length > 9) {

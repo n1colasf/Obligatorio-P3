@@ -5,7 +5,7 @@
 
 <h2>Registrar un Nuevo Socio</h2>
 
-<form action="/funcionario/RegistroSocio" method="post">
+<form action="/funcionario/RegistroSocio" method="post" onsubmit="return validarSubmit()">
 
     <div class="form-group">
         <label for="cedula">Cédula:</label>
@@ -25,13 +25,20 @@
     <button class="btn btn-primary" type="submit" id="btnRegistro">Registrar Socio</button>
 </form>
 <br>
-<h3>@ViewBag.mensaje</h3>
+@if (ViewBag.socioCreado)
+{
+    <h3 class="text-success">@ViewBag.mensaje</h3>
+}
+else
+{
+    <h3 class="text-danger">@ViewBag.mensaje</h3>
+}
+
 
 @section scripts
     {
     <script>
-        let btnRegistrarse = document.getElementById("btnRegistro")
-        btnRegistrarse.addEventListener('click', () => {
+        function validarSubmit() {
             let cedula = document.getElementById("cedula").value;
             let nombre = document.getElementById("nombre").value;
             let fechaNac = document.getElementById("fechaNac").value;
@@ -40,13 +47,15 @@
             let cedulaF = verificarCedula(cedula);
             if (nombreF != "" || cedulaF != "" || fechaNacF != "") {
                 alert("Error: " + cedulaF + ' ' + nombreF + ' ' + fechaNacF);
+                return false;
             }
-        })
+            return true;
+        }
         function verificarNombre(nombre) {
             let parrafo = "";
             if (nombre.length > 6) {
                 for (let i = 0; i < nombre.length; i++) {
-                    if (nombre[0] == ' ' || nombre[nombre.length - 1] == ' ' || (!isNaN(nombre[i]) && nombre[i] !== ' ') ) {
+                    if (nombre[0] == ' ' || nombre[nombre.length - 1] == ' ' || (!isNaN(nombre[i]) && nombre[i] !== ' ')) {
                         parrafo = 'El nombre no es válido.';
                         continue;
                     }
@@ -66,16 +75,12 @@
         }
         function validarEdad(fechaNac) {
             let parrafo = "";
-            //let fechaHoy = Date.now();
-            //let edad = fechaHoy - fechaNac;
-            //int edad = DateTime.Today.Year - fechaNac.Year;
-            //if (DateTime.Today < fechaNac.AddYears(edad)) {
-            //    edad--;
-            //}
-
-            //if (edad < 3 || edad > 90) {
-            //    parrafo = 'El Socio debe tener entre 3 y 90 años';
-            //}
+            fechaNac = new Date(fechaNac);
+            let fechaHoy = new Date();
+            let edad = new Date(fechaHoy).getFullYear() - new Date(fechaNac).getFullYear();
+            if (edad < 3 || edad > 90) {
+                parrafo = 'El Socio debe tener entre 3 y 90 años';
+            }
             return parrafo;
         }
     </script>
