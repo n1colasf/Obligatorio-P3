@@ -42,18 +42,19 @@ namespace Repositorios
             return ret;
 
         }
-        public static bool ModificarSocio(int cedula, string nombre, DateTime fechaNac, bool activo)
+        public static bool ModificarSocio(int cedula, string nombre, DateTime fechaNac)
         {
-            bool ret;
-            Socio socio = new Socio()
-            {
-                Cedula = cedula,
-                Nombre = nombre,
-                FechaNac = fechaNac,
-                Activo = activo
-            };
+            bool ret = false;
+            Socio socio = BuscarPorId(cedula);
+
+            if (socio != null) 
+            { 
+            socio.Nombre = nombre;
+            socio.FechaNac = fechaNac;
+            
             RepoSocios repoSocios = new RepoSocios();
             ret = repoSocios.Modificacion(socio);
+            }
             return ret;
 
         }

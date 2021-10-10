@@ -11,9 +11,7 @@ namespace Dominio
 	public class Conexion
 	{
 		private string stringConexion =
-			@"SERVER=ACER-GON\SQLEXPRESS;
-				Database=Club; 
-				INTEGRATED SECURITY = TRUE;";
+			@"Server=NICOLASFERNA298;Database=Obligatorio_P3;Integrated Security=True; MultipleActiveResultSets=true";
 		public SqlConnection CrearConexion()
 		{
 			return new SqlConnection(stringConexion);

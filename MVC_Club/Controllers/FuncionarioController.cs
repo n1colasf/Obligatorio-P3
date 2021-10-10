@@ -72,23 +72,6 @@ namespace MVC_Club.Controllers
             ViewBag.socioCreado = socioCreado;
             return View();
         }
-        public ActionResult ModificarSocio(int cedula = 0)
-        {
-            // NO ESTA FUNCIONANDO
-            ViewBag.socioModificado = false;
-            return View("DetalleSocio");
-        }
-        [HttpPost]
-        public ActionResult ModificarSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo)
-        {
-            //NO ESTA FUNCIONANDO
-            bool socioModificado = FachadaClub.ModificarSocio(cedula, nombre, fechaNac, activo);
-            ViewBag.mensaje = (socioModificado) ? "Se modificaron los datos con éxito." : "No se pudo actualizar datos.";
-            ViewBag.socioCreado = socioModificado;
-            Socio socio = FachadaClub.BuscarPorId(cedula);
-            ViewBag.socio = socio;
-            return View("DetalleSocio");
-        }
         public ActionResult Buscar()
         {
             if (Session["Logueado"] == null)
@@ -109,6 +92,8 @@ namespace MVC_Club.Controllers
         }
         public ActionResult DetalleSocio(int cedula = 0)
         {
+            ViewBag.mensajeDatosActualizados = "";
+            ViewBag.SocioModificado = false;
             if(cedula == 0)
             {
                 ViewBag.mensaje = "Ingresa una cédula válida para ver el detalle.";
@@ -129,8 +114,15 @@ namespace MVC_Club.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult DetalleSocio(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo)
+        public ActionResult DetalleSocio(int cedula, string nombre, DateTime fechaNac)
         {
+            ViewBag.mensajeDatosActualizados = "";
+            bool socioModificado = FachadaClub.ModificarSocio(cedula, nombre, fechaNac);
+            ViewBag.mensajeDatosActualizados = (socioModificado) ? "Se modificaron los datos con éxito." : "No se pudo actualizar datos.";
+            ViewBag.socioModificado = socioModificado;
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
+         
             return View();
         }
         public ActionResult PagarMensualidad(int cedula)

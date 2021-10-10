@@ -6,10 +6,10 @@
     ViewBag.FechaIngreso = ViewBag.socio.FechaIngreso.ToString("yyyy-MM-dd");
 
     <h2>Detalle del Socio</h2>
-    <form action="/funcionario/ModificarSocio" method="post" onsubmit="return validarSubmit();">
+    <form action="/funcionario/DetalleSocio" method="post" onsubmit="return validarSubmit();">
         <div class="form-group">
             <label for="cedula">Cédula:</label>
-            <input type="number" id="cedula" class="form-control" name="cedula" disabled value="@ViewBag.socio.Cedula" />
+            <input type="number" id="cedula" class="form-control" name="cedula" value="@ViewBag.socio.Cedula" readonly />
         </div>
 
         <div class="form-group">
@@ -24,18 +24,25 @@
 
         <div class="form-group">
             <label for="fechaNac">Fecha de Ingreso:</label>
-            <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" disabled value="@ViewBag.FechaIngreso" />
+            <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso"  value="@ViewBag.FechaIngreso" readonly/>
         </div>
         <div class="form-check form-switch form-group">
-            <input class="form-check-input" type="checkbox" id="activo" name="activo" disabled @ViewBag.TextoActivo>
+            <input class="form-check-input" type="checkbox" id="activo" name="activo" @ViewBag.TextoActivo onclick="return false"">
             <label class="form-check-label" for="activo">Activo</label>
         </div>
         <button class="btn btn-primary" type="submit" id="btnGuardar">Actualizar datos</button>
         <button class="btn btn-secondary btn btn-danger" type="button" id="btnEliminar">Dar de baja</button>
     </form>
-    <h3>@ViewBag.mensajeDatosActualizados</h3>
+    @if(ViewBag.socioModificado != null && ViewBag.socioModificado)
+            {
+            <h3 class="text-success">@ViewBag.mensajeDatosActualizados</h3>
+    } else
+    {
+        <h3 class="text-danger">@ViewBag.mensajeDatosActualizados</h3>
+    }
+
     <br />
-    <form action="/funcionario/DetalleSocio" method="post">
+    <form action="/funcionario/DetalleSocio" method="get">
         <h4>Más acciones:</h4>
         @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula })
         <br />

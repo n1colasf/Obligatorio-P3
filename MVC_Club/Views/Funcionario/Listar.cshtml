@@ -24,9 +24,9 @@
             <tr>
                 <td>@socio.Cedula</td>
                 <td>@socio.Nombre</td>
-                <td>@socio.FechaNac</td>
-                <td>@socio.FechaIngreso</td>
-                <td>@socio.Activo</td>
+                <td>@socio.FechaNac.ToString("dd-MM-yyyy")</td>
+                <td>@socio.FechaIngreso.ToString("dd-MM-yyyy")</td>
+                @if(socio.Activo) { <td>Si</td> } else{<td>No</td> }
                 <td>@Html.ActionLink("Ver Detalle", "/DetalleSocio", new { cedula = socio.Cedula })</td>
             </tr>
             }
