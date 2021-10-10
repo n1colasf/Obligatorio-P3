@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace Repositorios
 {
-    class RepoHorarios : IRepositorio<Horario>
+    public class RepoHorarios : IRepositorio<Horario>
     {
         public bool Alta(Horario obj)
         {
@@ -63,7 +63,39 @@ namespace Repositorios
 
         public List<Horario> TraerTodos()
         {
-            throw new NotImplementedException();
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Listar_Horarios";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    List<Horario> listaHorarios = new List<Horario>();
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        Horario hor = new Horario
+                        {
+                            Id = (int)filas["idActividad"],
+                            Dia = (int)filas["dia"],
+                            Hora = (int)filas["hora"]
+                        };
+                        listaHorarios.Add(hor);
+                    }
+                    return listaHorarios;
+                }
+            }
+            catch (SqlException Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
     }

@@ -8,7 +8,8 @@ namespace Dominio
 {
     public class Horario
     {
-        public string Dia { get; set; }
+        public int Id { get; set; }
+        public int Dia { get; set; }
         public int Hora { get; set; }
 
         public bool ValidarHora(int hora)

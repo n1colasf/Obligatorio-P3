@@ -57,7 +57,7 @@ namespace Repositorios
             return ret;
 
         }
-        public static bool AltaHorario(string dia, int hora)
+        public static bool AltaHorario(int dia, int hora)
         {
             bool ret = false;
             Horario horario = new Horario()

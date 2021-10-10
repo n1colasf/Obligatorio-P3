@@ -32,19 +32,18 @@
         <label for="activo">Activo:</label>
         <input type="text" id="activo" class="form-control" name="activo" disabled value="@ViewBag.TextoActivo" />
     </div>
-    <button class="btn btn-primary" type="submit" id="btnGuardar">Guardar</button>
-    <br />
-    <button class="btn btn-secondary" type="button" id="btnEliminar">Dar de baja</button>
+    <button class="btn btn-primary" type="submit" id="btnGuardar">Actualizar datos</button>
+    <button class="btn btn-secondary btn btn-danger" type="button" id="btnEliminar">Dar de baja</button>
 </form>
-
+<br />
 <form action="/funcionario/DetalleSocio" method="post">
-
-    <a href="">Inscribir a actividad</a>
+    <h4>Más acciones:</h4>
+    @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula})
     <br />
     @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
     <br />
     <br />
-    <h3>Ingresos a actividades por Fecha</h3>
+    <h4>Ingresos a actividades por Fecha:</h4>
     <div class="form-group">
         <label for="fechaIngresoAct">Selecciona una fecha:</label>
         <input type="date" id="fechaIngresoAct" class="form-control" name="fechaIngresoAct" required />

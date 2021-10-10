@@ -19,6 +19,7 @@ namespace WCF_AltaSocioActividad
         bool AnotarseAActividad(Socio socio, Actividad actividad);
         [OperationContract]
         IEnumerable<DtoActividad> ListarActividades();
+        IEnumerable<DtoHorarioActividad> ListarHorarios();
     }
 
     public class DtoSocio
@@ -49,6 +50,15 @@ namespace WCF_AltaSocioActividad
         [DataMember]
         public int Cupo { get; set; }
         [DataMember]
-        public List<Horario> Horarios { get; set; }
+        public List<DtoHorarioActividad> Horarios { get; set; }
+    }
+    public class DtoHorarioActividad
+    {
+        [DataMember]
+        public int IdActividad { get; set; }
+        [DataMember]
+        public int Dia { get; set; }
+        [DataMember]
+        public int Hora { get; set; }
     }
 }

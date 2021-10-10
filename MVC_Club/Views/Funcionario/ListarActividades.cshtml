@@ -1,17 +1,15 @@
 ﻿@using Dominio
 @using WCF_AltaSocioActividad;
 @{
-    ViewBag.Title = "Actividades disponibles para inscribir socio";
+    ViewBag.Title = "Actividades de hoy disponibles para inscripción";
 }
-
-<h2>ListarActividades</h2>
-
-@if (ViewBag.ListaActividades != null)
+<h2>Actividades de hoy disponibles para inscripción</h2>
+@if (ViewBag.ListaActividades != null && ViewBag.ListaActividades.Count > 0)
 {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Código de actividad</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Hora</th>
                 <th scope="col"></th>
@@ -20,13 +18,22 @@
         <tbody>
             @foreach (DtoActividad act in ViewBag.ListaActividades)
             {
-            <tr>
-                <td>@act.Id</td>
-                <td>@act.Nombre</td>
-                <td>@act.Horarios</td>
-                <td>@Html.ActionLink("Inscribir", "/DetalleSocio", new { idActividad = act.Id })</td>
-            </tr>
+                foreach (DtoHorarioActividad hor in act.Horarios)
+                {
+                    <tr>
+                        <td>@act.Id</td>
+                        <td>@act.Nombre</td>
+                        <td>@hor.Hora</td>
+                        <td>@Html.ActionLink("Inscribir", "/DetalleSocio", new { idActividad = act.Id })</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
+}
+else
+{
+    <br />
+    <br />
+    <p>No hay actividades disponibles para el día de hoy</p>
 }

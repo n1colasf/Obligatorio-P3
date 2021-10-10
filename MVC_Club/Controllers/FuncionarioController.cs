@@ -53,12 +53,20 @@ namespace MVC_Club.Controllers
         }
         public ActionResult Listar()
         {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/funcionario/Login");
+            }
             List<Socio> listadoSocios = FachadaClub.ListarSocios();
             ViewBag.listadoSocios = listadoSocios;
             return View();
         }
         public ActionResult DetalleSocio(int cedula)
         {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/funcionario/Login");
+            }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
             return View();
@@ -70,6 +78,10 @@ namespace MVC_Club.Controllers
         }
         public ActionResult PagarMensualidad(int cedula)
         {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/funcionario/Login");
+            }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
             return View();
@@ -77,7 +89,6 @@ namespace MVC_Club.Controllers
         [HttpPost]
         public ActionResult PagarMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera = 0)
         {
-            //ESTO SE ROMPE CUANDO EN EL FORMULARIO VIENE LA CANTIDAD DE ACTIVIDADES EN NULL
             double costoCuota;
             if (selectMembresia == 1)
             {
@@ -103,6 +114,10 @@ namespace MVC_Club.Controllers
         }
         public ActionResult ListarActividades()
         {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/funcionario/Login");
+            }
             ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
             //servicioActividad.Open(); ESTO PARA QUE ERA? NO SIRVE
             //TRAER LOS HORARIOS DE CADA ACTIVIDAD
