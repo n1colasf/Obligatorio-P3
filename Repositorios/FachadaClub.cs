@@ -132,14 +132,12 @@ namespace Repositorios
             };
             return cup;
         }
-
         public static bool VerificarMensualidad(Socio socio)
         {
             RepoPagos repoPagos = new RepoPagos();
 
            return repoPagos.VerificarMensualidad(socio);
         }
-
         public static double MostrarCostoCuponera(int cedula, int cantidadActividades)
         {
             return CalcularCuponera(cedula,cantidadActividades).CalcularCosto();

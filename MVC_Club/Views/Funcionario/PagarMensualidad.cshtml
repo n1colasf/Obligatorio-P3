@@ -42,13 +42,14 @@
             <option value="0" disabled>Elegir...</option>
             @if (ViewBag.slectedOption == 1)
             {
-    <option value="1" selected>Pase Libre</option>
-                    <option value="2">Cuponera</option> }
-                                else
-                                {
-                    <option value="1">Pase Libre</option>
-                                    <option value="2" selected>Cuponera</option>}
-
+                <option value="1" selected>Pase Libre</option>
+                <option value="2">Cuponera</option> 
+            }
+            else
+            {
+                <option value="1">Pase Libre</option>
+                <option value="2" selected>Cuponera</option>
+            }
         </select>
         <br />
         <div class="inputCantClases" style="display:@ViewBag.showCuponera;">

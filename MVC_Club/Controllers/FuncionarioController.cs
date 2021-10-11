@@ -135,8 +135,22 @@ namespace MVC_Club.Controllers
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
-
             return View();
+        }
+        [HttpPost]
+        public ActionResult PagarMensualidad(int cedula, int membresia, int cantActividades = 0)
+        {
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
+            if (membresia == 1 && !ViewBag.mensualidadPaga)
+            {
+                ViewBag.mensualidadPaga = FachadaClub.RegistrarPagoPaseLibre(cedula);
+            } else if(membresia == 2 && !ViewBag.mensualidadPaga)
+            {
+                ViewBag.mensualidadPaga = FachadaClub.RegistrarPagoCuponera(cedula, cantActividades);
+            }
+            ViewBag.socio = socio;
+            return View("");
         }
         public ActionResult MostrarCostoMensualidad(int cedula)
         {
@@ -149,9 +163,8 @@ namespace MVC_Club.Controllers
 
             return View("PagarMensualidad");
         }
-
         [HttpPost]
-        public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera = 0)
+        public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, int selectMembresia, int cantActividadesCuponera = 0)
         {
             double costoCuota;
             if (selectMembresia == 1)
