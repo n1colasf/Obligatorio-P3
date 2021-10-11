@@ -53,14 +53,14 @@
         </select>
         <br />
         <div class="inputCantClases" style="display:@ViewBag.showCuponera;">
-            <label for="cantActividadesCuponera">Cantidad de Actividades:</label>
-            <input type="number" id="cantActividadesCuponera" class="form-control" name="cantActividadesCuponera" placeholder="Ingrese la cantidad" value="@ViewBag.cantActividadesCuponera" />
+            <label for="cantActividades">Cantidad de Actividades:</label>
+            <input type="number" id="cantActividades" class="form-control" name="cantActividades" placeholder="Ingrese la cantidad" value="@ViewBag.cantActividades" />
         </div>
         <h3>Total a pagar: <span class="totalAPagar">$ @ViewBag.costoCuota</span></h3>
         <br />
         <button class="btn btn-success" type="submit" id="btnCalcularCosto">Calcular Costo</button>
         <!--<button class="btn btn-primary" type="button" id="btnConsultarIngresos">Registrar Pago</button>-->
-        @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula, @ViewBag.slectedOption, @ViewBag.cantActividadesCuponera })
+        @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula, @ViewBag.slectedOption, @ViewBag.cantActividades }, new AjaxOptions { HttpMethod = "POST" })
 
     </div>
     <br />
@@ -75,7 +75,7 @@
             var membresia = $("#membresia").val();
             if (membresia <= 1) {
                 $(".inputCantClases").hide();
-                $("#cantActividadesCuponera").val(10);
+                $("#cantActividades").val(10);
                 $(".totalAPagar").html('');
             } else {
                 $(".inputCantClases").show();
@@ -83,12 +83,12 @@
             }
         }
         function validateSubmit() {
-            let cantActividadesCuponera = document.getElementById("cantActividadesCuponera").value;
+            let cantActividades = document.getElementById("cantActividades").value;
             let membresia = document.getElementById("membresia").value;
             if (membresia <= 1) {
-                document.getElementById("cantActividadesCuponera").value(10);
+                document.getElementById("cantActividades").value(10);
             } else {
-                if (cantActividadesCuponera < 8 || cantActividadesCuponera > 60) {
+                if (cantActividades < 8 || cantActividades > 60) {
                     alert("Debes ingresar entre 8 y 60 actividades");
                     return false;
                 }

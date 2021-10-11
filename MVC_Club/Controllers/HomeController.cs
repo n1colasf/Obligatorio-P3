@@ -10,7 +10,7 @@ namespace MVC_Club.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("/Funcionario/Login");
+            return Redirect("/Inicio/Login");
         }
     }
 }

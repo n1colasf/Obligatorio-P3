@@ -15,50 +15,6 @@ namespace MVC_Club.Controllers
         {
             return View();
         }
-        public ActionResult Login()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Login(string email, string contrasena)
-        {
-            Funcionario funcLoggedin = FachadaClub.LogIn(email,contrasena);
-            if (funcLoggedin != null)
-            {
-                Session["Logueado"] = true;
-                return Redirect("/funcionario/Buscar");
-            }
-            else
-            {
-                ViewBag.mensaje = "El funcionario no existe.";
-            }
-            return View();
-        }
-        public ActionResult Registro()
-        {
-            ViewBag.funcionarioCreado = false;
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Registro(string email, string password)
-        {
-            bool funcionarioCreado = FachadaClub.AltaFuncionario(email, password);
-            ViewBag.funcionarioCreado = funcionarioCreado;
-            if (funcionarioCreado)
-            {
-                ViewBag.mensajeExito = "Funcionario registrado con éxito.";
-                Session["Logueado"] = true;
-                return View("Buscar");
-            } else
-            {
-                ViewBag.mensaje = "No se pudo registrar el funcionario.";
-                return View("");
-            }
-        }
-        public ActionResult Inicio()
-        {
-            return View();
-        }
         public ActionResult RegistroSocio()
         {
             ViewBag.socioCreado = false;
@@ -76,7 +32,7 @@ namespace MVC_Club.Controllers
         {
             if (Session["Logueado"] == null)
             {
-                return Redirect("/funcionario/Login");
+                return Redirect("/Inicio/Login");
             }
             return View();
         }
@@ -84,7 +40,7 @@ namespace MVC_Club.Controllers
         {
             if (Session["Logueado"] == null)
             {
-                return Redirect("/funcionario/Login");
+                return Redirect("/Inicio/Login");
             }
             List<Socio> listadoSocios = FachadaClub.ListarSocios();
             ViewBag.listadoSocios = listadoSocios;
@@ -102,7 +58,7 @@ namespace MVC_Club.Controllers
             ViewBag.mensaje = "";
             if (Session["Logueado"] == null)
             {
-                return Redirect("/funcionario/Login");
+                return Redirect("/Inicio/Login");
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             if(socio == null)
@@ -127,11 +83,11 @@ namespace MVC_Club.Controllers
          
             return View();
         }
-        public ActionResult PagarMensualidad(int cedula)
+        public ActionResult PagarMensualidad(int cedula = 0)
         {
             if (Session["Logueado"] == null)
             {
-                return Redirect("/funcionario/Login");
+                return Redirect("/Inicio/Login");
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
@@ -140,6 +96,7 @@ namespace MVC_Club.Controllers
         [HttpPost]
         public ActionResult PagarMensualidad(int cedula, int membresia, int cantActividades = 0)
         {
+            //ESTO NO ESTA ANDANDO - NO ENTRA NUNCA
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
             if (membresia == 1 && !ViewBag.mensualidadPaga)
@@ -156,7 +113,7 @@ namespace MVC_Club.Controllers
         {
             if (Session["Logueado"] == null)
             {
-                return Redirect("/funcionario/Login");
+                return Redirect("/Inicio/Login");
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
@@ -164,7 +121,7 @@ namespace MVC_Club.Controllers
             return View("PagarMensualidad");
         }
         [HttpPost]
-        public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, int selectMembresia, int cantActividadesCuponera = 0)
+        public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, int selectMembresia, int cantActividades = 0)
         {
             double costoCuota;
             if (selectMembresia == 1)
@@ -175,10 +132,10 @@ namespace MVC_Club.Controllers
             }
             else
             {
-                costoCuota = FachadaClub.MostrarCostoCuponera(cedula, cantActividadesCuponera);
+                costoCuota = FachadaClub.MostrarCostoCuponera(cedula, cantActividades);
                 ViewBag.slectedOption = 2;
                 ViewBag.showCuponera = "block";
-                ViewBag.cantActividadesCuponera = cantActividadesCuponera;
+                ViewBag.cantActividades = cantActividades;
             }
             ViewBag.costoCuota = costoCuota;
             Socio socio = FachadaClub.BuscarPorId(cedula);
@@ -196,13 +153,13 @@ namespace MVC_Club.Controllers
         public ActionResult Logout()
         {
             Session["Logueado"] = null;
-            return Redirect("/funcionario/Login");
+            return Redirect("/Inicio/Login");
         }
         public ActionResult ListarActividades()
         {
             if (Session["Logueado"] == null)
             {
-                return Redirect("/funcionario/Login");
+                return Redirect("/Inicio/Login");
             }
             ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
             //servicioActividad.Open(); ESTO PARA QUE ERA? NO SIRVE

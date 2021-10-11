@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,9 +162,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Funcionario\Login.cshtml" />
-    <Content Include="Views\Funcionario\Registro.cshtml" />
-    <Content Include="Views\Funcionario\Inicio.cshtml" />
+    <Content Include="Views\Inicio\Login.cshtml" />
+    <Content Include="Views\Inicio\Registro.cshtml" />
     <Content Include="Views\Funcionario\RegistroSocio.cshtml" />
     <Content Include="Views\Funcionario\Buscar.cshtml" />
     <Content Include="Views\Funcionario\Listar.cshtml" />
