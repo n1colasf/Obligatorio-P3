@@ -111,11 +111,13 @@ namespace MVC_Club.Controllers
                 return View("Buscar");
             }
             ViewBag.socio = socio;
+            ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
             return View();
         }
         [HttpPost]
         public ActionResult DetalleSocio(int cedula, string nombre, DateTime fechaNac)
         {
+            ViewBag.mensualidadPaga = false;
             ViewBag.mensajeDatosActualizados = "";
             bool socioModificado = FachadaClub.ModificarSocio(cedula, nombre, fechaNac);
             ViewBag.mensajeDatosActualizados = (socioModificado) ? "Se modificaron los datos con éxito." : "No se pudo actualizar datos.";
@@ -133,18 +135,23 @@ namespace MVC_Club.Controllers
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
+
             return View();
         }
-        public ActionResult DarDeBaja(int cedula = 0)
+        public ActionResult MostrarCostoMensualidad(int cedula)
         {
-            bool dadoDeBaja = FachadaClub.DarDeBajaSocio(cedula);
-            ViewBag.mensajeDatosActualizados = (dadoDeBaja) ? "El socio fue dado de baja." : "";
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/funcionario/Login");
+            }
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
-            return View("DetalleSocio");
+
+            return View("PagarMensualidad");
         }
+
         [HttpPost]
-        public ActionResult PagarMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera = 0)
+        public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, bool activo, int selectMembresia, int cantActividadesCuponera = 0)
         {
             double costoCuota;
             if (selectMembresia == 1)
@@ -152,7 +159,8 @@ namespace MVC_Club.Controllers
                 costoCuota = FachadaClub.MostrarCostoPaseLibre(cedula);
                 ViewBag.slectedOption = 1;
                 ViewBag.showCuponera = "none";
-            } else
+            }
+            else
             {
                 costoCuota = FachadaClub.MostrarCostoCuponera(cedula, cantActividadesCuponera);
                 ViewBag.slectedOption = 2;
@@ -162,7 +170,15 @@ namespace MVC_Club.Controllers
             ViewBag.costoCuota = costoCuota;
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
-            return View();
+            return View("PagarMensualidad");
+        }
+        public ActionResult DarDeBaja(int cedula = 0)
+        {
+            bool dadoDeBaja = FachadaClub.DarDeBajaSocio(cedula);
+            ViewBag.mensajeDatosActualizados = (dadoDeBaja) ? "El socio fue dado de baja." : "";
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.socio = socio;
+            return View("DetalleSocio");
         }
         public ActionResult Logout()
         {

@@ -31,8 +31,6 @@ namespace Repositorios
                     cmd.ExecuteNonQuery();
 
                 }
-
-
                 return true;
             }
             catch (SqlException Ex)
@@ -49,7 +47,6 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
-
         public Funcionario BuscarPorId(int id)
         {
             throw new NotImplementedException();

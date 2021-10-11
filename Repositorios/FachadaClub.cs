@@ -46,6 +46,7 @@ namespace Repositorios
         {
             bool ret = false;
             Socio socio = BuscarPorId(cedula);
+            if (!socio.Activo) return false;
 
             if (socio != null) 
             { 
@@ -131,6 +132,14 @@ namespace Repositorios
             };
             return cup;
         }
+
+        public static bool VerificarMensualidad(Socio socio)
+        {
+            RepoPagos repoPagos = new RepoPagos();
+
+           return repoPagos.VerificarMensualidad(socio);
+        }
+
         public static double MostrarCostoCuponera(int cedula, int cantidadActividades)
         {
             return CalcularCuponera(cedula,cantidadActividades).CalcularCosto();
@@ -142,7 +151,7 @@ namespace Repositorios
             bool ret = repoPagos.Alta(cup);
             return ret;
         }
-        public static PaseLibre CalcularPaseLibre(int cedula)
+        private static PaseLibre CalcularPaseLibre(int cedula)
         {
             RepoSocios repoSocios = new RepoSocios();
             Socio socio = repoSocios.BuscarPorId(cedula);

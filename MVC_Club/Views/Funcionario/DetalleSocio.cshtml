@@ -40,16 +40,19 @@
     {
         <h3 class="text-danger">@ViewBag.mensajeDatosActualizados</h3>
     }
-
-    <br />
     <form action="/funcionario/DetalleSocio" method="get">
         <h4>Más acciones:</h4>
-        @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula })
+        @if (ViewBag.mensualidadPaga)
+        {
+            @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula }) 
+
+        } else
+        {
+            @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
+        }
         <br />
-        @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
-        <br />
-        <br />
-        <h4>Ingresos a actividades por Fecha:</h4>
+        <hr />
+        <h3>Ingresos a actividades por Fecha:</h3>
         <div class="form-group">
             <label for="fechaIngresoAct">Selecciona una fecha:</label>
             <input type="date" id="fechaIngresoAct" class="form-control" name="fechaIngresoAct" required />

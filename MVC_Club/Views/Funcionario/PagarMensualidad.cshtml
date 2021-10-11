@@ -1,41 +1,40 @@
 ﻿@using Dominio
 @{
     ViewBag.Title = "Pagar Mensualidad";
-    ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "Si" : "No";
+    ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "checked" : "";
     ViewBag.FechaNacimiento = ViewBag.socio.FechaNac.ToString("yyyy-MM-dd");
     ViewBag.FechaIngreso = ViewBag.socio.FechaIngreso.ToString("yyyy-MM-dd");
 }
 
 <h2>Pagar Mensualidad</h2>
 
-<form action="/funcionario/PagarMensualidad" method="post" onsubmit="return validateSubmit();">
+<form action="/funcionario/MostrarCostoMensualidad" method="post" onsubmit="return validateSubmit();">
 
     <div class="form-group">
         <label for="cedula">Cédula:</label>
-        <input type="number" id="cedula" class="form-control" name="cedula"  value="@ViewBag.socio.Cedula" />
+        <input type="number" id="cedula" class="form-control" name="cedula" value="@ViewBag.socio.Cedula" readonly />
     </div>
 
     <div class="form-group">
         <label for="nombre">Nombre y Apellido:</label>
-        <input type="text" id="nombre" class="form-control" name="nombre"  value="@ViewBag.socio.Nombre" />
+        <input type="text" id="nombre" class="form-control" name="nombre" value="@ViewBag.socio.Nombre" readonly />
     </div>
 
     <div class="form-group">
         <label for="fechaNac">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNac" class="form-control" name="fechaNac"  value="@ViewBag.FechaNacimiento" />
+        <input type="date" id="fechaNac" class="form-control" name="fechaNac" value="@ViewBag.FechaNacimiento" readonly />
     </div>
 
     <div class="form-group">
         <label for="fechaIngreso">Fecha de Ingreso:</label>
-        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso"  value="@ViewBag.FechaIngreso" />
+        <input type="date" id="fechaIngreso" class="form-control" name="fechaIngreso" value="@ViewBag.FechaIngreso" readonly />
     </div>
 
-    <div class="form-group">
-        <label for="activo">Activo:</label>
-        <input type="text" id="activo" class="form-control" name="activo"  value="true" />
+    <div class="form-check form-switch form-group">
+        <input class="form-check-input" type="checkbox" id="activo" name="activo" @ViewBag.TextoActivo onclick="return false"/>
+        <label class="form-check-label" for="activo">Activo</label>
     </div>
-    <br />
-    <br />
+    <hr />
     <h3>Registrar Pago de Socio</h3>
     <div class="form-group">
         <label for="selectMembresia">Seleccionar Membresía:</label>
@@ -43,26 +42,26 @@
             <option value="0" disabled>Elegir...</option>
             @if (ViewBag.slectedOption == 1)
             {
-                <option value="1" selected>Pase Libre</option>
-                <option value="2">Cuponera</option>
-            }
-            else
-            {
-                <option value="1">Pase Libre</option>
-                <option value="2" selected>Cuponera</option>
-            }
+    <option value="1" selected>Pase Libre</option>
+                    <option value="2">Cuponera</option> }
+                                else
+                                {
+                    <option value="1">Pase Libre</option>
+                                    <option value="2" selected>Cuponera</option>}
 
         </select>
         <br />
         <div class="inputCantClases" style="display:@ViewBag.showCuponera;">
             <label for="cantActividadesCuponera">Cantidad de Actividades:</label>
-            <input type="number" id="cantActividadesCuponera" class="form-control" name="cantActividadesCuponera" placeholder="Ingrese la cantidad" value="@ViewBag.cantActividadesCuponera"/>
-            <br />
+            <input type="number" id="cantActividadesCuponera" class="form-control" name="cantActividadesCuponera" placeholder="Ingrese la cantidad" value="@ViewBag.cantActividadesCuponera" />
         </div>
-        <button class="btn btn-primary" type="submit" id="btnCalcularCosto">Calcular Costo</button>
         <h3>Total a pagar: <span class="totalAPagar">$ @ViewBag.costoCuota</span></h3>
+        <br />
+        <button class="btn btn-success" type="submit" id="btnCalcularCosto">Calcular Costo</button>
+        <!--<button class="btn btn-primary" type="button" id="btnConsultarIngresos">Registrar Pago</button>-->
+        @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula, @ViewBag.slectedOption, @ViewBag.cantActividadesCuponera })
+
     </div>
-    <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Registrar Pago</button>
     <br />
 </form>
 <br>

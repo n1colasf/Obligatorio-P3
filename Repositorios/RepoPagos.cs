@@ -83,5 +83,39 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public bool VerificarMensualidad(Socio socio)
+        {
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Verificar_Mensualidad";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cedula", socio.Cedula));
+                    con.Open();
+
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (SqlException Ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
     }
 }
