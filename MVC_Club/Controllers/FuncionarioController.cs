@@ -80,7 +80,7 @@ namespace MVC_Club.Controllers
             ViewBag.socioModificado = socioModificado;
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.socio = socio;
-         
+            ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
             return View();
         }
         public ActionResult PagarMensualidad(int cedula = 0)
@@ -180,7 +180,6 @@ namespace MVC_Club.Controllers
             Socio socio = FachadaClub.BuscarPorId(cedula);
             if (socio == null) return View("Buscar");
             ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
-            //ASOCIAR ACTIVIDAD AL SOCIO
             IEnumerable<DtoActividad> listaActividades = servicioActividad.ListarActividades(cedula);
             ViewBag.ListaActividades = listaActividades;
             ViewBag.cedulaSocio = socio.Cedula;
