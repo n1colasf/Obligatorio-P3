@@ -16,7 +16,7 @@ namespace MVC_Club
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Funcionario", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "Inicio", action = "Login", id = UrlParameter.Optional }
             );
         }
     }
