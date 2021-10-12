@@ -42,7 +42,7 @@ namespace Repositorios
                             int edadMin = (int)filas["edadMin"];
                             int edadMax = (int)filas["edadMax"];
                             int cupo = (int)filas["cupo"];
-                            sw.WriteLine($"{id}|{nombre}|{edadMin}|{edadMax}|{cupo},");
+                            sw.WriteLine($"{id} | {nombre} | {edadMin} | {edadMax} | {cupo},");
                         }
                         else if (tabla == "Funcionarios")
                         {
@@ -54,20 +54,20 @@ namespace Repositorios
                             int idActividad = (int)filas["idActividad"];
                             int dia = (int)filas["dia"];
                             int hora = (int)filas["hora"];
-                            sw.WriteLine($"{idActividad}|{dia}|{hora},");
+                            sw.WriteLine($"{idActividad} | {dia} | {hora},");
                         }
                         else if (tabla == "Pagos")
                         {
                             int id = (int)filas["id"];
                             int cedulaSocio = (int)filas["cedulaSocio"];
                             string fecha = filas["fecha"].ToString();
-                            double descuentoPL = (double)filas["descuentoPL"];
-                            int antiguedadPL = (int)filas["antiguedadPL"];
-                            double precioPL = (double)filas["precioPL"];
-                            double descuentoC = (double)filas["descuentoC"];
-                            int cantActividadesC = (int)filas["cantActividadesC"];
-                            double precioTotalC = (double)filas["precioTotalC"];
-                            sw.WriteLine($"{id}|{cedulaSocio}|{fecha}|{descuentoPL}|{antiguedadPL}|{precioPL}|{descuentoC}|{cantActividadesC}|{precioTotalC},");
+                            decimal descuentoPL = (filas["descuentoPL"] != DBNull.Value) ? (decimal)filas["descuentoPL"] : 0;
+                            int antiguedadPL = (filas["antiguedadPL"] != DBNull.Value) ? (int)filas["antiguedadPL"] : 0;
+                            decimal precioPL = (filas["precioPL"] != DBNull.Value) ? (decimal)filas["precioPL"] : 0;
+                            decimal descuentoC = (filas["descuentoC"] != DBNull.Value) ? (decimal)filas["descuentoC"] : 0;
+                            int cantActividadesC = (filas["cantActividadesC"] != DBNull.Value) ? (int)filas["cantActividadesC"] : 0;
+                            decimal precioTotalC = (filas["precioTotalC"] != DBNull.Value) ? (decimal)filas["precioTotalC"] : 0;
+                            sw.WriteLine($"{id} | {cedulaSocio} | {fecha} | {descuentoPL} | {antiguedadPL} | {precioPL} | {descuentoC} | {cantActividadesC} | {precioTotalC},");
                         }
                         else if (tabla == "Socios")
                         {
@@ -76,7 +76,7 @@ namespace Repositorios
                             string fechaNac = filas["fechaNac"].ToString();
                             string fechaIngreso = filas["fechaIngreso"].ToString();
                             bool activo = (bool)filas["activo"];
-                            sw.WriteLine($"{cedula}|{nombre}|{fechaNac}|{fechaIngreso}|{activo},");
+                            sw.WriteLine($"{cedula} | {nombre} | {fechaNac} | {fechaIngreso} | {activo},");
                         }
                         else if (tabla == "Socios_Actividad")
                         {
@@ -84,7 +84,7 @@ namespace Repositorios
                             int cedulaSocio = (int)filas["cedulaSocio"];
                             string fecha = filas["fecha"].ToString();
                             int horaActividad = (int)filas["horaActividad"];
-                            sw.WriteLine($"{idActividad}|{cedulaSocio}|{fecha}|{horaActividad},");
+                            sw.WriteLine($"{idActividad} | {cedulaSocio} | {fecha} | {horaActividad},");
                         }
                     }
                     filas.Close();

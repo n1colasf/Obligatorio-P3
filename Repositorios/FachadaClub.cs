@@ -98,7 +98,8 @@ namespace Repositorios
         public static Funcionario LogIn(string email, string password)
         {
             Funcionario func = BuscarFuncionario(email);
-            if (func != null && func.Email == email && func.Password == password)
+            string encryptedPassword = RepoFuncionarios.EncryptPassword(password);
+            if (func != null && func.Email == email && func.Password == encryptedPassword)
             {
                 return func;
             } else

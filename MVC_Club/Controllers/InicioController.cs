@@ -48,7 +48,7 @@ namespace MVC_Club.Controllers
             {
                 ViewBag.mensajeExito = "Funcionario registrado con éxito.";
                 Session["Logueado"] = true;
-                return View("Buscar");
+                return Redirect("/funcionario/Buscar");
             }
             else
             {
