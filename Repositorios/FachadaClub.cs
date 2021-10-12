@@ -116,6 +116,11 @@ namespace Repositorios
             }
             return ret;
         }
+        public static bool SocioInscriptoActividad(int idActividad, int cedula, int horaActividad)
+        {
+            RepoActividades repoActividades = new RepoActividades();
+            return repoActividades.SocioInscriptoActividad(idActividad, cedula, horaActividad);
+        }
         public List<Actividad> IngresosPorFecha(int cedula, DateTime fecha)
         {
             throw new NotImplementedException();

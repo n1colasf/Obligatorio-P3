@@ -37,7 +37,7 @@ namespace WCF_AltaSocioActividad
         [DataMember]
         public List<Actividad> Actividades { get; set; } //VER SI SE UTILIZA
     }
-    public class DtoActividad
+    public class DtoActividad : IComparable<DtoActividad>
     {
         [DataMember]
         public int Id { get; set; }
@@ -51,6 +51,26 @@ namespace WCF_AltaSocioActividad
         public int Cupo { get; set; }
         [DataMember]
         public List<DtoHorarioActividad> Horarios { get; set; }
+        [DataMember]
+        public List<DtoSocio> Participantes { get; set; }
+
+        public int CompareTo(DtoActividad other)
+        {
+            int res;
+            if (this.Nombre.CompareTo(other.Nombre) > 0)
+            {
+                res = 1;
+            }
+            else if (this.Nombre.CompareTo(other.Nombre) < 0)
+            {
+                res = -1;
+            }
+            else
+            {
+                res = 0;
+            }
+            return res;
+        }
     }
     public class DtoHorarioActividad
     {

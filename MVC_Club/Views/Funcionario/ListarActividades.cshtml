@@ -13,26 +13,41 @@
                 <th scope="col">Nombre de la actividad</th>
                 <th scope="col">Hora de comienzo</th>
                 <th scope="col">Cupos disponibles</th>
+                <th scope="col">Inscripto</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach (DtoActividad act in ViewBag.ListaActividades)
             {
-                foreach (DtoHorarioActividad hor in act.Horarios)
+                if(act.Cupo > 0)
                 {
-                <tr>
-                    <td>@act.Id</td>
-                    <td>@act.Nombre</td>
-                    <td>@hor.Hora</td>
-                    <td>@act.Cupo</td>
-                    <td>@Html.ActionLink("Inscribir", "/AnotarseAActividad", new { cedula = ViewBag.cedulaSocio, idActividad = act.Id, hora = hor.Hora })</td>
-                </tr>
+                    foreach (DtoHorarioActividad hor in act.Horarios)
+                    {
+                    <tr>
+                        <td>@act.Id</td>
+                        <td>@act.Nombre</td>
+                        <td>@hor.Hora</td>
+                        <td>@act.Cupo</td>
+                        @if (act.Participantes.Count > 0) 
+                        { 
+                            <td><input type="checkbox" checked onclick="return false;" /></td>
+                            <td style="color:#808080;">Inscripto</td>
+                        } 
+                        else
+                        {
+                            <td><input type="checkbox" onclick="return false;"/></td>
+                            <td>@Html.ActionLink("Inscribir", "/AnotarseAActividad", new { cedula = ViewBag.cedulaSocio, idActividad = act.Id, hora = hor.Hora })</td>
+                        }
+                        
+                    </tr>
+                    }
                 }
+                
             }
         </tbody>
     </table>
-    <p>@ViewBag.MensajeAnotadoAActividad</p>
+    <p>@ViewBag.mensaje</p>
 }
 else
 {

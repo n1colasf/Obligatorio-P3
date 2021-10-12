@@ -51,6 +51,23 @@ namespace WCF_AltaSocioActividad
                         {
                             unaA.Horarios = new List<DtoHorarioActividad>();
                             unaA.Horarios.Add(unH);
+
+                            unaA.Participantes = new List<DtoSocio>();
+                            if (FachadaClub.SocioInscriptoActividad(unaA.Id, socio.Cedula, unH.Hora))
+                            {
+                                DtoSocio dtoSocio = new DtoSocio
+                                {
+                                    Cedula = socio.Cedula,
+                                    Nombre = socio.Nombre,
+                                    FechaNac = socio.FechaNac,
+                                    FechaIngreso = socio.FechaIngreso,
+                                    Activo = socio.Activo,
+                                    Actividades = socio.Actividades
+
+                                };
+                                unaA.Participantes.Add(dtoSocio);
+                            }
+
                             listaActividadesConHorario.Add(new DtoActividad
                             {
                                 Id = unaA.Id,
@@ -58,15 +75,14 @@ namespace WCF_AltaSocioActividad
                                 EdadMin = unaA.EdadMin,
                                 EdadMax = unaA.EdadMax,
                                 Cupo = unaA.Cupo,
-                                Horarios = unaA.Horarios
+                                Horarios = unaA.Horarios,
+                                Participantes = unaA.Participantes
                             });
                         }
                     }
                 }
             }
-            //FALTA FILTRAR LAS ACTIVIDADES QUE EL SOCIO YA HAYA REALIZADO
-
-
+            listaActividadesConHorario.Sort();
             return listaActividadesConHorario;
         }
         public IEnumerable<DtoHorarioActividad> ListarHorarios()
@@ -87,7 +103,8 @@ namespace WCF_AltaSocioActividad
                     Nombre = a.Nombre,
                     EdadMin = a.EdadMin,
                     EdadMax = a.EdadMax,
-                    Cupo = a.Cupo
+                    Cupo = a.Cupo,
+                    Participantes = new List<DtoSocio>()
                 });
             }
             return actividadesAux;

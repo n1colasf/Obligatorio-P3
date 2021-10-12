@@ -171,7 +171,7 @@ namespace MVC_Club.Controllers
             Session["Logueado"] = null;
             return Redirect("/Inicio/Login");
         }
-        public ActionResult ListarActividades(int cedula = 0)
+        public ActionResult ListarActividades(int cedula = 0, string mensaje = "")
         {
             if (Session["Logueado"] == null)
             {
@@ -184,9 +184,9 @@ namespace MVC_Club.Controllers
             IEnumerable<DtoActividad> listaActividades = servicioActividad.ListarActividades(cedula);
             ViewBag.ListaActividades = listaActividades;
             ViewBag.cedulaSocio = socio.Cedula;
+            ViewBag.mensaje = mensaje;
             return View();
         }
-
 
         public ActionResult AnotarseAActividad(int cedula, int idActividad, int hora)
         {
@@ -206,8 +206,9 @@ namespace MVC_Club.Controllers
                 Actividades = socio.Actividades
             };
             ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
-            servicioActividad.AnotarseAActividad(dtoSocio, idActividad,hora);
-            return Redirect("/Funcionario/ListarActividades?cedula="+cedula);
+            bool anotadoAactividad = servicioActividad.AnotarseAActividad(dtoSocio, idActividad,hora);
+            ViewBag.mensaje = (anotadoAactividad) ? "El socio se inscribió corretamente." : "No se puede inscribir a una misma actividad mas de una vez en el mismo día.";
+            return Redirect("/Funcionario/ListarActividades?cedula="+cedula+"&mensaje="+ ViewBag.mensaje);
         }
     }
 }

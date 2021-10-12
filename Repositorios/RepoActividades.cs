@@ -117,5 +117,38 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public bool SocioInscriptoActividad(int idActividad, int cedula, int horaActividad)
+        {
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Socio_Inscripto_Actividad";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
+                    cmd.Parameters.Add(new SqlParameter("@cedulaSocio", cedula));
+                    cmd.Parameters.Add(new SqlParameter("@horaActividad", horaActividad));
+                    con.Open();
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (SqlException Ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }
