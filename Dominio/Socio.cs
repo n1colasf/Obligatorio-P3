@@ -52,17 +52,7 @@ namespace Dominio
         public bool ValidarEdad(DateTime fechaNac)
         {
             bool valido = false;
-
-            //Determino una variable fechaDeHoy a la que le doy el valor de la fecha actual
-            DateTime fechaDeHoy = DateTime.Today;
-            //Determino una variable edad la cual iguala a la resta del año de la fecha, menos el año de nacimiento
-            int edad = DateTime.Today.Year - fechaNac.Year;
-            //Si la fecha de cumpleaños todavia no paso, resto un año al resultado anterior
-            if (DateTime.Today < fechaNac.AddYears(edad))
-            {
-                edad--;
-            }
-
+            int edad = calcularEdad(fechaNac);
             if (edad > 3 && edad < 90)
             {
                 valido = true;
@@ -70,7 +60,15 @@ namespace Dominio
 
             return valido;
         }
-
+        private int calcularEdad(DateTime fechaNac)
+        {
+            int edad = DateTime.Today.Year - fechaNac.Year;
+            if (DateTime.Today < fechaNac.AddYears(edad))
+            {
+                edad--;
+            }
+            return edad;
+        }
 
     }
 

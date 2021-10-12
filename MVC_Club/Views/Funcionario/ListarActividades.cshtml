@@ -10,8 +10,9 @@
         <thead>
             <tr>
                 <th scope="col">Código de actividad</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Hora</th>
+                <th scope="col">Nombre de la actividad</th>
+                <th scope="col">Hora de comienzo</th>
+                <th scope="col">Cupos disponibles</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -20,16 +21,18 @@
             {
                 foreach (DtoHorarioActividad hor in act.Horarios)
                 {
-                    <tr>
-                        <td>@act.Id</td>
-                        <td>@act.Nombre</td>
-                        <td>@hor.Hora</td>
-                        <td>@Html.ActionLink("Inscribir", "/DetalleSocio", new { idActividad = act.Id })</td>
-                    </tr>
+                <tr>
+                    <td>@act.Id</td>
+                    <td>@act.Nombre</td>
+                    <td>@hor.Hora</td>
+                    <td>@act.Cupo</td>
+                    <td>@Html.ActionLink("Inscribir", "/AnotarseAActividad", new { cedula = ViewBag.cedulaSocio, idActividad = act.Id, hora = hor.Hora })</td>
+                </tr>
                 }
             }
         </tbody>
     </table>
+    <p>@ViewBag.MensajeAnotadoAActividad</p>
 }
 else
 {

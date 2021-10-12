@@ -45,10 +45,12 @@
         @if (ViewBag.mensualidadPaga)
         {
             @Html.ActionLink("Inscribir a Actividad", "/ListarActividades", new { cedula = @ViewBag.socio.Cedula }) 
+            <p class="text-success">*El socio tiene la cuota al día.</p>
 
         } else
         {
             @Html.ActionLink("Pagar Mensualidad", "/PagarMensualidad", new { cedula = @ViewBag.socio.Cedula })
+            <p class="text-danger">*El socio no tiene la cuota al día.</p>
         }
         <br />
         <hr />

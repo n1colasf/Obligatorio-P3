@@ -194,5 +194,50 @@ namespace Repositorios
             }
             return existe;
         }
+        public bool AltaSocioActividad(Socio obj, int idActividad, int hora)
+        {
+            if (obj == null)
+                return false;
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            SqlTransaction trn = null;
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                if (manejadorConexion.AbrirConexion(con))
+                {
+                    trn = con.BeginTransaction();
+
+                    cmd.Connection = con;
+                    cmd.CommandText = "Alta_Socio_Actividad";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
+                    cmd.Parameters.Add(new SqlParameter("@cedulaSocio", obj.Cedula));
+                    cmd.Parameters.Add(new SqlParameter("@fecha", DateTime.Now.Date));
+                    cmd.Parameters.Add(new SqlParameter("@horaActividad", hora));
+                    cmd.Transaction = trn;
+                    cmd.ExecuteNonQuery();
+
+                    SqlCommand cmd2 = new SqlCommand();
+                    cmd2.Connection = con;
+                    cmd2.CommandText = "Bajar_Cupo";
+                    cmd2.CommandType = CommandType.StoredProcedure;
+                    cmd2.Parameters.Add(new SqlParameter("@id", idActividad));
+                    cmd2.Transaction = trn;
+                    cmd2.ExecuteNonQuery();
+                    trn.Commit();
+                }
+                
+                return true;
+            }
+            catch (SqlException Ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }

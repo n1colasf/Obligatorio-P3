@@ -15,38 +15,58 @@ namespace WCF_AltaSocioActividad
     {
         private RepoActividades repoActividades = new RepoActividades();
         private RepoHorarios repoHorarios = new RepoHorarios();
-        public bool AnotarseAActividad(Socio socio, Actividad actividad)
+        public bool AnotarseAActividad(DtoSocio dtoSocio, int idActividad, int hora)
         {
-            return true;
+            Socio socio = new Socio
+            {
+                Cedula = dtoSocio.Cedula,
+                Nombre = dtoSocio.Nombre,
+                FechaNac = dtoSocio.FechaNac,
+                FechaIngreso = dtoSocio.FechaIngreso,
+                Activo = dtoSocio.Activo,
+                Actividades = dtoSocio.Actividades
+            };
+            return FachadaClub.AnotarseAActividad(socio, idActividad, hora);
         }
-        public IEnumerable<DtoActividad> ListarActividades()
+        public IEnumerable<DtoActividad> ListarActividades(int cedula) //FALTA FILTRAR LAS ACTIVIDADES QUE EL SOCIO YA HAYA REALIZADO
         {
+            List<DtoActividad> listaActividadesConHorario = new List<DtoActividad>();
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            bool mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
             IEnumerable<Actividad> listaActividadesDB = repoActividades.TraerTodos();
             IEnumerable<DtoActividad> listaActividades = ObtenerListaDtosActividades(listaActividadesDB);
-
             IEnumerable<DtoHorarioActividad> listHorarios = ListarHorarios();
 
-            List<DtoActividad> listaActividadesConHorario = new List<DtoActividad>();
             foreach (DtoActividad unaA in listaActividades)
             {
-                foreach (DtoHorarioActividad unH in listHorarios)
+                if(calcularEdad(socio.FechaNac) >= unaA.EdadMin && calcularEdad(socio.FechaNac) <= unaA.EdadMax && mensualidadPaga)
                 {
-                    if(unaA.Id == unH.IdActividad && unH.Dia == (int)DateTime.Now.DayOfWeek && unH.Hora > DateTime.Now.Hour)
+                    foreach (DtoHorarioActividad unH in listHorarios)
                     {
-                        unaA.Horarios = new List<DtoHorarioActividad>();
-                        unaA.Horarios.Add(unH);
-                        listaActividadesConHorario.Add(new DtoActividad
+                        if (
+                            unaA.Id == unH.IdActividad &&
+                            unH.Dia == (int)DateTime.Now.DayOfWeek &&
+                            unH.Hora > DateTime.Now.Hour
+                            )
                         {
-                            Id = unaA.Id,
-                            Nombre = unaA.Nombre,
-                            EdadMin = unaA.EdadMin,
-                            EdadMax = unaA.EdadMax,
-                            Cupo = unaA.Cupo,
-                            Horarios = unaA.Horarios
-                        });
+                            unaA.Horarios = new List<DtoHorarioActividad>();
+                            unaA.Horarios.Add(unH);
+                            listaActividadesConHorario.Add(new DtoActividad
+                            {
+                                Id = unaA.Id,
+                                Nombre = unaA.Nombre,
+                                EdadMin = unaA.EdadMin,
+                                EdadMax = unaA.EdadMax,
+                                Cupo = unaA.Cupo,
+                                Horarios = unaA.Horarios
+                            });
+                        }
                     }
                 }
             }
+            //FALTA FILTRAR LAS ACTIVIDADES QUE EL SOCIO YA HAYA REALIZADO
+
+
             return listaActividadesConHorario;
         }
         public IEnumerable<DtoHorarioActividad> ListarHorarios()
@@ -86,6 +106,34 @@ namespace WCF_AltaSocioActividad
                 });
             }
             return horariosAux;
+        }
+        private DtoSocio buscarDtoSocio(int cedula)
+        {
+            DtoSocio dtoSocio = null;
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            if (socio != null)
+            {
+                dtoSocio = new DtoSocio
+                {
+                    Cedula = socio.Cedula,
+                    Nombre = socio.Nombre,
+                    FechaNac = socio.FechaNac,
+                    FechaIngreso = socio.FechaIngreso,
+                    Activo = socio.Activo,
+                    Actividades = socio.Actividades
+
+                };
+            }
+            return dtoSocio;
+        }
+        private int calcularEdad(DateTime fechaNac)
+        {
+            int edad = DateTime.Today.Year - fechaNac.Year;
+            if (DateTime.Today < fechaNac.AddYears(edad))
+            {
+                edad--;
+            }
+            return edad;
         }
     }
 }

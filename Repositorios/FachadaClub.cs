@@ -106,9 +106,15 @@ namespace Repositorios
                 return null;
             }
         }
-        public bool AnotarseAActividad(Socio socio, Actividad actividad)
+        public static bool AnotarseAActividad(Socio socio, int idActividad, int hora)
         {
-            throw new NotImplementedException();
+            bool ret = false;
+            if (VerificarMensualidad(socio))
+            {
+                RepoSocios repoSocios = new RepoSocios();
+                ret = repoSocios.AltaSocioActividad(socio, idActividad, hora);
+            }
+            return ret;
         }
         public List<Actividad> IngresosPorFecha(int cedula, DateTime fecha)
         {
@@ -134,8 +140,7 @@ namespace Repositorios
         }
         public static bool VerificarMensualidad(Socio socio)
         {
-            RepoPagos repoPagos = new RepoPagos();
-
+           RepoPagos repoPagos = new RepoPagos();
            return repoPagos.VerificarMensualidad(socio);
         }
         public static double MostrarCostoCuponera(int cedula, int cantidadActividades)
@@ -144,6 +149,10 @@ namespace Repositorios
         }
         public static bool RegistrarPagoCuponera(int cedula, int cantidadActividades)
         {
+            Socio socio = BuscarPorId(cedula);
+            bool mensualidadPaga = false;
+            if (socio != null) mensualidadPaga = VerificarMensualidad(socio);
+            if (cantidadActividades <= 8 || cantidadActividades > 60 || mensualidadPaga) return false;
             Cuponera cup = CalcularCuponera(cedula, cantidadActividades);
             RepoPagos repoPagos = new RepoPagos();
             bool ret = repoPagos.Alta(cup);

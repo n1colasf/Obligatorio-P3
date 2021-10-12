@@ -96,7 +96,6 @@ namespace MVC_Club.Controllers
         [HttpPost]
         public ActionResult PagarMensualidad(int cedula, int membresia, int cantActividades = 0)
         {
-            //ESTO NO ESTA ANDANDO - NO ENTRA NUNCA
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
             if (membresia == 1 && !ViewBag.mensualidadPaga)
@@ -106,8 +105,17 @@ namespace MVC_Club.Controllers
             {
                 ViewBag.mensualidadPaga = FachadaClub.RegistrarPagoCuponera(cedula, cantActividades);
             }
+            if (ViewBag.mensualidadPaga)
+            {
+                ViewBag.mensaje = "El pago ha sido realizado con éxito.";
+                ViewBag.textMensualidadPaga = "success";
+            } else
+            {
+                ViewBag.mensaje = "No se pudo realizar el pago.";
+                ViewBag.textMensualidadPaga = "danger";
+            }
             ViewBag.socio = socio;
-            return View("");
+            return View();
         }
         public ActionResult MostrarCostoMensualidad(int cedula)
         {
@@ -123,6 +131,15 @@ namespace MVC_Club.Controllers
         [HttpPost]
         public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, int selectMembresia, int cantActividades = 0)
         {
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
+            ViewBag.socio = socio;
+            if (ViewBag.mensualidadPaga)
+            {
+                ViewBag.mensaje = "El socio ya tiene la cuota paga.";
+                ViewBag.textMensualidadPaga = "danger";
+                return View("PagarMensualidad");
+            }
             double costoCuota;
             if (selectMembresia == 1)
             {
@@ -138,8 +155,7 @@ namespace MVC_Club.Controllers
                 ViewBag.cantActividades = cantActividades;
             }
             ViewBag.costoCuota = costoCuota;
-            Socio socio = FachadaClub.BuscarPorId(cedula);
-            ViewBag.socio = socio;
+            
             return View("PagarMensualidad");
         }
         public ActionResult DarDeBaja(int cedula = 0)
@@ -155,19 +171,43 @@ namespace MVC_Club.Controllers
             Session["Logueado"] = null;
             return Redirect("/Inicio/Login");
         }
-        public ActionResult ListarActividades()
+        public ActionResult ListarActividades(int cedula = 0)
         {
             if (Session["Logueado"] == null)
             {
                 return Redirect("/Inicio/Login");
             }
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            if (socio == null) return View("Buscar");
             ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
-            //servicioActividad.Open(); ESTO PARA QUE ERA? NO SIRVE
-            //TRAER LOS HORARIOS DE CADA ACTIVIDAD
             //ASOCIAR ACTIVIDAD AL SOCIO
-            IEnumerable<DtoActividad> listaActividades = servicioActividad.ListarActividades();
+            IEnumerable<DtoActividad> listaActividades = servicioActividad.ListarActividades(cedula);
             ViewBag.ListaActividades = listaActividades;
+            ViewBag.cedulaSocio = socio.Cedula;
             return View();
+        }
+
+
+        public ActionResult AnotarseAActividad(int cedula, int idActividad, int hora)
+        {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/Inicio/Login");
+            }
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            if(socio == null) return View("Buscar");
+            DtoSocio dtoSocio = new DtoSocio
+            {
+                Cedula = socio.Cedula,
+                Nombre = socio.Nombre,
+                FechaNac = socio.FechaNac,
+                FechaIngreso = socio.FechaIngreso,
+                Activo = socio.Activo,
+                Actividades = socio.Actividades
+            };
+            ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
+            servicioActividad.AnotarseAActividad(dtoSocio, idActividad,hora);
+            return Redirect("/Funcionario/ListarActividades?cedula="+cedula);
         }
     }
 }

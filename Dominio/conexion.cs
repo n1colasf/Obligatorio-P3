@@ -16,7 +16,7 @@ namespace Dominio
 		{
 			return new SqlConnection(stringConexion);
 		}
-		public bool AbrirConexion(IDbConnection cn)
+		public bool AbrirConexion(SqlConnection cn)
 		{
 
 			if (cn == null)
@@ -28,7 +28,7 @@ namespace Dominio
 			}
 			return false;
 		}
-		public bool CerrarConexion(IDbConnection cn)
+		public bool CerrarConexion(SqlConnection cn)
 		{
 			if (cn == null)
 				return false;

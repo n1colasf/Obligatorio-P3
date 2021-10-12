@@ -14,7 +14,7 @@ namespace Dominio
 
         public bool ValidarHora(int hora)
         {
-            return hora >= 7 && hora <= 23;
+            return hora >= 7 && hora < 23;
         }
     }
 }

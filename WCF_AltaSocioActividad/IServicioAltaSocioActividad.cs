@@ -16,9 +16,9 @@ namespace WCF_AltaSocioActividad
     public interface IServicioAltaSocioActividad
     {
         [OperationContract]
-        bool AnotarseAActividad(Socio socio, Actividad actividad);
+        bool AnotarseAActividad(DtoSocio dtoSocio, int idActividad, int hora);
         [OperationContract]
-        IEnumerable<DtoActividad> ListarActividades();
+        IEnumerable<DtoActividad> ListarActividades(int cedula);
         IEnumerable<DtoHorarioActividad> ListarHorarios();
     }
 
