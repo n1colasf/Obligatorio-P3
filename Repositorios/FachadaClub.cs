@@ -122,11 +122,17 @@ namespace Repositorios
             RepoActividades repoActividades = new RepoActividades();
             return repoActividades.SocioInscriptoActividad(idActividad, cedula, horaActividad);
         }
-        public List<Actividad> IngresosPorFecha(int cedula, DateTime fecha)
+        public static List<Actividad> IngresosPorFecha(int cedula, DateTime fecha) //FALTA IMPLEMENTAR!!!
         {
-            throw new NotImplementedException();
+            List<Actividad> ret = new List<Actividad>();
+            //Socio socio = BuscarPorId(cedula);
+            //if (socio == null) return ret;
+            //RepoActividades repoActividades = new RepoActividades();
+            //ret = repoActividades.IngresosPorSocio(cedula,fecha);
+
+            return ret;
         }
-        public List<Actividad> ProximasActividades(DateTime fecha)
+        public List<Actividad> ProximasActividades(DateTime fecha) //NO IMPLEMENTADO, NO SE USA
         {
             throw new NotImplementedException();
         }
@@ -196,7 +202,7 @@ namespace Repositorios
         public void ExportarInformacion()
         {
             throw new NotImplementedException();
-        }
+        } //NO SE UTILIZA, EL CONTROLADOR LLAMA AL REPOEXPORTAR
         public static Funcionario BuscarFuncionario(string email)
         {
             RepoFuncionarios repoFunc = new RepoFuncionarios();

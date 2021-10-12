@@ -186,7 +186,6 @@ namespace MVC_Club.Controllers
             ViewBag.mensaje = mensaje;
             return View();
         }
-
         public ActionResult AnotarseAActividad(int cedula, int idActividad, int hora)
         {
             if (Session["Logueado"] == null)
@@ -208,6 +207,24 @@ namespace MVC_Club.Controllers
             bool anotadoAactividad = servicioActividad.AnotarseAActividad(dtoSocio, idActividad,hora);
             ViewBag.mensaje = (anotadoAactividad) ? "El socio se inscribió corretamente." : "No se puede inscribir a una misma actividad mas de una vez en el mismo día.";
             return Redirect("/Funcionario/ListarActividades?cedula="+cedula+"&mensaje="+ ViewBag.mensaje);
+        }
+        public ActionResult IngresosPorFecha(int cedula)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult IngresosPorFecha(int cedula, DateTime fecha)
+        {
+            if (Session["Logueado"] == null)
+            {
+                return Redirect("/Inicio/Login");
+            }
+            Socio socio = FachadaClub.BuscarPorId(cedula);
+            if (socio == null) return View("Buscar");
+
+            List<Actividad> ingresosPorFecha = FachadaClub.IngresosPorFecha(cedula, fecha);
+            ViewBag.ingresosPorFecha = ingresosPorFecha;
+            return View();
         }
     }
 }

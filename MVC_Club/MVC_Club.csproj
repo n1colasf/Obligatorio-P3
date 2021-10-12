@@ -172,6 +172,7 @@
     <Content Include="Views\Funcionario\PagarMensualidad.cshtml" />
     <Content Include="Views\Funcionario\ListarActividades.cshtml" />
     <Content Include="Views\Export\Exportar.cshtml" />
+    <Content Include="Views\Funcionario\IngresosPorFecha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -54,11 +54,12 @@
     }
     <br />
     <hr />
-    <form action="/funcionario/DetalleSocio" method="get">
+    <form action="/funcionario/IngresosPorFecha" method="post">
         <h3>Ingresos a actividades por Fecha:</h3>
         <div class="form-group">
             <label for="fechaIngresoAct">Selecciona una fecha:</label>
             <input type="date" id="fechaIngresoAct" class="form-control" name="fechaIngresoAct" required />
+            <input style="display:none;" type="text" id="cedulaIngresosFecha" class="form-control" name="cedula" required value="@ViewBag.socio.Cedula" />
         </div>
         <button class="btn btn-primary" type="button" id="btnConsultarIngresos">Consultar</button>
         <br />

@@ -1,0 +1,34 @@
+﻿@using Dominio
+@{ ViewBag.Title = "Ingresos del socio a actividades.";
+}
+<h2>Ingresos del socio a actividades.</h2>
+
+@if (ViewBag.ingresosPorFecha != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Código de actividad</th>
+                <th scope="col">Nombre de la actividad</th>
+                <th scope="col">Hora de comienzo</th>
+                <th scope="col">Fecha de actividad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Actividad act in ViewBag.ingresosPorFecha)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>@ViewBag.mensaje</p>
+} else
+{
+    <br>
+    <p>No hay actividades para la fecha seleccionada.</p>
+}

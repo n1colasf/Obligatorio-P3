@@ -101,10 +101,8 @@ namespace Repositorios
             }
         }
 
-        //Fix me: Van aca los metodos del repo socios
         public bool ExisteNombre(string nombre)
         {
-            //IMPLEMENTAR PARA VALIDACION
             return false;
         }
 
@@ -144,6 +142,42 @@ namespace Repositorios
             catch (SqlException Ex)
             {
                 return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public static List<Actividad> IngresosPorSocio(int idActividad, int cedula, DateTime fecha) //FALTA IMPLEMENTAR!!!!
+        {
+            List<Actividad> listaActividades = new List<Actividad>();
+            Conexion manejadorConexion = new Conexion();
+            SqlConnection con = manejadorConexion.CrearConexion();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "Ingresos_Por_Socio";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@cedula", cedula));
+                    cmd.Parameters.Add(new SqlParameter("@fecha", fecha.Date));
+                    con.Open();
+                    SqlDataReader filas = cmd.ExecuteReader();
+                    while (filas.Read())
+                    {
+                        Actividad act = new Actividad
+                        {
+                            //FALTA IMPLEMENTAR
+                        };
+                        listaActividades.Add(act);
+                    }
+                    return listaActividades;
+                }
+            }
+            catch (SqlException Ex)
+            {
+                return null;
             }
             finally
             {
