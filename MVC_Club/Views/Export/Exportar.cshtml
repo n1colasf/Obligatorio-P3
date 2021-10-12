@@ -1,0 +1,47 @@
+﻿@using Dominio
+@{ ViewBag.Title = "Exportar Información"; }
+
+<h2>Exportar información del sistema</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Nombre de Tabla</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Link a descarga de datos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Actividades</td>
+            <td>Listado de actividades disponibles del CLub.</td>
+            <td>@Html.ActionLink("Exportar", "/GuardarTabla", new { tabla = "Actividades" })</td>
+        </tr>
+        <tr>
+            <td>Funcionarios</td>
+            <td>Listado de Funcionarios activos en el sistema.</td>
+            <td>@Html.ActionLink("Exportar", "/GuardarTabla", new { tabla = "Funcionarios" })</td>
+        </tr>
+        <tr>
+            <td>Horarios de Actividad</td>
+            <td>Listado de horarios disponibles de las actividades.</td>
+            <td>@Html.ActionLink("Exportar", "/GuardarTabla", new { tabla = "Horarios_Actividad" })</td>
+        </tr>
+        <tr>
+            <td>Pagos</td>
+            <td>Listado de pagos de mensualidad de los Socios.</td>
+            <td>@Html.ActionLink("Exportar", "/GuardarTabla", new { tabla = "Pagos" })</td>
+        </tr>
+        <tr>
+            <td>Socios</td>
+            <td>Listado de Socios registrados en el sistema.</td>
+            <td>@Html.ActionLink("Exportar", "/GuardarTabla", new { tabla = "Socios" })</td>
+        </tr>
+        <tr>
+            <td>Actividades por Socio</td>
+            <td>Listado de Actividades a las que se inscribieron los socios.</td>
+            <td>@Html.ActionLink("Exportar", "/GuardarTabla", new { tabla = "Socios_Actividad" })</td>
+        </tr>
+    </tbody>
+</table>
+<h3>@ViewBag.mensaje</h3>

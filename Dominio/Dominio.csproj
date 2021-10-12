@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exportar.cs" />
     <Compile Include="conexion.cs" />
     <Compile Include="Socio.cs" />
     <Compile Include="Actividad.cs" />
