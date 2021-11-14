@@ -1,8 +1,8 @@
 ﻿@using Dominio
 @{ ViewBag.Title = "Pagar Mensualidad";
-                ViewBag.TextoActivo = (ViewBag.socio.Activo) ? "checked" : "";
-                ViewBag.FechaNacimiento = ViewBag.socio.FechaNac.ToString("yyyy-MM-dd");
-                ViewBag.FechaIngreso = ViewBag.socio.FechaIngreso.ToString("yyyy-MM-dd");
+                ViewBag.TextoActivo = (Model.Activo) ? "checked" : "";
+                ViewBag.FechaNacimiento = Model.FechaNac.ToString("yyyy-MM-dd");
+                ViewBag.FechaIngreso = Model.FechaIngreso.ToString("yyyy-MM-dd");
                 ViewBag.mostrarBotonPago = (ViewBag.costoCuota > 0) ? "" : "disabled"; }
 
 <h2>Pagar Mensualidad</h2>
@@ -11,12 +11,12 @@
 
     <div class="form-group">
         <label for="cedula">Cédula:</label>
-        <input type="number" id="cedula" class="form-control" name="cedula" value="@ViewBag.socio.Cedula" readonly />
+        <input type="number" id="cedula" class="form-control" name="cedula" value="@Model.Cedula" readonly />
     </div>
 
     <div class="form-group">
         <label for="nombre">Nombre y Apellido:</label>
-        <input type="text" id="nombre" class="form-control" name="nombre" value="@ViewBag.socio.Nombre" readonly />
+        <input type="text" id="nombre" class="form-control" name="nombre" value="@Model.Nombre" readonly />
     </div>
 
     <div class="form-group">
@@ -59,7 +59,7 @@
     </div>
 </form>
 <form action="/funcionario/PagarMensualidad" method="post">
-    <input style="display:none;" type="number" id="cedula2" class="form-control" name="cedula" value="@ViewBag.socio.Cedula" readonly />
+    <input style="display:none;" type="number" id="cedula2" class="form-control" name="cedula" value="@Model.Cedula" readonly />
     <input style="display:none;" type="number" id="membresia2" class="form-control" name="membresia" value="@ViewBag.slectedOption" readonly />
     <input style="display:none;" type="number" id="cantActividades2" class="form-control" name="cantActividades" value="@ViewBag.cantActividades" readonly />
     <!--h3>Total a pagar: <span class="totalAPagar">$ @ViewBag.costoCuota</span></h3-->

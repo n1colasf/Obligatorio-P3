@@ -4,7 +4,7 @@
     ViewBag.Title = "Actividades del día disponibles para inscripción";
 }
 <h2>Actividades de hoy disponibles para inscripción</h2>
-@if (ViewBag.ListaActividades != null && ViewBag.ListaActividades.Count > 0)
+@if (Model != null && Model.Count > 0)
 {
     <table class="table table-striped">
         <thead>
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (DtoActividad act in ViewBag.ListaActividades)
+            @foreach (DtoActividad act in Model)
             {
                 if(act.Cupo > 0)
                 {

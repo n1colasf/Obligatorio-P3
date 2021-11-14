@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dominio;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Repositorios
 {
@@ -15,23 +16,16 @@ namespace Repositorios
         {
             if (obj == null || !obj.ValidarEmail(obj.Email) || !obj.ValidarPassword(obj.Password))
                 return false;
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
 
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString()); //VER DE TRAER EL CONSTRING DE WEB.CONFIG
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Alta_Funcionario";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@email", obj.Email));
-                    string encryptedPassword = EncryptPassword(obj.Password);
-                    cmd.Parameters.Add(new SqlParameter("@password", encryptedPassword));
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-
-                }
+                string encryptedPassword = EncryptPassword(obj.Password);
+                Funcionario f = new Funcionario { Email = obj.Email, Password = encryptedPassword };
+                
+                db.Funcionarios.Add(f);
+                db.SaveChanges(); //ESTO VA ACÁ O EN EL FINALLY?
                 return true;
             }
             catch (SqlException Ex)
@@ -40,7 +34,7 @@ namespace Repositorios
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
         }
 

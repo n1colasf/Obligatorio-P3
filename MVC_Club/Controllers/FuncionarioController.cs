@@ -43,8 +43,7 @@ namespace MVC_Club.Controllers
                 return Redirect("/Inicio/Login");
             }
             List<Socio> listadoSocios = FachadaClub.ListarSocios();
-            ViewBag.listadoSocios = listadoSocios;
-            return View();
+            return View(listadoSocios);
         }
         public ActionResult DetalleSocio(int cedula = 0)
         {
@@ -66,9 +65,8 @@ namespace MVC_Club.Controllers
                 ViewBag.mensaje = "No se encontró socio con la cédula ingresada.";
                 return View("Buscar");
             }
-            ViewBag.socio = socio;
             ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
-            return View();
+            return View(socio);
         }
         [HttpPost]
         public ActionResult DetalleSocio(int cedula, string nombre, DateTime fechaNac)
@@ -79,9 +77,8 @@ namespace MVC_Club.Controllers
             ViewBag.mensajeDatosActualizados = (socioModificado) ? "Se modificaron los datos con éxito." : "No se pudo actualizar datos.";
             ViewBag.socioModificado = socioModificado;
             Socio socio = FachadaClub.BuscarPorId(cedula);
-            ViewBag.socio = socio;
             ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
-            return View();
+            return View(socio);
         }
         public ActionResult PagarMensualidad(int cedula = 0)
         {
@@ -90,8 +87,7 @@ namespace MVC_Club.Controllers
                 return Redirect("/Inicio/Login");
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
-            ViewBag.socio = socio;
-            return View();
+            return View(socio);
         }
         [HttpPost]
         public ActionResult PagarMensualidad(int cedula, int membresia, int cantActividades = 0)
@@ -114,8 +110,7 @@ namespace MVC_Club.Controllers
                 ViewBag.mensaje = "No se pudo realizar el pago.";
                 ViewBag.textMensualidadPaga = "danger";
             }
-            ViewBag.socio = socio;
-            return View();
+            return View(socio);
         }
         public ActionResult MostrarCostoMensualidad(int cedula)
         {
@@ -124,21 +119,19 @@ namespace MVC_Club.Controllers
                 return Redirect("/Inicio/Login");
             }
             Socio socio = FachadaClub.BuscarPorId(cedula);
-            ViewBag.socio = socio;
 
-            return View("PagarMensualidad");
+            return View("PagarMensualidad",socio);
         }
         [HttpPost]
         public ActionResult MostrarCostoMensualidad(int cedula, string nombre, DateTime fechaNac, DateTime fechaIngreso, int selectMembresia, int cantActividades = 0)
         {
             Socio socio = FachadaClub.BuscarPorId(cedula);
             ViewBag.mensualidadPaga = FachadaClub.VerificarMensualidad(socio);
-            ViewBag.socio = socio;
             if (ViewBag.mensualidadPaga)
             {
                 ViewBag.mensaje = "El socio ya tiene la cuota paga.";
                 ViewBag.textMensualidadPaga = "danger";
-                return View("PagarMensualidad");
+                return View("PagarMensualidad",socio);
             }
             double costoCuota;
             if (selectMembresia == 1)
@@ -156,15 +149,14 @@ namespace MVC_Club.Controllers
             }
             ViewBag.costoCuota = costoCuota;
             
-            return View("PagarMensualidad");
+            return View("PagarMensualidad",socio);
         }
         public ActionResult DarDeBaja(int cedula = 0)
         {
             bool dadoDeBaja = FachadaClub.DarDeBajaSocio(cedula);
             ViewBag.mensajeDatosActualizados = (dadoDeBaja) ? "El socio fue dado de baja." : "";
             Socio socio = FachadaClub.BuscarPorId(cedula);
-            ViewBag.socio = socio;
-            return View("DetalleSocio");
+            return View("DetalleSocio",socio);
         }
         public ActionResult Logout()
         {
@@ -181,10 +173,9 @@ namespace MVC_Club.Controllers
             if (socio == null) return View("Buscar");
             ServicioAltaSocioActividad servicioActividad = new ServicioAltaSocioActividad();
             IEnumerable<DtoActividad> listaActividades = servicioActividad.ListarActividades(cedula);
-            ViewBag.ListaActividades = listaActividades;
             ViewBag.cedulaSocio = socio.Cedula;
             ViewBag.mensaje = mensaje;
-            return View();
+            return View(listaActividades);
         }
         public ActionResult AnotarseAActividad(int cedula, int idActividad, int hora)
         {
@@ -211,9 +202,9 @@ namespace MVC_Club.Controllers
         public ActionResult IngresosPorFecha(int cedula)
         {
             return View();
-        }
+        } //FALTA TERMINAR DE IMPLEMENTAR
         [HttpPost]
-        public ActionResult IngresosPorFecha(int cedula, DateTime fecha)
+        public ActionResult IngresosPorFecha(int cedula, DateTime fecha) //FALTA TERMINAR DE IMPLEMENTAR
         {
             if (Session["Logueado"] == null)
             {

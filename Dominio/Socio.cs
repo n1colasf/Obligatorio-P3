@@ -8,6 +8,7 @@ namespace Dominio
 {
     public class Socio
     {
+        public int Id { get; set; }
         public int Cedula { get; set; }
         public string Nombre { get; set; }
         public DateTime FechaNac { get; set; }
@@ -28,12 +29,7 @@ namespace Dominio
 
         public bool ValidarNombre(string nombre)
         {
-            //6<caracteres &
-            //sin espacios al principio o al final & 
-            //caracteres alfabeticos
             bool valido = true;
-
-            //FixMe: ver de hacer con una expresion regular
             if (nombre.Length > 6)
             {
                 for (int i = 0; i < nombre.Length; i++)

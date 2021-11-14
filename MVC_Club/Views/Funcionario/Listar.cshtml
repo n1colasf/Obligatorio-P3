@@ -5,7 +5,7 @@
 
 <h2>Listado de Socios</h2>
 
-@if (ViewBag.listadoSocios != null)
+@if (Model != null)
 {
     <table class="table table-striped">
         <thead>
@@ -19,15 +19,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Socio socio in ViewBag.listadoSocios)
+            @foreach (var s in Model)
             {
             <tr>
-                <td>@socio.Cedula</td>
-                <td>@socio.Nombre</td>
-                <td>@socio.FechaNac.ToString("dd-MM-yyyy")</td>
-                <td>@socio.FechaIngreso.ToString("dd-MM-yyyy")</td>
-                @if(socio.Activo) { <td>Si</td> } else {<td>No</td> }
-                <td>@Html.ActionLink("Ver Detalle", "/DetalleSocio", new { cedula = socio.Cedula })</td>
+                <td>@s.Cedula</td>
+                <td>@s.Nombre</td>
+                <td>@s.FechaNac.ToString("dd-MM-yyyy")</td>
+                <td>@s.FechaIngreso.ToString("dd-MM-yyyy")</td>
+                @if(s.Activo) { <td>Si</td> } else {<td>No</td> }
+                <td>@Html.ActionLink("Ver Detalle", "/DetalleSocio", new { cedula = s.Cedula })</td>
             </tr>
             }
         </tbody>

@@ -12,6 +12,10 @@ namespace Dominio
 	{
 		//private string stringConexion = @"Server=NICOLASFERNA298;Database=Obligatorio_P3;Integrated Security=True; MultipleActiveResultSets=true";
 		private string stringConexion = @"Server=ACER-GON\SQLEXPRESS;Database=Club;Integrated Security=True; MultipleActiveResultSets=true";
+		public string getConectionString()
+        {
+			return stringConexion;
+        }
 		public SqlConnection CrearConexion()
 		{
 			return new SqlConnection(stringConexion);

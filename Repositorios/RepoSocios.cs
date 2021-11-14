@@ -16,23 +16,15 @@ namespace Repositorios
         {
             if (obj == null || !obj.ValidarCedula(obj.Cedula) || !obj.ValidarNombre(obj.Nombre) || !obj.ValidarEdad(obj.FechaNac) || ExisteSocio(obj.Cedula))
             	return false;
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
+
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString()); //VER DE TRAER EL CONSTRING DE WEB.CONFIG
             try
             {
-                using(SqlCommand cmd = new SqlCommand()){
-                    cmd.Connection = con;
-                    cmd.CommandText = "Alta_Socio";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@cedula", obj.Cedula));
-                    cmd.Parameters.Add(new SqlParameter("@nombre", obj.Nombre));
-                    cmd.Parameters.Add(new SqlParameter("@fechaNac", obj.FechaNac));
-                    cmd.Parameters.Add(new SqlParameter("@fechaIngreso", obj.FechaIngreso));
-                    cmd.Parameters.Add(new SqlParameter("@activo", obj.Activo));
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    
-                }
+                Socio s = new Socio { Cedula = obj.Cedula, Nombre = obj.Nombre, FechaNac = obj.FechaNac, FechaIngreso = obj.FechaIngreso, Activo = obj.Activo};
+
+                db.Socios.Add(s);
+                db.SaveChanges(); //ESTO VA ACÁ O EN EL FINALLY?
 				return true;
 			}
 			catch (SqlException Ex)
@@ -41,7 +33,7 @@ namespace Repositorios
             }
             finally
 			{
-                con.Close();
+                db.Dispose();
             }
 		}
 
@@ -112,6 +104,34 @@ namespace Repositorios
             {
                 con.Close();
             }
+
+
+            //Conexion con = new Conexion();
+            //Context db = new Context(con.getConectionString()); //VER DE TRAER EL CONSTRING DE WEB.CONFIG
+            //Socio socio = new Socio();
+            //try
+            //{
+            //var soc = db.Socios 
+            //    .Where(s => s.Cedula == cedula)
+            //    .Select(s => s);
+
+            //var socio = from s in db.Socios
+            //            where s.Cedula == cedula
+            //            select new {s.Cedula, s.Nombre, s.FechaNac, s.FechaIngreso, s.Activo};
+
+            //Socio socio = db.Socios .Where(s => s.Cedula == cedula).Single();
+
+            //    return socio;
+
+            //}
+            //catch (SqlException Ex)
+            //{
+            //    return null;
+            //}
+            //finally
+            //{
+            //    db.Dispose();
+            //}
         }
 
         public bool Modificacion(Socio obj)
@@ -148,6 +168,13 @@ namespace Repositorios
 
         public List<Socio> TraerTodos()
         {
+
+            //Conexion con = new Conexion();
+            //Context db = new Context(con.getConectionString()); //VER DE TRAER EL CONSTRING DE WEB.CONFIG
+            //return db.Socios .ToList();//SE ROMPE!!!!!!!!!!!!!!!!!!!!
+            //db.Dispose();
+
+
             Conexion manejadorConexion = new Conexion();
             SqlConnection con = manejadorConexion.CrearConexion();
             try
