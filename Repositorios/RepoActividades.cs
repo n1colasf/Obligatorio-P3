@@ -15,35 +15,22 @@ namespace Repositorios
         {
             if (obj == null || ExisteNombre(obj.Nombre))
                 return false;
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
-
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Alta_Actividad";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@nombre", obj.Nombre));
-                    cmd.Parameters.Add(new SqlParameter("@edadMin", obj.EdadMin));
-                    cmd.Parameters.Add(new SqlParameter("@edadMax", obj.EdadMax));
-                    cmd.Parameters.Add(new SqlParameter("@cupo", obj.Cupo));
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-
-                }
-
-
+                Actividad act = new Actividad { Nombre = obj.Nombre, EdadMin = obj.EdadMin, EdadMax = obj.EdadMax, Cupo = obj.Cupo};
+                db.Actividades.Add(act);
+                db.SaveChanges();
                 return true;
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
                 return false;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
         }
 
@@ -64,40 +51,19 @@ namespace Repositorios
 
         public List<Actividad> TraerTodos()
         {
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Listar_Actividades";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    List<Actividad> listaActividades = new List<Actividad>();
-                    SqlDataReader filas = cmd.ExecuteReader();
-                    while (filas.Read())
-                    {
-                        Actividad act = new Actividad
-                        {
-                            Id = (int)filas["id"],
-                            Nombre = (string)filas["nombre"],
-                            EdadMin = (int)filas["edadMin"],
-                            EdadMax = (int)filas["edadMax"],
-                            Cupo = (int)filas["cupo"]
-                        };
-                        listaActividades.Add(act);
-                    }
-                    return listaActividades;
-                }
+                return db.Actividades.ToList();
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
                 return null;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
         }
 
@@ -118,35 +84,58 @@ namespace Repositorios
 
         public bool SocioInscriptoActividad(int idActividad, int cedula, int horaActividad)
         {
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            bool retorno = false;
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Socio_Inscripto_Actividad";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
-                    cmd.Parameters.Add(new SqlParameter("@cedulaSocio", cedula));
-                    cmd.Parameters.Add(new SqlParameter("@horaActividad", horaActividad));
-                    con.Open();
-                    SqlDataReader filas = cmd.ExecuteReader();
-                    while (filas.Read())
-                    {
-                        return true;
-                    }
-                    return false;
-                }
+
+                //retorno = db.Socios_Actividad
+                    //.Where(sa => sa.idActividad == idActividad, sa => sa.cedulaSocio == cedula, sa => sa.horaActividad == horaActividad)
+
+                return retorno;
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
                 return false;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
+
+
+
+
+            //Conexion manejadorConexion = new Conexion();
+            //SqlConnection con = manejadorConexion.CrearConexion();
+            //try
+            //{
+            //    using (SqlCommand cmd = new SqlCommand())
+            //    {
+            //        cmd.Connection = con;
+            //        cmd.CommandText = "Socio_Inscripto_Actividad";
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
+            //        cmd.Parameters.Add(new SqlParameter("@cedulaSocio", cedula));
+            //        cmd.Parameters.Add(new SqlParameter("@horaActividad", horaActividad));
+            //        con.Open();
+            //        SqlDataReader filas = cmd.ExecuteReader();
+            //        while (filas.Read())
+            //        {
+            //            return true;
+            //        }
+            //        return false;
+            //    }
+            //}
+            //catch (SqlException Ex)
+            //{
+            //    return false;
+            //}
+            //finally
+            //{
+            //    con.Close();
+            //}
         }
         public static List<Actividad> IngresosPorSocio(int idActividad, int cedula, DateTime fecha) //FALTA IMPLEMENTAR!!!!
         {

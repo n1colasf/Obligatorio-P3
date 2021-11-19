@@ -18,17 +18,17 @@ namespace Repositorios
                 return false;
 
             Conexion con = new Conexion();
-            Context db = new Context(con.getConectionString()); //VER DE TRAER EL CONSTRING DE WEB.CONFIG
+            Context db = new Context(con.getConectionString());
             try
             {
                 string encryptedPassword = EncryptPassword(obj.Password);
                 Funcionario f = new Funcionario { Email = obj.Email, Password = encryptedPassword };
                 
                 db.Funcionarios.Add(f);
-                db.SaveChanges(); //ESTO VA ACÁ O EN EL FINALLY?
+                db.SaveChanges();
                 return true;
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
                 return false;
             }
@@ -48,38 +48,21 @@ namespace Repositorios
         }
         public Funcionario BuscarPorEmail(string email)
         {
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            Funcionario funcionario = new Funcionario();
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Buscar_Funcionario";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@email", email));
-                    con.Open();
-                    SqlDataReader filas = cmd.ExecuteReader();
-                    while (filas.Read())
-                    {
-                        Funcionario func = new Funcionario
-                        {
-                            Email = (string)filas["email"],
-                            Password = (string)filas["password"]
-                        };
-                        return func;
-                    }
-
-                }
-                return null;
+                funcionario = db.Funcionarios.Where(f => f.Email == email).Single();
+                return funcionario;
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
                 return null;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
         }
         public bool Modificacion(Funcionario obj)
