@@ -23,7 +23,7 @@ namespace Dominio
         }
         public override double CalcularDescAplicado()
         {
-            return DescontarActividad() ? DescuentoC : 0; 
+            return DescontarActividad() ? CantActividades * Actividad.PrecioActividad - CalcularCosto() : 0; 
         }
 
         private bool DescontarActividad()

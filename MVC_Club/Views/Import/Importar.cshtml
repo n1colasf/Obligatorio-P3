@@ -1,0 +1,27 @@
+﻿@using Dominio
+@{ ViewBag.Title = "Importar Información"; }
+
+<h2>Importar Datos</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Nombre de Documento</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Link de archivo con datos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Usuarios</td>
+            <td>Importar un listado de usuarios al sistema con su Email y Password.</td>
+            <td>@Html.ActionLink("Import", "/ImportarUsuarios")</td>
+        </tr>
+        <tr>
+            <td>Actividades</td>
+            <td>Importar un listado de Actividades al sistema con sus datos.</td>
+            <td>@Html.ActionLink("Import", "/ImportarActividades")</td>
+        </tr>
+    </tbody>
+</table>
+<h3>@ViewBag.mensaje</h3>

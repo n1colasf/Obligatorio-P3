@@ -136,9 +136,9 @@ namespace Repositorios
             Context db = new Context(con.getConectionString());
             try
             {
-                //FALTAAAAA
-
-
+                SocioActividad sa = new SocioActividad { IdActividad = idActividad, CedulaSocio = obj.Cedula, Fecha = DateTime.Now.Date, HoraActividad = hora };
+                db.SociosActividad.Add(sa);
+                db.SaveChanges();
                 return true;
 
             }
@@ -150,50 +150,6 @@ namespace Repositorios
             {
                 db.Dispose();
             }
-
-
-
-
-            //Conexion manejadorConexion = new Conexion();
-            //SqlConnection con = manejadorConexion.CrearConexion();
-            //SqlTransaction trn = null;
-            //try
-            //{
-            //    SqlCommand cmd = new SqlCommand();
-            //    if (manejadorConexion.AbrirConexion(con))
-            //    {
-            //        trn = con.BeginTransaction();
-
-            //        cmd.Connection = con;
-            //        cmd.CommandText = "Alta_Socio_Actividad";
-            //        cmd.CommandType = CommandType.StoredProcedure;
-            //        cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
-            //        cmd.Parameters.Add(new SqlParameter("@cedulaSocio", obj.Cedula));
-            //        cmd.Parameters.Add(new SqlParameter("@fecha", DateTime.Now.Date));
-            //        cmd.Parameters.Add(new SqlParameter("@horaActividad", hora));
-            //        cmd.Transaction = trn;
-            //        cmd.ExecuteNonQuery();
-
-            //        SqlCommand cmd2 = new SqlCommand();
-            //        cmd2.Connection = con;
-            //        cmd2.CommandText = "Bajar_Cupo";
-            //        cmd2.CommandType = CommandType.StoredProcedure;
-            //        cmd2.Parameters.Add(new SqlParameter("@id", idActividad));
-            //        cmd2.Transaction = trn;
-            //        cmd2.ExecuteNonQuery();
-            //        trn.Commit();
-            //    }
-
-            //    return true;
-            //}
-            //catch (SqlException Ex)
-            //{
-            //    return false;
-            //}
-            //finally
-            //{
-            //    con.Close();
-            //}
         }
     }
 }

@@ -18,7 +18,5 @@ namespace Dominio
         public static double PrecioActividad { get; set; } = 120;
         public List<Horario> Horarios { get; set; }
         public List<Socio> Participantes { get; set; }
-        public virtual ICollection<Socio> Socios { get; set; } //PENDIENTE PARA RELACION N-N
-
     }
 }

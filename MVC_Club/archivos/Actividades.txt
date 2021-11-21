@@ -1,0 +1,6 @@
+Patinaje Artístico|4|18|10
+Tenis inclusivo|10|20|50
+baile del caño|60|93|5
+ |10|20|5
+|10|50|10
+skateboard virtual|||

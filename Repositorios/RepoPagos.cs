@@ -9,59 +9,62 @@ using System.Data.SqlClient;
 
 namespace Repositorios
 {
-    class RepoPagos : IRepositorio<FormaDePago>
+    public class RepoPagos : IRepositorio<FormaDePago>
     {
         public bool Alta(FormaDePago obj)
         {
             if (obj == null)
                 return false;
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
 
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                if (obj is Cuponera)
                 {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Alta_Pago";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@cedulaSocio", obj.Socio.Cedula));
-                    cmd.Parameters.Add(new SqlParameter("@fecha", obj.Fecha));
-                    if (obj is Cuponera)
+                    Cuponera cup = (Cuponera)obj;
+                    Pago pago = new Pago
                     {
-                        Cuponera cup = (Cuponera)obj;
-                        cmd.Parameters.Add(new SqlParameter("@descuentoPL", DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@antiguedadPL", DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@precioPL", DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@descuentoC", cup.CalcularDescAplicado()));
-                        cmd.Parameters.Add(new SqlParameter("@cantActividadesC", cup.CantActividades));
-                        cmd.Parameters.Add(new SqlParameter("@precioTotalC", cup.CalcularCosto()));
-                    }
-                    else if (obj is PaseLibre)
-                    {
-                        PaseLibre pas = (PaseLibre)obj;
-                        cmd.Parameters.Add(new SqlParameter("@descuentoPL", pas.CalcularDescAplicado()));
-                        cmd.Parameters.Add(new SqlParameter("@antiguedadPL", pas.Antiguedad));
-                        cmd.Parameters.Add(new SqlParameter("@precioPL", pas.CalcularCosto()));
-                        cmd.Parameters.Add(new SqlParameter("@descuentoC", DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@cantActividadesC", DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@precioTotalC", DBNull.Value));
-                    }
-                    con.Open();
-                    cmd.ExecuteNonQuery();
+                        CedulaSocio = obj.Socio.Cedula,
+                        Fecha = DateTime.Now.Date,
+                        DescuentoPL = 0,
+                        AntiguedadPL = 0,
+                        PrecioPL = 0,
+                        DescuentoC = cup.CalcularDescAplicado(),
+                        CantActividadesC = cup.CantActividades,
+                        PrecioTotalC = cup.CalcularCosto()
+                    };
+                    db.Pagos.Add(pago);
                 }
-
+                else if (obj is PaseLibre)
+                {
+                    PaseLibre pas = (PaseLibre)obj;
+                    Pago pago = new Pago
+                    {
+                        CedulaSocio = obj.Socio.Cedula,
+                        Fecha = DateTime.Now.Date,
+                        DescuentoPL = pas.CalcularDescAplicado(),
+                        AntiguedadPL = pas.Antiguedad,
+                        PrecioPL = pas.CalcularCosto(),
+                        DescuentoC = 0,
+                        CantActividadesC = 0,
+                        PrecioTotalC = 0
+                    };
+                    db.Pagos.Add(pago);
+                }
+                
+                db.SaveChanges();
                 return true;
+
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
-                return false;
+                throw Ex;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
-
         }
 
         public bool Baja(int id) //NO SE IMPLEMENTA
@@ -79,43 +82,60 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public List<FormaDePago> TraerTodos()
+        public List<FormaDePago> TraerTodos() //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
 
         public bool VerificarMensualidad(Socio socio)
         {
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
-
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            bool retorno = false;
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Verificar_Mensualidad";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@cedula", socio.Cedula));
-                    con.Open();
+                Pago pago = db.Pagos
+                    .Where(pa => pa.CedulaSocio == socio.Cedula)
+                    .Where(pa => pa.CedulaSocio == socio.Cedula)
+                    .Where(pa => pa.Fecha.Month == DateTime.Now.Month)
+                    .Where(pa => pa.Fecha.Year == DateTime.Now.Year).SingleOrDefault();
 
-                    SqlDataReader filas = cmd.ExecuteReader();
-                    while (filas.Read())
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                if (pago != null) retorno = true;
+
+                return retorno;
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
-                return false;
+                throw Ex;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
+        }
+        public IEnumerable<Pago> ListarPagosPorMesYAnio(int month, int year) //FALTA OBTENER NOMBRE SOCIO
+        {
+            List<Pago> listaPagos = new List<Pago>();
 
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            try
+            {
+                listaPagos = db.Pagos
+                    .Where(p => p.Fecha.Month == month)
+                    .Where(p => p.Fecha.Year == year)
+                    .ToList();
+
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+            finally
+            {
+                db.Dispose();
+            }
+            return listaPagos;
         }
     }
 }

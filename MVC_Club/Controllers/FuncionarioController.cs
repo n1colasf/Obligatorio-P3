@@ -217,5 +217,17 @@ namespace MVC_Club.Controllers
             ViewBag.ingresosPorFecha = ingresosPorFecha;
             return View();
         }
+
+        public ActionResult ListarPagos()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ListarPagos(int month, int year)
+        {
+            RepoPagos repoPagos = new RepoPagos();
+            IEnumerable<Pago> listaPagos = repoPagos.ListarPagosPorMesYAnio(month, year);
+            return View(listaPagos);
+        }
     }
 }

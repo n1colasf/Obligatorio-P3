@@ -12,9 +12,6 @@ namespace Dominio
         public DateTime Fecha { get; set; }
         public Socio Socio { get; set; }
 
-        //FixMe: Este atributo era necesario?
-        private static int ContId;
-
         public abstract double CalcularCosto();
         public abstract double CalcularDescAplicado();
     }

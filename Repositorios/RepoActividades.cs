@@ -67,9 +67,25 @@ namespace Repositorios
             }
         }
 
-        public bool ExisteNombre(string nombre)
+        public static bool ExisteNombre(string nombre)
         {
-            return false;
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            bool retorno = false;
+            try
+            {
+                Actividad act = db.Actividades.Where(a => a.Nombre == nombre).SingleOrDefault();
+                if (act != null) retorno = true;
+                return retorno;
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+            finally
+            {
+                db.Dispose();
+            }
         }
 
         public bool VerificarCupo()
@@ -89,9 +105,12 @@ namespace Repositorios
             bool retorno = false;
             try
             {
+                SocioActividad socAct = db.SociosActividad
+                    .Where(sa => sa.IdActividad == idActividad)
+                    .Where(sa => sa.CedulaSocio == cedula)
+                    .Where(sa => sa.HoraActividad == horaActividad).SingleOrDefault();
 
-                //retorno = db.Socios_Actividad
-                    //.Where(sa => sa.idActividad == idActividad, sa => sa.cedulaSocio == cedula, sa => sa.horaActividad == horaActividad)
+                if (socAct != null) retorno = true;
 
                 return retorno;
             }
@@ -103,39 +122,6 @@ namespace Repositorios
             {
                 db.Dispose();
             }
-
-
-
-
-            //Conexion manejadorConexion = new Conexion();
-            //SqlConnection con = manejadorConexion.CrearConexion();
-            //try
-            //{
-            //    using (SqlCommand cmd = new SqlCommand())
-            //    {
-            //        cmd.Connection = con;
-            //        cmd.CommandText = "Socio_Inscripto_Actividad";
-            //        cmd.CommandType = CommandType.StoredProcedure;
-            //        cmd.Parameters.Add(new SqlParameter("@idActividad", idActividad));
-            //        cmd.Parameters.Add(new SqlParameter("@cedulaSocio", cedula));
-            //        cmd.Parameters.Add(new SqlParameter("@horaActividad", horaActividad));
-            //        con.Open();
-            //        SqlDataReader filas = cmd.ExecuteReader();
-            //        while (filas.Read())
-            //        {
-            //            return true;
-            //        }
-            //        return false;
-            //    }
-            //}
-            //catch (SqlException Ex)
-            //{
-            //    return false;
-            //}
-            //finally
-            //{
-            //    con.Close();
-            //}
         }
         public static List<Actividad> IngresosPorSocio(int idActividad, int cedula, DateTime fecha) //FALTA IMPLEMENTAR!!!!
         {

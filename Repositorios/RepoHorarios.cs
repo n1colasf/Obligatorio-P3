@@ -11,7 +11,7 @@ namespace Repositorios
 {
     public class RepoHorarios : IRepositorio<Horario>
     {
-        public bool Alta(Horario obj) //FALTA EL ID DE ACTIVIDAD
+        public bool Alta(Horario obj) //NO SE UTILIZA
         {
             if (obj == null || !obj.ValidarHora(obj.Hora))
                 return false;
@@ -51,7 +51,7 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public Horario BuscarPorId(int id)
+        public Horario BuscarPorId(int id) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
@@ -63,38 +63,19 @@ namespace Repositorios
 
         public List<Horario> TraerTodos()
         {
-            Conexion manejadorConexion = new Conexion();
-            SqlConnection con = manejadorConexion.CrearConexion();
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
             try
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandText = "Listar_Horarios";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    List<Horario> listaHorarios = new List<Horario>();
-                    SqlDataReader filas = cmd.ExecuteReader();
-                    while (filas.Read())
-                    {
-                        Horario hor = new Horario
-                        {
-                            Id = (int)filas["idActividad"],
-                            Dia = (int)filas["dia"],
-                            Hora = (int)filas["hora"]
-                        };
-                        listaHorarios.Add(hor);
-                    }
-                    return listaHorarios;
-                }
+                return db.Horarios.ToList();
             }
-            catch (SqlException Ex)
+            catch (Exception Ex)
             {
-                return null;
+                throw Ex;
             }
             finally
             {
-                con.Close();
+                db.Dispose();
             }
         }
 

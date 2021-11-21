@@ -23,7 +23,7 @@ namespace Dominio
         }
         public override double CalcularDescAplicado()
         {
-            return (Antiguedad >= 5) ? DescuentoPL : 0;
+            return (Antiguedad >= 5) ? PrecioPL - CalcularCosto() : 0;
         }
     }
 }

@@ -1,0 +1,7 @@
+chumingalapocha.com|contrasena
+emailvalido1@club.com|ASDasd123
+ | 
+emailnovalido2@com|ASDasd123
+emailnovalido3@club.com|ASDasd
+emailvalido4@club.com|QWEqwe456
+emailvalido1@club.com|ASDasd456

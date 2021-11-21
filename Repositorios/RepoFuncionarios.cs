@@ -14,7 +14,7 @@ namespace Repositorios
     {
         public bool Alta(Funcionario obj)
         {
-            if (obj == null || !obj.ValidarEmail(obj.Email) || !obj.ValidarPassword(obj.Password))
+            if (obj == null || !Funcionario.ValidarEmail(obj.Email) || !Funcionario.ValidarPassword(obj.Password))
                 return false;
 
             Conexion con = new Conexion();
@@ -37,12 +37,11 @@ namespace Repositorios
                 db.Dispose();
             }
         }
-
-        public bool Baja(int id)
+        public bool Baja(int id) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
-        public Funcionario BuscarPorId(int id)
+        public Funcionario BuscarPorId(int id) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
@@ -53,24 +52,23 @@ namespace Repositorios
             Funcionario funcionario = new Funcionario();
             try
             {
-                funcionario = db.Funcionarios.Where(f => f.Email == email).Single();
+                funcionario = db.Funcionarios.Where(f => f.Email == email).SingleOrDefault();
                 return funcionario;
             }
             catch (Exception Ex)
             {
-                return null;
+                throw Ex;
             }
             finally
             {
                 db.Dispose();
             }
         }
-        public bool Modificacion(Funcionario obj)
+        public bool Modificacion(Funcionario obj) //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }
-
-        public List<Funcionario> TraerTodos()
+        public List<Funcionario> TraerTodos() //NO SE IMPLEMENTA
         {
             throw new NotImplementedException();
         }

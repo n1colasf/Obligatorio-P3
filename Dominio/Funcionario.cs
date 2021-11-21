@@ -13,11 +13,11 @@ namespace Dominio
         public string Email { get; set; }
         public string Password { get; set; }
 
-        private string numeros = "0123456789";
-        private string minusculas = "abcdefghijklmnopqrstuvwxyz";
-        private string mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public const string numeros = "0123456789";
+        public const string minusculas = "abcdefghijklmnopqrstuvwxyz";
+        public const string mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public bool ValidarEmail(string email)
+        public static bool ValidarEmail(string email)
         {
                 try
                 {
@@ -30,7 +30,7 @@ namespace Dominio
                 }
             
         }
-        public bool ValidarPassword(string password)
+        public static bool ValidarPassword(string password)
         {
             bool retorno = false;
             if (password.Length >= 6 && TieneNumero(password) && TieneMayuscula(password) && TieneMinuscula(password)) 
@@ -40,7 +40,7 @@ namespace Dominio
             return retorno;
         } 
 
-        private bool TieneMinuscula(string password)
+        private static bool TieneMinuscula(string password)
         {
             bool estado = false;
 
@@ -54,7 +54,7 @@ namespace Dominio
             }
             return estado;
         }
-        private bool TieneMayuscula(string password)
+        private static bool TieneMayuscula(string password)
         {
             {
                 bool estado = false;
@@ -70,7 +70,7 @@ namespace Dominio
                 return estado;
             }
         }
-        private bool TieneNumero(string password)
+        private static bool TieneNumero(string password)
         {
             bool estado = false;
 

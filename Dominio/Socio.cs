@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio
 {
@@ -15,7 +16,6 @@ namespace Dominio
         public DateTime FechaIngreso { get; set; }
         public bool Activo { get; set; }
         public List<Actividad> Actividades { get; set; }
-        public virtual ICollection<Actividad> SocioActividades { get; set; }//PENDIENTE PARA RELACION N-N
 
         public bool ValidarCedula(int cedula)
         {

@@ -1,0 +1,96 @@
+﻿@using Dominio
+@{ 
+    ViewBag.Title = "Listar Pagos";
+    ViewBag.YearMin = 2001;
+    ViewBag.YearMax = DateTime.Now.Year;
+}
+
+<h2>Listar pagos por mes y año</h2>
+
+<form action="/funcionario/ListarPagos" method="post">
+
+    <div class="form-group">
+        <label for="month">Seleccionar Mes:</label>
+        <select required class="form-control" name="month" id="month">
+            <option value="" disabled selected>Elegir opción</option>
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <br />
+        <label for="year">Seleccionar Año:</label>
+        <select required class="form-control" name="year" id="year">
+            <option value="" disabled selected>Selecciona una opción</option>
+            @for (int i = ViewBag.YearMin; i <= ViewBag.YearMax; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+
+</div>
+
+    <button class="btn btn-primary" type="submit" id="btnBuscar">Listar</button>
+</form>
+<br>
+<p class="text-danger">@ViewBag.mensaje</p>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Tipo de Pago</th>
+                <th scope="col">Fecha de Pago</th>
+                <th scope="col">Monto pagado</th>
+                <th scope="col">Monto de Descuento</th>
+                <th scope="col">Cedula de socio</th>
+                <th scope="col">Nombre de socio</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Pago pago in Model)
+            {
+                if (pago.PrecioPL > 0)
+                {
+                    <tr>
+                        <td>Pase Libre</td>
+                        <td>@pago.Fecha</td>
+                        <td>@pago.PrecioPL</td>
+                        <td>@pago.DescuentoPL</td>
+                        <td>@pago.CedulaSocio</td>
+                        <td>XXXXXXXXX</td>
+                    </tr>
+                }
+                else 
+                {
+                    <tr>
+                        <td>Cuponera</td>
+                        <td>@pago.Fecha</td>
+                        <td>@pago.PrecioTotalC</td>
+                        <td>@pago.DescuentoC</td>
+                        <td>@pago.CedulaSocio</td>
+                        <td>YYYYYYYY</td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+    <p>@ViewBag.mensaje</p>
+}
+else
+{
+    <br />
+    <br />
+    <p>No hay Pagos Registrados en estas fechas</p>
+}

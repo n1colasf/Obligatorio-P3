@@ -19,6 +19,9 @@ namespace Dominio
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Socio> Socios { get; set; }
         public DbSet<Actividad> Actividades { get; set; }
-        //public DbSet<SocioActividad> SociosActividad { get; set; }
+        public DbSet<Horario> Horarios { get; set; }
+        public DbSet<SocioActividad> SociosActividad { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
+
     }
 }

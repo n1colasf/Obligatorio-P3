@@ -130,6 +130,7 @@
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,6 +181,8 @@
     <Content Include="Views\Funcionario\ListarActividades.cshtml" />
     <Content Include="Views\Export\Exportar.cshtml" />
     <Content Include="Views\Funcionario\IngresosPorFecha.cshtml" />
+    <Content Include="Views\Import\Importar.cshtml" />
+    <Content Include="Views\Funcionario\ListarPagos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
