@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Club", "MVC_Club\MVC_Cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF_AltaSocioActividad", "WCF_AltaSocioActividad\WCF_AltaSocioActividad.csproj", "{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{47994FEA-B8C7-4FEA-A9E3-7D3D1721A310}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5AE02E5-A0A7-4BF8-8E1F-F9BEC7B58A3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47994FEA-B8C7-4FEA-A9E3-7D3D1721A310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47994FEA-B8C7-4FEA-A9E3-7D3D1721A310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47994FEA-B8C7-4FEA-A9E3-7D3D1721A310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47994FEA-B8C7-4FEA-A9E3-7D3D1721A310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

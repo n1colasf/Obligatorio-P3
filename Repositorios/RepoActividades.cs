@@ -19,7 +19,7 @@ namespace Repositorios
             Context db = new Context(con.getConectionString());
             try
             {
-                Actividad act = new Actividad { Nombre = obj.Nombre, EdadMin = obj.EdadMin, EdadMax = obj.EdadMax, Cupo = obj.Cupo};
+                Actividad act = new Actividad { Nombre = obj.Nombre.ToUpper(), EdadMin = obj.EdadMin, EdadMax = obj.EdadMax, Cupo = obj.Cupo};
                 db.Actividades.Add(act);
                 db.SaveChanges();
                 return true;

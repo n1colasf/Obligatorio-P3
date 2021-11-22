@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MVC_Club.Models.ActividadModel>
+
+@{
+    ViewBag.Title = "Actividades";
+}
+
+<h2>Actividades</h2>
+
+<div>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cupo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EdadMin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EdadMax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cupo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
