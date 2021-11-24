@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using MVC_Club.Models;
-
+using Dominio;
 
 namespace MVC_Club.Controllers
 {
@@ -35,9 +35,13 @@ namespace MVC_Club.Controllers
                 respuesta = clienteApi.GetAsync(clienteApi.BaseAddress).Result;
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Models.ActividadModel>>().Result;
+                    var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Actividad>>().Result;
                     if (contenido != null)
-                        return View(contenido);
+                    {
+                        IEnumerable<Actividad> contenidoAux = contenido;
+                        IEnumerable<ActividadModel> actividadesModel = castActividadToActividadModel(contenidoAux);
+                        return View(actividadesModel);
+                    }
                 }
                 ModelState.AddModelError("Error Api", "No se obtuvo respuesta " +
                 respuesta.ReasonPhrase);
@@ -50,12 +54,40 @@ namespace MVC_Club.Controllers
             }
         }
 
-        // GET: Actividades/Details/5
-        public ActionResult Details(int id)
+        //GET: Actividades/Filter
+        public ActionResult Filter()
         {
             return View();
         }
 
+        //POST: Actividades/Filter
+        [HttpPost]
+        public ActionResult Filter(string nombreContent = "", int edadMin = 0, int dia = 0, int hora = 0)
+        {
+            try
+            {
+                ConfigurarCliente();
+                respuesta = clienteApi.GetAsync(clienteApi.BaseAddress).Result;
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Actividad>>().Result;
+                    if (contenido != null)
+                    {
+                        IEnumerable<Actividad> contenidoAux = contenido;
+                        IEnumerable<ActividadModel> actividadesModel = castActividadToActividadModel(contenidoAux);
+                        return View(actividadesModel);
+                    }
+                }
+                ModelState.AddModelError("Error Api", "No se obtuvo respuesta " +
+                respuesta.ReasonPhrase);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Se produjo una excepción: ", ex.Message);
+                return View();
+            }
+        }
         // GET: Actividades/Create
         public ActionResult Create()
         {
@@ -75,7 +107,7 @@ namespace MVC_Club.Controllers
                     var accesoApi = clienteApi.PostAsJsonAsync(ruta, act);
                     accesoApi.Wait();
                     respuesta = accesoApi.Result;
-                if (respuesta.IsSuccessStatusCode)
+                    if (respuesta.IsSuccessStatusCode)
                     {
                         TempData["ResultadoOperacion"] = "Actividad Agregada ";
                         return RedirectToAction("Index");
@@ -95,7 +127,30 @@ namespace MVC_Club.Controllers
                 return View();
             }
         }
+        private IEnumerable<ActividadModel> castActividadToActividadModel(IEnumerable<Actividad> actividades)
+        {
+            List<ActividadModel> actividadesModel = new List<ActividadModel>();
 
+            foreach (Actividad act in actividades)
+            {
+                actividadesModel.Add(new ActividadModel
+                {
+                    Nombre = act.Nombre,
+                    EdadMin = act.EdadMin,
+                    EdadMax = act.EdadMax,
+                    Cupo = act.Cupo
+                });
+            }
+
+            return actividadesModel;
+
+        }
+
+        // GET: Actividades/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
         // GET: Actividades/Edit/5
         public ActionResult Edit(int id)
         {

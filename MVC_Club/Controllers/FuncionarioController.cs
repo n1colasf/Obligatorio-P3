@@ -226,7 +226,7 @@ namespace MVC_Club.Controllers
         public ActionResult ListarPagos(int month, int year)
         {
             RepoPagos repoPagos = new RepoPagos();
-            IEnumerable<Pago> listaPagos = repoPagos.ListarPagosPorMesYAnio(month, year);
+            IEnumerable<PagoSocio> listaPagos = repoPagos.ListarPagosPorMesYAnio(month, year);
             return View(listaPagos);
         }
     }

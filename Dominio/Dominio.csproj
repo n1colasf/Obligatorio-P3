@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PagoSocio.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Exportar.cs" />
     <Compile Include="conexion.cs" />

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MVC_Club.Models.ActividadModel>
+
+@{
+    ViewBag.Title = "Filter";
+}
+
+<h2>Filtrar actividades</h2>
+
+<form action="/Actividades/Filter" method="post">
+
+    <h3>Por Nombre de Actividad</h3>
+    <label for="nombreActividad">Ingresa el nombre</label>
+    <input type="text" name="nombreActividad" id="nombreActividad" class="form-control" placeholder="Ingresa el nombre o parte del nombre" />
+    <br />
+    <button class="btn btn-primary" type="submit" id="btnBuscar1">Filtrar</button>
+
+    <hr />
+    <h3>Por Edad Mínima</h3>
+    <label for="edadMinima">Ingresa una edad mínima</label>
+    <input type="number" name="edadMinima" id="edadMinima" class="form-control" placeholder="Ingresa la edad" />
+    <br />
+    <button class="btn btn-primary" type="submit" id="btnBuscar2">Filtrar</button>
+
+    <hr />
+    <h3>Por Día/Hora</h3>
+    <div class="form-group">
+        <label for="dia">Seleccionar Día:</label>
+        <select class="form-control" name="dia" id="dia" style="display:inline-block;">
+            <option value="" disabled selected>Elegir opción</option>
+            <option value="01">Lunes</option>
+            <option value="02">Martes</option>
+            <option value="03">Miércoles</option>
+            <option value="04">Jueves</option>
+            <option value="05">Viernes</option>
+            <option value="06">Sábado</option>
+        </select>
+        <label for="hora">Seleccionar Hora:</label>
+        <select class="form-control" name="hora" id="hora" style="display:inline-block;">
+            <option value="" disabled selected>Selecciona una opción</option>
+            @for (int i = 7; i < 23; i++)
+            {
+                <option value="@i">@i</option>
+
+            }
+        </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit" id="btnBuscar3">Filtrar</button>
+</form>
+<br>
+<p class="text-danger">@ViewBag.mensaje</p>
+
+@if (Model != null)
+{
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cupo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EdadMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EdadMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cupo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+}

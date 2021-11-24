@@ -20,12 +20,14 @@ namespace WebApplication.Controllers
         }
 
         // GET: api/Actividades/5
-        public string Get(int id)
+        public IEnumerable<Actividad> Get(string nameContent, int edad, int dia, int hora)
         {
-            return "value";
+            RepoActividades repoActividades = new RepoActividades();
+            var actividades = repoActividades.TraerTodos();
+            return actividades;
         }
 
-        // POST: api/Actividades
+        // POST: api/Actividades-
         public void Post([FromBody]Actividad nuevaActividad)
         {
             RepoActividades repoActividades = new RepoActividades();

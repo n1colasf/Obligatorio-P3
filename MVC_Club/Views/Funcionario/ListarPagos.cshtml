@@ -43,7 +43,7 @@
 <br>
 <p class="text-danger">@ViewBag.mensaje</p>
 
-@if (Model != null && Model.Count > 0)
+@if (Model != null)
 {
     <table class="table table-striped">
         <thead>
@@ -58,7 +58,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Pago pago in Model)
+            @foreach (PagoSocio pago in Model)
             {
                 if (pago.PrecioPL > 0)
                 {
@@ -68,7 +68,7 @@
                         <td>@pago.PrecioPL</td>
                         <td>@pago.DescuentoPL</td>
                         <td>@pago.CedulaSocio</td>
-                        <td>XXXXXXXXX</td>
+                        <td>@pago.NombreSocio</td>
                     </tr>
                 }
                 else 
@@ -79,7 +79,7 @@
                         <td>@pago.PrecioTotalC</td>
                         <td>@pago.DescuentoC</td>
                         <td>@pago.CedulaSocio</td>
-                        <td>YYYYYYYY</td>
+                        <td>@pago.NombreSocio</td>
                     </tr>
                 }
 

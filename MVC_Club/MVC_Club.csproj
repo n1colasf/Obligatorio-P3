@@ -194,6 +194,7 @@
     <Content Include="Views\Funcionario\ListarPagos.cshtml" />
     <Content Include="Views\Actividades\Create.cshtml" />
     <Content Include="Views\Actividades\Index.cshtml" />
+    <Content Include="Views\Actividades\Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

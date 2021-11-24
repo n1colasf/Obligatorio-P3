@@ -113,19 +113,39 @@ namespace Repositorios
                 db.Dispose();
             }
         }
-        public IEnumerable<Pago> ListarPagosPorMesYAnio(int month, int year) //FALTA OBTENER NOMBRE SOCIO
+        public IEnumerable<PagoSocio> ListarPagosPorMesYAnio(int month, int year) //FALTA OBTENER NOMBRE SOCIO
         {
-            List<Pago> listaPagos = new List<Pago>();
+            IEnumerable<PagoSocio> listaPagosSocio = new List<PagoSocio>();
+            //PagoSocio listaPagosSocio = new PagoSocio();
 
             Conexion con = new Conexion();
             Context db = new Context(con.getConectionString());
             try
             {
-                listaPagos = db.Pagos
-                    .Where(p => p.Fecha.Month == month)
-                    .Where(p => p.Fecha.Year == year)
-                    .ToList();
+                //listaPagos = db.Pagos
+                //    .Where(p => p.Fecha.Month == month)
+                //    .Where(p => p.Fecha.Year == year)
+                //    .ToList();
 
+                var listaPagosSocioAux =
+                  from Pagos in db.Pagos
+                  join Socios in db.Socios
+                  on Pagos.CedulaSocio equals Socios.Cedula
+                  where Pagos.Fecha.Month == month
+                  where Pagos.Fecha.Year == year
+                  select new PagoSocio
+                  {
+                      NombreSocio = Socios.Nombre,
+                      CedulaSocio = Pagos.CedulaSocio,
+                      Fecha = Pagos.Fecha,
+                      DescuentoPL = Pagos.DescuentoPL,
+                      DescuentoC = Pagos.DescuentoC,
+                      PrecioPL = Pagos.PrecioPL,
+                      PrecioTotalC = Pagos.PrecioTotalC
+                  };
+
+                listaPagosSocio = (IEnumerable<PagoSocio>)listaPagosSocioAux;
+                return listaPagosSocio;
             }
             catch (Exception Ex)
             {
@@ -133,9 +153,9 @@ namespace Repositorios
             }
             finally
             {
-                db.Dispose();
+                //db.Dispose();
             }
-            return listaPagos;
+            return listaPagosSocio;
         }
     }
 }
