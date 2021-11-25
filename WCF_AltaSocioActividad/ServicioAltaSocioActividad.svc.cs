@@ -117,7 +117,7 @@ namespace WCF_AltaSocioActividad
             {
                 horariosAux.Add(new DtoHorarioActividad
                 {
-                    IdActividad = h.Id,
+                    IdActividad = h.IdActividad,
                     Dia = h.Dia,
                     Hora = h.Hora
                 });

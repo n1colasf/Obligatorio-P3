@@ -66,6 +66,76 @@ namespace Repositorios
                 db.Dispose();
             }
         }
+        public IEnumerable<Actividad> FiltrarActividades(string nombreContent = "", int edadMin = 0, int dia = 0, int hora = 0)
+        {
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            IEnumerable<Actividad> actividadesFiltradas = new List<Actividad>();
+            try
+            {
+                if(nombreContent != "")
+                {
+                    nombreContent = nombreContent.ToUpper();
+                    actividadesFiltradas = (IEnumerable<Actividad>)(from a in db.Actividades
+                                                 join h in db.Horarios
+                                                 on a.Id equals h.IdActividad
+                                                 where a.Nombre.Contains(nombreContent)
+                                                 select a);
+                } else if(edadMin > 0)
+                {
+                    actividadesFiltradas = (IEnumerable<Actividad>)(from a in db.Actividades
+                                                                    join h in db.Horarios
+                                                                    on a.Id equals h.IdActividad
+                                                                    where a.EdadMin >= edadMin
+                                                                    select a);
+                } else if (dia > 0 && dia < 7 && hora > 7 && hora < 23)
+                {
+                    actividadesFiltradas = (IEnumerable<Actividad>)(from a in db.Actividades
+                                                                    join h in db.Horarios
+                                                                    on a.Id equals h.IdActividad
+                                                                    where h.Dia == dia
+                                                                    where h.Hora == hora
+                                                                    select a);
+                }
+               
+                return actividadesFiltradas;
+
+            }
+            catch (Exception Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                //db.Dispose();
+            }
+        }
+        public IEnumerable<Actividad> ListarActividadesSocio(int cedula = 0, string nombreActividad = "")
+        {
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            IEnumerable<Actividad> actividadesSocio = new List<Actividad>();
+            try
+            {
+                actividadesSocio = (IEnumerable<Actividad>)(from sa in db.SociosActividad
+                                                                    join a in db.Actividades
+                                                                    on sa.IdActividad equals a.Id
+                                                                    where sa.CedulaSocio == cedula
+                                                                    where a.Nombre.Contains(nombreActividad)
+                                                                    select sa);
+                return actividadesSocio;
+
+            }
+            catch (Exception Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                //db.Dispose();
+            }
+        }
+
 
         public static bool ExisteNombre(string nombre)
         {

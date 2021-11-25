@@ -66,6 +66,10 @@ namespace MVC_Club.Controllers
         {
             try
             {
+                //ConfigurarCliente();
+                //respuesta = clienteApi.GetAsync(clienteApi.BaseAddress + "nombreContent=" + nombreContent
+                //    + "edadMin=" + edadMin + "dia=" + dia + "hora=" + hora).Result;
+
                 ConfigurarCliente();
                 respuesta = clienteApi.GetAsync(clienteApi.BaseAddress).Result;
                 if (respuesta.IsSuccessStatusCode)

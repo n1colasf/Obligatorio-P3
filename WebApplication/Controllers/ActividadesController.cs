@@ -20,10 +20,11 @@ namespace WebApplication.Controllers
         }
 
         // GET: api/Actividades/5
+        [Route("{nameContent}/{edad}/{dia}/{hora}")]
         public IEnumerable<Actividad> Get(string nameContent, int edad, int dia, int hora)
         {
             RepoActividades repoActividades = new RepoActividades();
-            var actividades = repoActividades.TraerTodos();
+            var actividades = repoActividades.FiltrarActividades(nameContent, edad, dia, hora);
             return actividades;
         }
 

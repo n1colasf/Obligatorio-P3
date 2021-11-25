@@ -122,10 +122,6 @@ namespace Repositorios
             Context db = new Context(con.getConectionString());
             try
             {
-                //listaPagos = db.Pagos
-                //    .Where(p => p.Fecha.Month == month)
-                //    .Where(p => p.Fecha.Year == year)
-                //    .ToList();
 
                 var listaPagosSocioAux =
                   from Pagos in db.Pagos
@@ -153,7 +149,7 @@ namespace Repositorios
             }
             finally
             {
-                //db.Dispose();
+                db.Dispose();
             }
             return listaPagosSocio;
         }

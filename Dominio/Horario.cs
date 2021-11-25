@@ -9,6 +9,7 @@ namespace Dominio
     public class Horario
     {
         public int Id { get; set; }
+        public int IdActividad { get; set; }
         public int Dia { get; set; }
         public int Hora { get; set; }
 
