@@ -17,7 +17,6 @@ namespace MVC_Club.Controllers
         private HttpClient clienteApi = new HttpClient();
         private HttpResponseMessage respuesta = new HttpResponseMessage();
         private Uri UriBase = new Uri(@"https://localhost:44395/api/actividades");
-        //private Uri UriBaseFiltrarCategorias = new Uri(@"https://localhost:44395/api/actividades/filter?nameContent={tenis}&edadMin=5&dia=5&hora=22");
 
         private void ConfigurarCliente()
         {
@@ -26,14 +25,6 @@ namespace MVC_Club.Controllers
             clienteApi.DefaultRequestHeaders.Accept.Add
             (new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-        //private void ConfigurarClienteFiltrado()
-        //{
-        //    clienteApi.BaseAddress = UriBaseFiltrarCategorias;
-        //    clienteApi.DefaultRequestHeaders.Accept.Clear();
-        //    clienteApi.DefaultRequestHeaders.Accept.Add
-        //    (new MediaTypeWithQualityHeaderValue("application/json"));
-        //}
 
         // GET: Actividades
         public ActionResult Index()
@@ -71,13 +62,16 @@ namespace MVC_Club.Controllers
 
         //POST: Actividades/Filter
         [HttpPost]
-        public ActionResult Filter(string nameContent = "", int edadMin = 0, int dia = 0, int hora = 0)
+        public ActionResult Filter(string nombreContent = "", int edadMin = 0, int dia = 0, int hora = 0)
         {
             try
             {
+                //ConfigurarCliente();
+                //respuesta = clienteApi.GetAsync(clienteApi.BaseAddress + "nombreContent=" + nombreContent
+                //    + "edadMin=" + edadMin + "dia=" + dia + "hora=" + hora).Result;
+
                 ConfigurarCliente();
-                string filterUrl = "/filter?nameContent="+nameContent+ "&edadMin=" + edadMin + "&dia=" + dia + "&hora=" + hora;
-                respuesta = clienteApi.GetAsync(clienteApi.BaseAddress+ filterUrl).Result;
+                respuesta = clienteApi.GetAsync(clienteApi.BaseAddress).Result;
                 if (respuesta.IsSuccessStatusCode)
                 {
                     var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Actividad>>().Result;
@@ -98,43 +92,6 @@ namespace MVC_Club.Controllers
                 return View();
             }
         }
-
-        //GET: Actividades/Ingresos
-        //public ActionResult Ingresos()
-        //{
-        //    return View();
-        //}
-
-        ////POST: Actividades/Ingresos
-        //[HttpPost]
-        //public ActionResult Ingresos(int cedula = 0)
-        //{
-        //    try
-        //    {
-        //        ConfigurarCliente();
-        //        string filterUrl = "/filter?cedula=" + cedula;
-        //        respuesta = clienteApi.GetAsync(clienteApi.BaseAddress + filterUrl).Result;
-        //        if (respuesta.IsSuccessStatusCode)
-        //        {
-        //            var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Actividad>>().Result;
-        //            if (contenido != null)
-        //            {
-        //                IEnumerable<Actividad> contenidoAux = contenido;
-        //                IEnumerable<ActividadModel> actividadesModel = castActividadToActividadModel(contenidoAux);
-        //                return View(actividadesModel);
-        //            }
-        //        }
-        //        ModelState.AddModelError("Error Api", "No se obtuvo respuesta " +
-        //        respuesta.ReasonPhrase);
-        //        return View();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ModelState.AddModelError("Se produjo una excepción: ", ex.Message);
-        //        return View();
-        //    }
-        //}
-
         // GET: Actividades/Create
         public ActionResult Create()
         {
@@ -192,7 +149,6 @@ namespace MVC_Club.Controllers
             return actividadesModel;
 
         }
-
 
         // GET: Actividades/Details/5
         public ActionResult Details(int id)

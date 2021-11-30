@@ -144,6 +144,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActividadModel.cs" />
+    <Compile Include="Models\SocioActividadModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +196,7 @@
     <Content Include="Views\Actividades\Create.cshtml" />
     <Content Include="Views\Actividades\Index.cshtml" />
     <Content Include="Views\Actividades\Filter.cshtml" />
+    <Content Include="Views\Actividades\Ingresos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

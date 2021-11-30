@@ -9,15 +9,15 @@
 <form action="/Actividades/Filter" method="post">
 
     <h3>Por Nombre de Actividad</h3>
-    <label for="nombreActividad">Ingresa el nombre</label>
-    <input type="text" name="nombreActividad" id="nombreActividad" class="form-control" placeholder="Ingresa el nombre o parte del nombre" />
+    <label for="nameContent">Ingresa el nombre</label>
+    <input type="text" name="nameContent" id="nameContent" class="form-control" placeholder="Ingresa el nombre o parte del nombre" />
     <br />
     <button class="btn btn-primary" type="submit" id="btnBuscar1">Filtrar</button>
 
-    <hr />
+    @*<hr />
     <h3>Por Edad Mínima</h3>
-    <label for="edadMinima">Ingresa una edad mínima</label>
-    <input type="number" name="edadMinima" id="edadMinima" class="form-control" placeholder="Ingresa la edad" />
+    <label for="edadMin">Ingresa una edad mínima</label>
+    <input type="number" name="edadMin" id="edadMin" class="form-control" placeholder="Ingresa la edad" />
     <br />
     <button class="btn btn-primary" type="submit" id="btnBuscar2">Filtrar</button>
 
@@ -43,9 +43,9 @@
 
             }
         </select>
-    </div>
+    </div>*@
 
-    <button class="btn btn-primary" type="submit" id="btnBuscar3">Filtrar</button>
+    @*<button class="btn btn-primary" type="submit" id="btnBuscar3">Filtrar</button>*@
 </form>
 <br>
 <p class="text-danger">@ViewBag.mensaje</p>
