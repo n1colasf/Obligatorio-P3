@@ -1,10 +1,10 @@
-﻿@*@model IEnumerable<MVC_Club.Models.ActividadModel>
+﻿@model IEnumerable<MVC_Club.Models.SocioActividadModel>
 
 @{
     ViewBag.Title = "Ingresos";
 }
 
-<h2>Ingresos por Socip</h2>
+<h2>Ingresos por Socio</h2>
 
 <form action="/Actividades/Ingresos" method="post">
 
@@ -17,47 +17,47 @@
 <br>
 <p class="text-danger">@ViewBag.mensaje</p>
 
-@if (Model != null)
+@if (Model != null && Model.Count() > 0)
 {
     <table class="table">
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.IdActividad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaSocio)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EdadMin)
+                @Html.DisplayNameFor(model => model.HoraActividad)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EdadMax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cupo)
-            </th>
-            <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
+                    @Html.DisplayFor(modelItem => item.IdActividad)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EdadMin)
+                    @Html.DisplayFor(modelItem => item.CedulaSocio)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EdadMax)
+                    @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Cupo)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.DisplayFor(modelItem => item.HoraActividad)
                 </td>
             </tr>
         }
 
     </table>
-}*@
+}
+else
+{
+    <br />
+    <br />
+    <p>No hay actividades para esta búsqueda.</p>
+}

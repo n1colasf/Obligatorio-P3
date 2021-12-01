@@ -36,13 +36,13 @@ namespace WebApplication.Controllers
             var actividades = repoActividades.FiltrarActividades(nameContent);
             return actividades;
         }
-        //[Route("api/actividades/ingresos")] //Creo que esto ya no es necesario porque tiene la ruta en la config
-        //public IEnumerable<SocioActividad> Get(int cedula)
-        //{
-        //    RepoActividades repoActividades = new RepoActividades();
-        //    var actividades = repoActividades.ListarActividadesSocio(cedula);
-        //    return actividades;
-        //}
+        [Route("api/actividades/ingresos")] //Creo que esto ya no es necesario porque tiene la ruta en la config
+        public IEnumerable<SocioActividad> Get(int cedula)
+        {
+            RepoActividades repoActividades = new RepoActividades();
+            var socioActividades = repoActividades.ListarActividadesSocio(cedula);
+            return socioActividades;
+        }
 
         // POST: api/Actividades-
         public void Post([FromBody]Actividad nuevaActividad)

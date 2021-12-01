@@ -27,14 +27,6 @@ namespace MVC_Club.Controllers
             (new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        //private void ConfigurarClienteFiltrado()
-        //{
-        //    clienteApi.BaseAddress = UriBaseFiltrarCategorias;
-        //    clienteApi.DefaultRequestHeaders.Accept.Clear();
-        //    clienteApi.DefaultRequestHeaders.Accept.Add
-        //    (new MediaTypeWithQualityHeaderValue("application/json"));
-        //}
-
         // GET: Actividades
         public ActionResult Index()
         {
@@ -100,40 +92,40 @@ namespace MVC_Club.Controllers
         }
 
         //GET: Actividades/Ingresos
-        //public ActionResult Ingresos()
-        //{
-        //    return View();
-        //}
+        public ActionResult Ingresos()
+        {
+            return View();
+        }
 
-        ////POST: Actividades/Ingresos
-        //[HttpPost]
-        //public ActionResult Ingresos(int cedula = 0)
-        //{
-        //    try
-        //    {
-        //        ConfigurarCliente();
-        //        string filterUrl = "/filter?cedula=" + cedula;
-        //        respuesta = clienteApi.GetAsync(clienteApi.BaseAddress + filterUrl).Result;
-        //        if (respuesta.IsSuccessStatusCode)
-        //        {
-        //            var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Actividad>>().Result;
-        //            if (contenido != null)
-        //            {
-        //                IEnumerable<Actividad> contenidoAux = contenido;
-        //                IEnumerable<ActividadModel> actividadesModel = castActividadToActividadModel(contenidoAux);
-        //                return View(actividadesModel);
-        //            }
-        //        }
-        //        ModelState.AddModelError("Error Api", "No se obtuvo respuesta " +
-        //        respuesta.ReasonPhrase);
-        //        return View();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ModelState.AddModelError("Se produjo una excepción: ", ex.Message);
-        //        return View();
-        //    }
-        //}
+        //POST: Actividades/Ingresos
+        [HttpPost]
+        public ActionResult Ingresos(int cedula = 0)
+        {
+            try
+            {
+                ConfigurarCliente();
+                string filterUrl = "/Ingresos?cedula=" + cedula;
+                respuesta = clienteApi.GetAsync(clienteApi.BaseAddress + filterUrl).Result;
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var contenido = respuesta.Content.ReadAsAsync<IEnumerable<SocioActividad>>().Result;
+                    if (contenido != null)
+                    {
+                        IEnumerable<SocioActividad> contenidoAux = contenido;
+                        IEnumerable<SocioActividadModel> socioActividadModel = castSocioActividadToSocioActividadModel(contenidoAux);
+                        return View(socioActividadModel);
+                    }
+                }
+                ModelState.AddModelError("Error Api", "No se obtuvo respuesta " +
+                respuesta.ReasonPhrase);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Se produjo una excepción: ", ex.Message);
+                return View();
+            }
+        }
 
         // GET: Actividades/Create
         public ActionResult Create()
@@ -193,6 +185,21 @@ namespace MVC_Club.Controllers
 
         }
 
+        private IEnumerable<SocioActividadModel> castSocioActividadToSocioActividadModel(IEnumerable<SocioActividad> socioActividades)
+        {
+            List<SocioActividadModel> socioActividadesModel = new List<SocioActividadModel>();
+            foreach (SocioActividad act in socioActividades)
+            {
+                socioActividadesModel.Add(new SocioActividadModel
+                {
+                    IdActividad = act.IdActividad,
+                    CedulaSocio = act.CedulaSocio,
+                    Fecha = act.Fecha,
+                    HoraActividad = act.HoraActividad
+                });
+            }
+            return socioActividadesModel;
+        }
 
         // GET: Actividades/Details/5
         public ActionResult Details(int id)

@@ -113,10 +113,9 @@ namespace Repositorios
                 db.Dispose();
             }
         }
-        public IEnumerable<PagoSocio> ListarPagosPorMesYAnio(int month, int year) //FALTA OBTENER NOMBRE SOCIO
+        public IEnumerable<PagoSocio> ListarPagosPorMesYAnio(int month, int year)
         {
             IEnumerable<PagoSocio> listaPagosSocio = new List<PagoSocio>();
-            //PagoSocio listaPagosSocio = new PagoSocio();
 
             Conexion con = new Conexion();
             Context db = new Context(con.getConectionString());
@@ -149,7 +148,7 @@ namespace Repositorios
             }
             finally
             {
-                db.Dispose();
+                //db.Dispose();
             }
             return listaPagosSocio;
         }

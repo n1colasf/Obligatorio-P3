@@ -73,19 +73,14 @@ namespace Repositorios
             IEnumerable<Actividad> actividadesFiltradas = new List<Actividad>();
             try
             {
-                if(nameContent != "")
+                if(nameContent != null && nameContent != "")
                 {
                     nameContent = nameContent.ToUpper();
                     actividadesFiltradas = db.Actividades
                         .Where(a => a.Nombre.Contains(nameContent))
+                        .OrderBy(a => a.Nombre)
                         .ToList();
 
-
-                    //actividadesFiltradas = (IEnumerable<Actividad>)(from a in db.Actividades
-                    //                             join h in db.Horarios
-                    //                             on a.Id equals h.IdActividad
-                    //                             where a.Nombre.Contains(nameContent)
-                    //                             select a);
                 } 
 
                 // NO FUNCIONA EL METODO RECIBIENDO MAS DE 1 PARAMETRO!!
@@ -115,7 +110,7 @@ namespace Repositorios
             }
             finally
             {
-                //db.Dispose();
+                db.Dispose();
             }
         }
         public IEnumerable<SocioActividad> ListarActividadesSocio(int cedula = 0)
@@ -127,6 +122,7 @@ namespace Repositorios
             {
                 actividadesSocio = db.SociosActividad
                     .Where(sa => sa.CedulaSocio == cedula)
+                    .OrderByDescending(sa => sa.Fecha)
                     .ToList();
 
                 return actividadesSocio;
