@@ -113,6 +113,33 @@ namespace Repositorios
                 db.Dispose();
             }
         }
+        public IEnumerable<Actividad> FiltrarActividadesEdad(int edadMin = 0)
+        {
+            Conexion con = new Conexion();
+            Context db = new Context(con.getConectionString());
+            IEnumerable<Actividad> actividadesFiltradas = new List<Actividad>();
+            try
+            {
+                if (edadMin > 0)
+                {
+                    actividadesFiltradas = db.Actividades
+                        .Where(a => a.EdadMin <= edadMin)
+                        .OrderBy(a => a.Nombre)
+                        .ToList();
+
+                }
+                return actividadesFiltradas;
+
+            }
+            catch (Exception Ex)
+            {
+                return null;
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
         public IEnumerable<SocioActividad> ListarActividadesSocio(int cedula = 0)
         {
             Conexion con = new Conexion();

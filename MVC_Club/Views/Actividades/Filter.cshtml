@@ -13,8 +13,18 @@
     <input type="text" name="nameContent" id="nameContent" class="form-control" placeholder="Ingresa el nombre o parte del nombre" />
     <br />
     <button class="btn btn-primary" type="submit" id="btnBuscar1">Filtrar</button>
+</form>
+<hr />
+<form action="/Actividades/FilterEdad" method="post">
 
-    @*<hr />
+    <h3>Por Cota minima de edad</h3>
+    <label for="edadMin">Ingresa una edad</label>
+    <input type="text" name="edadMin" id="edadMin" class="form-control" placeholder="Ingresa la edad" />
+    <br />
+    <button class="btn btn-primary" type="submit" id="btnBuscar2">Filtrar</button>
+</form>
+
+@*<hr />
     <h3>Por Edad Mínima</h3>
     <label for="edadMin">Ingresa una edad mínima</label>
     <input type="number" name="edadMin" id="edadMin" class="form-control" placeholder="Ingresa la edad" />
@@ -45,52 +55,54 @@
         </select>
     </div>*@
 
-    @*<button class="btn btn-primary" type="submit" id="btnBuscar3">Filtrar</button>*@
-</form>
+@*<button class="btn btn-primary" type="submit" id="btnBuscar3">Filtrar</button>*@
+
+
+
+
 <br>
 <p class="text-danger">@ViewBag.mensaje</p>
 
 @if (Model != null && Model.Count() > 0)
 {
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EdadMin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EdadMax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cupo)
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EdadMin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EdadMax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cupo)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EdadMin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EdadMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cupo)
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cupo)
+                </td>
+            </tr>
+        }
+
+    </table>
 }
 else
 {
-    <br />
-    <br />
-    <p>No se encontraron actividades.</p>
-}
+<br />
+                <br />
+                                <p>No se encontraron actividades.</p>}

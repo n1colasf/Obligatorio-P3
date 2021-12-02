@@ -91,6 +91,42 @@ namespace MVC_Club.Controllers
             }
         }
 
+        //GET: Actividades/FilterEdad
+        public ActionResult FilterEdad()
+        {
+            return View();
+        }
+
+        //POST: Actividades/FilterEdad
+        [HttpPost]
+        public ActionResult FilterEdad(int edadMin = 0)
+        {
+            try
+            {
+                ConfigurarCliente();
+                string filterUrl = "/filterEdad?edadMin=" + edadMin;
+                respuesta = clienteApi.GetAsync(clienteApi.BaseAddress + filterUrl).Result;
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var contenido = respuesta.Content.ReadAsAsync<IEnumerable<Actividad>>().Result;
+                    if (contenido != null)
+                    {
+                        IEnumerable<Actividad> contenidoAux = contenido;
+                        IEnumerable<ActividadModel> actividadesModel = castActividadToActividadModel(contenidoAux);
+                        return View("Filter",actividadesModel);
+                    }
+                }
+                ModelState.AddModelError("Error Api", "No se obtuvo respuesta " +
+                respuesta.ReasonPhrase);
+                return View("Filter");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Se produjo una excepción: ", ex.Message);
+                return View();
+            }
+        }
+
         //GET: Actividades/Ingresos
         public ActionResult Ingresos()
         {
