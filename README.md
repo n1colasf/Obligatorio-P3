@@ -1,4 +1,9 @@
-# SolutionClub
+# Obligatorio-P3
+Obligatorios 1 y 2 de Programación 3 (Semestre 3 - Agosto 2021) Calificación: 60/65
+
+<hr>
+
+## SolutionClub
 
 CREAR BASE DE DATOS:
 1- Bajar de GIT el archivo backupClub
