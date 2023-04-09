@@ -5,10 +5,10 @@ Obligatorios 1 y 2 de Programación 3 (Semestre 3 - Agosto 2021) Calificación: 
 
 ## SolutionClub
 
-CREAR BASE DE DATOS:
-1- Bajar de GIT el archivo backupClub
-2- Crear nueva base de datos con nombre Club
-3- Click derecho en Base de datos - Task - Restore..
+CREAR BASE DE DATOS:<br>
+1- Bajar de GIT el archivo backupClub<br>
+2- Crear nueva base de datos con nombre Club<br>
+3- Click derecho en Base de datos - Task - Restore..<br>
 4- Elegir devices y seleccionar el archivo descargado backupClub
 
 CAMBIAR CONNECTION STRING EN:
